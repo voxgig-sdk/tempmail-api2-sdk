@@ -1,0 +1,452 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Tempmail API",
+    "description": "The Tempmail API provides users with disposable email addresses that can be used for temporary registrations or verifications. It allows users to manage their temporary inboxes, retrieve emails, and perform various email-related operations securely and anonymously.",
+    "version": "2.0.0",
+    "contact": {
+      "name": "Tempmail Support",
+      "url": "https://tempmail.lol"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.tempmail.lol/v2",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/inbox/create": {
+      "post": {
+        "summary": "Create temporary email inbox",
+        "description": "Creates a new temporary email address and inbox for receiving emails",
+        "operationId": "createInbox",
+        "tags": [
+          "Inbox"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully created temporary inbox",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "The generated temporary email address"
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Authentication token for accessing the inbox"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/inbox/{token}": {
+      "get": {
+        "summary": "Retrieve inbox messages",
+        "description": "Retrieves all emails in the temporary inbox associated with the provided token",
+        "operationId": "getInbox",
+        "tags": [
+          "Inbox"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "description": "The authentication token for the inbox",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved inbox messages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "emails": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Unique identifier for the email"
+                          },
+                          "from": {
+                            "type": "string",
+                            "format": "email",
+                            "description": "Sender email address"
+                          },
+                          "subject": {
+                            "type": "string",
+                            "description": "Email subject"
+                          },
+                          "body": {
+                            "type": "string",
+                            "description": "Email body content"
+                          },
+                          "date": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when email was received"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid token"
+          },
+          "404": {
+            "description": "Inbox not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete inbox",
+        "description": "Deletes the temporary inbox and all associated emails",
+        "operationId": "deleteInbox",
+        "tags": [
+          "Inbox"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "description": "The authentication token for the inbox",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inbox successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Inbox deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid token"
+          },
+          "404": {
+            "description": "Inbox not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/inbox/{token}/{emailId}": {
+      "get": {
+        "summary": "Get specific email",
+        "description": "Retrieves a specific email by its ID from the inbox",
+        "operationId": "getEmail",
+        "tags": [
+          "Email"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "description": "The authentication token for the inbox",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "emailId",
+            "in": "path",
+            "required": true,
+            "description": "The unique identifier of the email",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the email"
+                    },
+                    "from": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Sender email address"
+                    },
+                    "to": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Recipient email address"
+                    },
+                    "subject": {
+                      "type": "string",
+                      "description": "Email subject"
+                    },
+                    "body": {
+                      "type": "string",
+                      "description": "Email body content"
+                    },
+                    "html": {
+                      "type": "string",
+                      "description": "HTML version of email body"
+                    },
+                    "date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when email was received"
+                    },
+                    "attachments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "filename": {
+                            "type": "string"
+                          },
+                          "size": {
+                            "type": "integer"
+                          },
+                          "contentType": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid token"
+          },
+          "404": {
+            "description": "Email not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete specific email",
+        "description": "Deletes a specific email from the inbox",
+        "operationId": "deleteEmail",
+        "tags": [
+          "Email"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "description": "The authentication token for the inbox",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "emailId",
+            "in": "path",
+            "required": true,
+            "description": "The unique identifier of the email",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid token"
+          },
+          "404": {
+            "description": "Email not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/domains": {
+      "get": {
+        "summary": "Get available domains",
+        "description": "Retrieves a list of available domains for creating temporary email addresses",
+        "operationId": "getDomains",
+        "tags": [
+          "Domains"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved domains",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "domains": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "tempmail.lol",
+                        "temp.lol"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/inbox/custom": {
+      "post": {
+        "summary": "Create custom email address",
+        "description": "Creates a temporary inbox with a custom username",
+        "operationId": "createCustomInbox",
+        "tags": [
+          "Inbox"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Desired username for the email address"
+                  },
+                  "domain": {
+                    "type": "string",
+                    "description": "Domain for the email address (optional)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created custom inbox",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "The created custom email address"
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Authentication token for accessing the inbox"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Username already taken or invalid"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Inbox",
+      "description": "Operations for managing temporary email inboxes"
+    },
+    {
+      "name": "Email",
+      "description": "Operations for managing individual emails"
+    },
+    {
+      "name": "Domains",
+      "description": "Operations for retrieving available domains"
+    }
+  ],
+  "externalDocs": {
+    "description": "Full API Documentation",
+    "url": "https://api.tempmail.lol/v2/"
+  }
+}

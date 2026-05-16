@@ -1,0 +1,38 @@
+# Guide
+
+guide: {
+  metrics: count: entity: 3
+  metrics: count: path: 5
+  metrics: count: method: 7
+
+  entity: domain: {
+    path: "/domains": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: email: {
+    path: "/inbox/{token}/{emailId}": {
+      rename: param: "emailId": *"email_id"
+      op: list: method: *GET
+      op: remove: method: *DELETE
+    }
+  }
+
+  entity: inbox: {
+    path: "/inbox/create": {
+      action: "create": {}
+      op: create: method: *POST
+    }
+    path: "/inbox/custom": {
+      action: "custom": {}
+      op: create: method: *POST
+    }
+    path: "/inbox/{token}": {
+      rename: param: "token": *"id"
+      op: load: method: *GET
+      op: remove: method: *DELETE
+    }
+  }
+
+}

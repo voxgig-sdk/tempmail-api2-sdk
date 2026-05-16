@@ -1,0 +1,37 @@
+# Entity: domain
+
+main: kit: entity: domain: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "domain"
+      req: false
+      type: "`$ARRAY`"
+    }
+  ]
+
+  name: "domain"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          method: "GET"
+          orig: "/domains"
+          parts: [
+            "domains"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

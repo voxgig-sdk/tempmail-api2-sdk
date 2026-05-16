@@ -1,0 +1,147 @@
+# Entity: inbox
+
+main: kit: entity: inbox: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "domain"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "email"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "token"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "username"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "inbox"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/inbox/create"
+          parts: [
+            "inbox"
+            "create"
+          ]
+          select: {
+            "$action": "create"
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          method: "POST"
+          orig: "/inbox/custom"
+          parts: [
+            "inbox"
+            "custom"
+          ]
+          select: {
+            "$action": "custom"
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "token"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/inbox/{token}"
+          parts: [
+            "inbox"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              token: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "token"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/inbox/{token}"
+          parts: [
+            "inbox"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              token: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

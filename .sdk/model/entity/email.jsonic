@@ -1,0 +1,133 @@
+# Entity: email
+
+main: kit: entity: email: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "content_type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "filename"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "size"
+      req: false
+      type: "`$INTEGER`"
+    }
+  ]
+
+  name: "email"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "email_id"
+                orig: "email_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "token"
+                orig: "token"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/inbox/{token}/{emailId}"
+          parts: [
+            "inbox"
+            "{token}"
+            "{email_id}"
+          ]
+          rename: {
+            param: {
+              emailId: "email_id"
+            }
+          }
+          select: {
+            exist: [
+              "email_id"
+              "token"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "email_id"
+                orig: "email_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "token"
+                orig: "token"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/inbox/{token}/{emailId}"
+          parts: [
+            "inbox"
+            "{token}"
+            "{email_id}"
+          ]
+          rename: {
+            param: {
+              emailId: "email_id"
+            }
+          }
+          select: {
+            exist: [
+              "email_id"
+              "token"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "inbox"
+      ]
+    ]
+  }
+
+
+
+}

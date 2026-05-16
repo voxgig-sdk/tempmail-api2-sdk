@@ -1,0 +1,37 @@
+{
+  "existing": {
+    "inbox": {
+      "INBOX00": {
+        "domain": "s28",
+        "email": [],
+        "token": "s2a",
+        "username": "s2b",
+        "id": "INBOX00"
+      },
+      "INBOX01": {
+        "domain": "s50",
+        "email": [],
+        "token": "s52",
+        "username": "s53",
+        "id": "INBOX01"
+      },
+      "INBOX02": {
+        "domain": "s78",
+        "email": [],
+        "token": "s7a",
+        "username": "s7b",
+        "id": "INBOX02"
+      }
+    }
+  },
+  "new": {
+    "inbox": {
+      "inbox_ref01": {
+        "domain": "sa0",
+        "email": [],
+        "token": "sa2",
+        "username": "sa3"
+      }
+    }
+  }
+}

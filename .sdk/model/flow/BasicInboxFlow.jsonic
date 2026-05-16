@@ -1,0 +1,53 @@
+# BasicInboxFlow
+
+main: kit: flow: BasicInboxFlow:
+{
+  entity: "inbox",
+  kind: "basic",
+  name: "BasicInboxFlow",
+  step: [
+    {
+      input: {
+        ref: "inbox_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      input: {
+        ref: "inbox_ref01",
+        srcdatavar: "inbox_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "inbox01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-inbox_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "inbox_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "inbox01"
+      }
+
+      op: "remove"
+    }
+  ],
+  "key$": "BasicInboxFlow"
+}

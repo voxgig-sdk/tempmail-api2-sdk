@@ -1,0 +1,22 @@
+{
+  "existing": {
+    "domain": {
+      "DOMAIN00": {
+        "domain": []
+      },
+      "DOMAIN01": {
+        "domain": []
+      },
+      "DOMAIN02": {
+        "domain": []
+      }
+    }
+  },
+  "new": {
+    "domain": {
+      "domain_ref01": {
+        "domain": []
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+# BasicEmailFlow
+
+main: kit: flow: BasicEmailFlow:
+{
+  entity: "email",
+  kind: "basic",
+  name: "BasicEmailFlow",
+  step: [
+    {
+      match: {
+        email_id: "email01",
+        token: "token01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "email_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "email_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "email01",
+        token: "token01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      match: {
+        email_id: "email01",
+        token: "token01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "email_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicEmailFlow"
+}

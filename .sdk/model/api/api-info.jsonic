@@ -1,0 +1,24 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      contact: {
+        name: "Tempmail Support"
+        url: "https://tempmail.lol"
+      }
+      description: "The Tempmail API provides users with disposable email addresses that can be used for temporary registrations or verifications. It allows users to manage their temporary inboxes, retrieve emails, and perform various email-related operations securely and anonymously."
+      servers: [
+        {
+          description: "Production server"
+          url: "https://api.tempmail.lol/v2"
+        }
+      ]
+      title: "Tempmail API"
+      version: "2.0.0"
+    }
+  }
+}
+
+}
