@@ -14,9 +14,6 @@ local function make_config()
     },
     options = {
       base = "https://api.tempmail.lol/v2",
-      auth = {
-        prefix = "Bearer",
-      },
       headers = {
         ["content-type"] = "application/json",
       },

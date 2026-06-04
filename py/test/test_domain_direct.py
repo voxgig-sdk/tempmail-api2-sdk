@@ -61,14 +61,12 @@ def _domain_direct_setup(mockres):
     env = runner.env_override({
         "TEMPMAILAPI__TEST_DOMAIN_ENTID": {},
         "TEMPMAILAPI__TEST_LIVE": "FALSE",
-        "TEMPMAILAPI__APIKEY": "NONE",
     })
 
     live = env.get("TEMPMAILAPI__TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {
-            "apikey": env.get("TEMPMAILAPI__APIKEY"),
         }
         client = TempmailApi2SDK(merged_opts)
         return {

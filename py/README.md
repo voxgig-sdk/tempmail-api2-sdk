@@ -23,12 +23,9 @@ loading a specific record.
 ### 1. Create a client
 
 ```python
-import os
 from tempmailapi2_sdk import TempmailApi2SDK
 
-client = TempmailApi2SDK({
-    "apikey": os.environ.get("TEMPMAIL-API2_APIKEY"),
-})
+client = TempmailApi2SDK({})
 ```
 
 ### 2. List domains
@@ -121,7 +118,6 @@ Create a `.env.local` file at the project root:
 
 ```
 TEMPMAIL-API2_TEST_LIVE=TRUE
-TEMPMAIL-API2_APIKEY=<your-key>
 ```
 
 Then run:
@@ -145,7 +141,6 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `apikey` | `str` | API key for authentication. |
 | `base` | `str` | Base URL of the API server. |
 | `prefix` | `str` | URL path prefix prepended to all requests. |
 | `suffix` | `str` | URL path suffix appended to all requests. |
