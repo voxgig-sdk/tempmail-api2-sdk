@@ -93,6 +93,7 @@ function inbox_basic_setup($extra)
         "TEMPMAILAPI__TEST_INBOX_ENTID" => $idmap,
         "TEMPMAILAPI__TEST_LIVE" => "FALSE",
         "TEMPMAILAPI__TEST_EXPLAIN" => "FALSE",
+        "TEMPMAILAPI__APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -104,6 +105,7 @@ function inbox_basic_setup($extra)
     if ($env["TEMPMAILAPI__TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
+                "apikey" => $env["TEMPMAILAPI__APIKEY"],
             ],
             $extra ?? [],
         ]);

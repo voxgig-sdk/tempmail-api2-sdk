@@ -87,12 +87,14 @@ function email_direct_setup($mockres)
     $env = Runner::env_override([
         "TEMPMAILAPI__TEST_EMAIL_ENTID" => [],
         "TEMPMAILAPI__TEST_LIVE" => "FALSE",
+        "TEMPMAILAPI__APIKEY" => "NONE",
     ]);
 
     $live = $env["TEMPMAILAPI__TEST_LIVE"] === "TRUE";
 
     if ($live) {
         $merged_opts = [
+            "apikey" => $env["TEMPMAILAPI__APIKEY"],
         ];
         $client = new TempmailApi2SDK($merged_opts);
         return [

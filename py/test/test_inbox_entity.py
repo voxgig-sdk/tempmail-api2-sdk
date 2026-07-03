@@ -100,6 +100,7 @@ def _inbox_basic_setup(extra):
         "TEMPMAILAPI__TEST_INBOX_ENTID": idmap,
         "TEMPMAILAPI__TEST_LIVE": "FALSE",
         "TEMPMAILAPI__TEST_EXPLAIN": "FALSE",
+        "TEMPMAILAPI__APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -110,6 +111,7 @@ def _inbox_basic_setup(extra):
     if env.get("TEMPMAILAPI__TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
+                "apikey": env.get("TEMPMAILAPI__APIKEY"),
             },
             extra or {},
         ])
