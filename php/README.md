@@ -10,7 +10,7 @@ The PHP SDK for the TempmailApi2 API — an entity-oriented client using PHP con
 
 ## Install
 ```bash
-composer require voxgig/tempmail-api2-sdk
+composer require voxgig-sdk/tempmail-api2
 ```
 
 
