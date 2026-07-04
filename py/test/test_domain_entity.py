@@ -50,8 +50,7 @@ class TestDomainEntity:
         domain_ref01_ent = client.Domain(None)
         domain_ref01_match = {}
 
-        domain_ref01_list_result, err = domain_ref01_ent.list(domain_ref01_match, None)
-        assert err is None
+        domain_ref01_list_result = domain_ref01_ent.list(domain_ref01_match, None)
         assert isinstance(domain_ref01_list_result, list)
 
 
@@ -92,7 +91,6 @@ def _domain_basic_setup(extra):
         "TEMPMAILAPI__TEST_DOMAIN_ENTID": idmap,
         "TEMPMAILAPI__TEST_LIVE": "FALSE",
         "TEMPMAILAPI__TEST_EXPLAIN": "FALSE",
-        "TEMPMAILAPI__APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -103,7 +101,6 @@ def _domain_basic_setup(extra):
     if env.get("TEMPMAILAPI__TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("TEMPMAILAPI__APIKEY"),
             },
             extra or {},
         ])

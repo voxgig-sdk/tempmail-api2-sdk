@@ -38,10 +38,6 @@ class Config {
   options = {
     base: 'https://api.tempmail.lol/v2',
 
-    auth: {
-      prefix: 'Bearer',
-    },
-
     headers: {
       "content-type": "application/json"
     },
@@ -141,7 +137,8 @@ class Config {
                     "name": "email_id",
                     "orig": "email_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -149,7 +146,8 @@ class Config {
                     "name": "token",
                     "orig": "token",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },
@@ -194,7 +192,8 @@ class Config {
                     "name": "email_id",
                     "orig": "email_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -202,7 +201,8 @@ class Config {
                     "name": "token",
                     "orig": "token",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },
@@ -332,7 +332,8 @@ class Config {
                     "name": "id",
                     "orig": "token",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -375,7 +376,8 @@ class Config {
                     "name": "id",
                     "orig": "token",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },

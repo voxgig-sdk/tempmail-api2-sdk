@@ -1,0 +1,43 @@
+-- Typed models for the TempmailApi2 SDK (LuaLS annotations).
+--
+-- GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
+-- params (op.<name>.points[].args.params[]). Field/param types come from the
+-- canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
+-- @voxgig/apidef VALID_CANON). Annotations only — no runtime effect. Do not
+-- edit by hand.
+
+---@class Domain
+---@field domain? table
+
+---@class DomainListMatch
+
+---@class Email
+---@field content_type? string
+---@field filename? string
+---@field size? number
+
+---@class EmailListMatch
+---@field email_id string
+---@field token string
+
+---@class EmailRemoveMatch
+---@field email_id string
+---@field token string
+
+---@class Inbox
+---@field domain? string
+---@field email? table
+---@field token? string
+---@field username string
+
+---@class InboxLoadMatch
+---@field id string
+
+---@class InboxCreateData
+
+---@class InboxRemoveMatch
+---@field id string
+
+local M = {}
+
+return M

@@ -45,6 +45,7 @@ class DomainEntity
     end
   end
 
+  # @return [Domain, Hash] the current Domain data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,6 +58,7 @@ class DomainEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Domain fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
@@ -65,6 +67,11 @@ class DomainEntity
   
 
   
+  # List Domain items matching the given filter.
+  #
+  # @param reqmatch [DomainListMatch, Hash, nil] match filter (any subset of Domain fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Array<Domain>, Array] the matching Domain items; raises TempmailApi2Error on failure
   def list(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

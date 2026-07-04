@@ -44,23 +44,19 @@ class TestInboxEntity:
         inbox_ref01_data = helpers.to_map(vs.getprop(
             vs.getpath(setup["data"], "new.inbox"), "inbox_ref01"))
 
-        inbox_ref01_data_result, err = inbox_ref01_ent.create(inbox_ref01_data, None)
-        assert err is None
-        inbox_ref01_data = helpers.to_map(inbox_ref01_data_result)
+        inbox_ref01_data = helpers.to_map(inbox_ref01_ent.create(inbox_ref01_data, None))
         assert inbox_ref01_data is not None
 
         # LOAD
         inbox_ref01_match_dt0 = {}
-        inbox_ref01_data_dt0_loaded, err = inbox_ref01_ent.load(inbox_ref01_match_dt0, None)
-        assert err is None
+        inbox_ref01_data_dt0_loaded = inbox_ref01_ent.load(inbox_ref01_match_dt0, None)
         assert inbox_ref01_data_dt0_loaded is not None
 
         # REMOVE
         inbox_ref01_match_rm0 = {
             "id": inbox_ref01_data["id"],
         }
-        _, err = inbox_ref01_ent.remove(inbox_ref01_match_rm0, None)
-        assert err is None
+        inbox_ref01_ent.remove(inbox_ref01_match_rm0, None)
 
 
 
@@ -100,7 +96,6 @@ def _inbox_basic_setup(extra):
         "TEMPMAILAPI__TEST_INBOX_ENTID": idmap,
         "TEMPMAILAPI__TEST_LIVE": "FALSE",
         "TEMPMAILAPI__TEST_EXPLAIN": "FALSE",
-        "TEMPMAILAPI__APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -111,7 +106,6 @@ def _inbox_basic_setup(extra):
     if env.get("TEMPMAILAPI__TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("TEMPMAILAPI__APIKEY"),
             },
             extra or {},
         ])

@@ -43,23 +43,20 @@ class InboxEntityTest extends TestCase
         $inbox_ref01_data = Helpers::to_map(Vs::getprop(
             Vs::getpath($setup["data"], "new.inbox"), "inbox_ref01"));
 
-        [$inbox_ref01_data_result, $err] = $inbox_ref01_ent->create($inbox_ref01_data, null);
-        $this->assertNull($err);
+        $inbox_ref01_data_result = $inbox_ref01_ent->create($inbox_ref01_data, null);
         $inbox_ref01_data = Helpers::to_map($inbox_ref01_data_result);
         $this->assertNotNull($inbox_ref01_data);
 
         // LOAD
         $inbox_ref01_match_dt0 = [];
-        [$inbox_ref01_data_dt0_loaded, $err] = $inbox_ref01_ent->load($inbox_ref01_match_dt0, null);
-        $this->assertNull($err);
+        $inbox_ref01_data_dt0_loaded = $inbox_ref01_ent->load($inbox_ref01_match_dt0, null);
         $this->assertNotNull($inbox_ref01_data_dt0_loaded);
 
         // REMOVE
         $inbox_ref01_match_rm0 = [
             "id" => $inbox_ref01_data["id"],
         ];
-        [$_, $err] = $inbox_ref01_ent->remove($inbox_ref01_match_rm0, null);
-        $this->assertNull($err);
+        $inbox_ref01_ent->remove($inbox_ref01_match_rm0, null);
 
     }
 }
@@ -93,7 +90,6 @@ function inbox_basic_setup($extra)
         "TEMPMAILAPI__TEST_INBOX_ENTID" => $idmap,
         "TEMPMAILAPI__TEST_LIVE" => "FALSE",
         "TEMPMAILAPI__TEST_EXPLAIN" => "FALSE",
-        "TEMPMAILAPI__APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -105,7 +101,6 @@ function inbox_basic_setup($extra)
     if ($env["TEMPMAILAPI__TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["TEMPMAILAPI__APIKEY"],
             ],
             $extra ?? [],
         ]);

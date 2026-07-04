@@ -9,9 +9,10 @@ The PHP SDK for the TempmailApi2 API — an entity-oriented client using PHP con
 
 
 ## Install
-```bash
-composer require voxgig-sdk/tempmail-api2
-```
+This package is not yet published to Packagist. Install it from the
+GitHub release tag (`php/vX.Y.Z`):
+
+- Releases: [https://github.com/voxgig-sdk/tempmail-api2-sdk/releases](https://github.com/voxgig-sdk/tempmail-api2-sdk/releases)
 
 
 ## Tutorial: your first API call
@@ -25,22 +26,22 @@ loading a specific record.
 <?php
 require_once 'tempmailapi2_sdk.php';
 
-$client = new TempmailApi2SDK([
-    "apikey" => getenv("TEMPMAIL-API2_APIKEY"),
-]);
+$client = new TempmailApi2SDK();
 ```
 
 ### 2. List domains
 
 ```php
-[$result, $err] = $client->Domain()->list();
-if ($err) { throw new \Exception($err); }
-
-if (is_array($result)) {
-    foreach ($result as $item) {
-        $d = $item->data_get();
-        echo $d["id"] . " " . $d["name"] . "\n";
+try {
+    $result = $client->domain()->list();
+    if (is_array($result)) {
+        foreach ($result as $item) {
+            $d = $item->data_get();
+            echo $d["id"] . " " . $d["name"] . "\n";
+        }
     }
+} catch (\Exception $err) {
+    echo "Error: " . $err->getMessage();
 }
 ```
 
@@ -52,28 +53,31 @@ if (is_array($result)) {
 For endpoints not covered by entity methods:
 
 ```php
-[$result, $err] = $client->direct([
+// direct() is the raw-HTTP escape hatch: it returns a result array
+// (it does not throw). Branch on $result["ok"].
+$result = $client->direct([
     "path" => "/api/resource/{id}",
     "method" => "GET",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 if ($result["ok"]) {
     echo $result["status"];  // 200
     print_r($result["data"]);  // response body
+} else {
+    echo "Error: " . $result["err"]->getMessage();
 }
 ```
 
 ### Prepare a request without sending it
 
 ```php
-[$fetchdef, $err] = $client->prepare([
+// prepare() throws on error and returns the fetch definition.
+$fetchdef = $client->prepare([
     "path" => "/api/resource/{id}",
     "method" => "DELETE",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 echo $fetchdef["url"];
 echo $fetchdef["method"];
@@ -87,7 +91,7 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = TempmailApi2SDK::test();
 
-[$result, $err] = $client->TempmailApi2()->load(["id" => "test01"]);
+$result = $client->domain()->load(["id" => "test01"]);
 // $result contains mock response data
 ```
 
@@ -121,8 +125,7 @@ $client = new TempmailApi2SDK([
 Create a `.env.local` file at the project root:
 
 ```
-TEMPMAIL-API2_TEST_LIVE=TRUE
-TEMPMAIL-API2_APIKEY=<your-key>
+TEMPMAIL_API2_TEST_LIVE=TRUE
 ```
 
 Then run:
@@ -145,7 +148,6 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |
@@ -193,8 +195,12 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `[$result, $err]`. The first value is an
-`array` with these keys:
+Entity operations return the bare result data (an `array` for single-entity
+ops, a `list` for `list`) and throw on error. Wrap calls in
+`try`/`catch` to handle failures.
+
+The `direct()` escape hatch never throws — it returns a result `array`
+you branch on via `$result["ok"]`:
 
 | Key | Type | Description |
 | --- | --- | --- |
@@ -249,7 +255,7 @@ API path: `/inbox/create`
 
 ### Domain
 
-Create an instance: `const domain = client.Domain()`
+Create an instance: `const domain = client.domain`
 
 #### Operations
 
@@ -266,13 +272,13 @@ Create an instance: `const domain = client.Domain()`
 #### Example: List
 
 ```ts
-const domains = await client.Domain().list()
+const domains = await client.domain.list()
 ```
 
 
 ### Email
 
-Create an instance: `const email = client.Email()`
+Create an instance: `const email = client.email`
 
 #### Operations
 
@@ -292,13 +298,13 @@ Create an instance: `const email = client.Email()`
 #### Example: List
 
 ```ts
-const emails = await client.Email().list()
+const emails = await client.email.list()
 ```
 
 
 ### Inbox
 
-Create an instance: `const inbox = client.Inbox()`
+Create an instance: `const inbox = client.inbox`
 
 #### Operations
 
@@ -320,13 +326,13 @@ Create an instance: `const inbox = client.Inbox()`
 #### Example: Load
 
 ```ts
-const inbox = await client.Inbox().load({ id: 'inbox_id' })
+const inbox = await client.inbox.load({ id: 'inbox_id' })
 ```
 
 #### Example: Create
 
 ```ts
-const inbox = await client.Inbox().create({
+const inbox = await client.inbox.create({
   username: /* `$STRING` */,
 })
 ```
@@ -403,11 +409,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$moon = $client->Moon();
-[$result, $err] = $moon->load(["planet_id" => "earth", "id" => "luna"]);
+$domain = $client->domain();
+$domain->load(["id" => "example_id"]);
 
-// $moon->dataGet() now returns the loaded moon data
-// $moon->matchGet() returns the last match criteria
+// $domain->dataGet() now returns the loaded domain data
+// $domain->matchGet() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

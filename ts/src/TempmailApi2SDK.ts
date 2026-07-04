@@ -4,6 +4,8 @@ import { DomainEntity } from './entity/DomainEntity'
 import { EmailEntity } from './entity/EmailEntity'
 import { InboxEntity } from './entity/InboxEntity'
 
+export type * from './TempmailApi2Types'
+
 
 import { inspect } from 'node:util'
 
@@ -204,18 +206,42 @@ class TempmailApi2SDK {
 
 
 
+  _domain?: DomainEntity
+
+  // Idiomatic facade: `client.domain.list()` / `client.domain.load({ id })`.
+  get domain(): DomainEntity {
+    return (this._domain ??= new DomainEntity(this, undefined))
+  }
+
+  /** @deprecated Use `client.domain` instead. */
   Domain(data?: any) {
     const self = this
     return new DomainEntity(self,data)
   }
 
 
+  _email?: EmailEntity
+
+  // Idiomatic facade: `client.email.list()` / `client.email.load({ id })`.
+  get email(): EmailEntity {
+    return (this._email ??= new EmailEntity(this, undefined))
+  }
+
+  /** @deprecated Use `client.email` instead. */
   Email(data?: any) {
     const self = this
     return new EmailEntity(self,data)
   }
 
 
+  _inbox?: InboxEntity
+
+  // Idiomatic facade: `client.inbox.list()` / `client.inbox.load({ id })`.
+  get inbox(): InboxEntity {
+    return (this._inbox ??= new InboxEntity(this, undefined))
+  }
+
+  /** @deprecated Use `client.inbox` instead. */
   Inbox(data?: any) {
     const self = this
     return new InboxEntity(self,data)

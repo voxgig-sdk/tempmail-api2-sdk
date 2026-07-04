@@ -19,7 +19,6 @@ Create a new SDK client instance.
 | Name | Type | Description |
 | --- | --- | --- |
 | `options` | `table` | SDK configuration options. |
-| `options.apikey` | `string` | API key for authentication. |
 | `options.base` | `string` | Base URL for API requests. |
 | `options.prefix` | `string` | URL prefix appended after base. |
 | `options.suffix` | `string` | URL suffix appended after path. |
@@ -92,7 +91,7 @@ same parameters as `direct()`.
 ## DomainEntity
 
 ```lua
-local domain = client:Domain(nil)
+local domain = client:domain(nil)
 ```
 
 ### Fields
@@ -108,7 +107,7 @@ local domain = client:Domain(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Domain():list()
+local results, err = client:domain():list()
 ```
 
 ### Common Methods
@@ -144,7 +143,7 @@ Return the entity name.
 ## EmailEntity
 
 ```lua
-local email = client:Email(nil)
+local email = client:email(nil)
 ```
 
 ### Fields
@@ -162,7 +161,7 @@ local email = client:Email(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Email():list()
+local results, err = client:email():list()
 ```
 
 #### `remove(reqmatch, ctrl) -> any, err`
@@ -170,7 +169,7 @@ local results, err = client:Email():list()
 Remove the entity matching the given criteria.
 
 ```lua
-local result, err = client:Email():remove({ id = "email_id" })
+local result, err = client:email():remove({ id = "email_id" })
 ```
 
 ### Common Methods
@@ -206,7 +205,7 @@ Return the entity name.
 ## InboxEntity
 
 ```lua
-local inbox = client:Inbox(nil)
+local inbox = client:inbox(nil)
 ```
 
 ### Fields
@@ -225,7 +224,7 @@ local inbox = client:Inbox(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Inbox():create({
+local result, err = client:inbox():create({
   username = --[[ `$STRING` ]],
 })
 ```
@@ -235,7 +234,7 @@ local result, err = client:Inbox():create({
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Inbox():load({ id = "inbox_id" })
+local result, err = client:inbox():load({ id = "inbox_id" })
 ```
 
 #### `remove(reqmatch, ctrl) -> any, err`
@@ -243,7 +242,7 @@ local result, err = client:Inbox():load({ id = "inbox_id" })
 Remove the entity matching the given criteria.
 
 ```lua
-local result, err = client:Inbox():remove({ id = "inbox_id" })
+local result, err = client:inbox():remove({ id = "inbox_id" })
 ```
 
 ### Common Methods

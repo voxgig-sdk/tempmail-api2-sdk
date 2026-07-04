@@ -14,9 +14,14 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Email,
+  EmailListMatch,
+  EmailRemoveMatch,
+} from '../TempmailApi2Types'
 
 // TODO: needs Entity superclass
-class EmailEntity extends TempmailApi2EntityBase {
+class EmailEntity extends TempmailApi2EntityBase<Email> {
 
   constructor(client: TempmailApi2SDK, entopts: any) {
     super(client, entopts)
@@ -33,7 +38,7 @@ class EmailEntity extends TempmailApi2EntityBase {
 
 
 
-  async list(this: any, reqmatch?: any, ctrl?: Control) {
+  async list(this: any, reqmatch?: EmailListMatch, ctrl?: Control): Promise<Email[]> {
 
     const utility = this._utility
 
@@ -133,7 +138,9 @@ class EmailEntity extends TempmailApi2EntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Email[]> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }
@@ -142,7 +149,7 @@ class EmailEntity extends TempmailApi2EntityBase {
 
 
 
-  async remove(this: any, reqmatch?: any, ctrl?: Control) {
+  async remove(this: any, reqmatch?: EmailRemoveMatch, ctrl?: Control): Promise<Email> {
 
     const utility = this._utility
 
@@ -247,7 +254,9 @@ class EmailEntity extends TempmailApi2EntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Email> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

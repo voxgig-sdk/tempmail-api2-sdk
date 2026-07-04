@@ -43,8 +43,7 @@ class DomainEntityTest < Minitest::Test
     domain_ref01_ent = client.Domain(nil)
     domain_ref01_match = {}
 
-    domain_ref01_list_result, err = domain_ref01_ent.list(domain_ref01_match, nil)
-    assert_nil err
+    domain_ref01_list_result = domain_ref01_ent.list(domain_ref01_match, nil)
     assert domain_ref01_list_result.is_a?(Array)
 
   end
@@ -83,7 +82,6 @@ def domain_basic_setup(extra)
     "TEMPMAILAPI__TEST_DOMAIN_ENTID" => idmap,
     "TEMPMAILAPI__TEST_LIVE" => "FALSE",
     "TEMPMAILAPI__TEST_EXPLAIN" => "FALSE",
-    "TEMPMAILAPI__APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -95,7 +93,6 @@ def domain_basic_setup(extra)
   if env["TEMPMAILAPI__TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["TEMPMAILAPI__APIKEY"],
       },
       extra || {},
     ])

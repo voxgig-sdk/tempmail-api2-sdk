@@ -4,6 +4,7 @@
 main: {
   kit: {
     info: {
+      auth: false
       contact: {
         name: "Tempmail Support"
         url: "https://tempmail.lol"

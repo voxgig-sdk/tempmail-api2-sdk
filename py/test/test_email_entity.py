@@ -53,16 +53,14 @@ class TestEmailEntity:
             "token": setup["idmap"]["token01"],
         }
 
-        email_ref01_list_result, err = email_ref01_ent.list(email_ref01_match, None)
-        assert err is None
+        email_ref01_list_result = email_ref01_ent.list(email_ref01_match, None)
         assert isinstance(email_ref01_list_result, list)
 
         # REMOVE
         email_ref01_match_rm0 = {
             "id": email_ref01_data["id"],
         }
-        _, err = email_ref01_ent.remove(email_ref01_match_rm0, None)
-        assert err is None
+        email_ref01_ent.remove(email_ref01_match_rm0, None)
 
         # LIST
         email_ref01_match_rt0 = {
@@ -70,8 +68,7 @@ class TestEmailEntity:
             "token": setup["idmap"]["token01"],
         }
 
-        email_ref01_list_rt0_result, err = email_ref01_ent.list(email_ref01_match_rt0, None)
-        assert err is None
+        email_ref01_list_rt0_result = email_ref01_ent.list(email_ref01_match_rt0, None)
         assert isinstance(email_ref01_list_rt0_result, list)
 
 
@@ -112,7 +109,6 @@ def _email_basic_setup(extra):
         "TEMPMAILAPI__TEST_EMAIL_ENTID": idmap,
         "TEMPMAILAPI__TEST_LIVE": "FALSE",
         "TEMPMAILAPI__TEST_EXPLAIN": "FALSE",
-        "TEMPMAILAPI__APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -123,7 +119,6 @@ def _email_basic_setup(extra):
     if env.get("TEMPMAILAPI__TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("TEMPMAILAPI__APIKEY"),
             },
             extra or {},
         ])

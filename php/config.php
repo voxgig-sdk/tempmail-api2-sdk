@@ -20,9 +20,6 @@ class TempmailApi2Config
             ],
             "options" => [
                 "base" => "https://api.tempmail.lol/v2",
-                "auth" => [
-                    "prefix" => "Bearer",
-                ],
                 "headers" => [
           'content-type' => 'application/json',
         ],
@@ -113,6 +110,7 @@ class TempmailApi2Config
                         'orig' => 'email_id',
                         'reqd' => true,
                         'type' => '`$STRING`',
+                        'index$' => 0,
                       ],
                       [
                         'active' => true,
@@ -121,6 +119,7 @@ class TempmailApi2Config
                         'orig' => 'token',
                         'reqd' => true,
                         'type' => '`$STRING`',
+                        'index$' => 1,
                       ],
                     ],
                   ],
@@ -166,6 +165,7 @@ class TempmailApi2Config
                         'orig' => 'email_id',
                         'reqd' => true,
                         'type' => '`$STRING`',
+                        'index$' => 0,
                       ],
                       [
                         'active' => true,
@@ -174,6 +174,7 @@ class TempmailApi2Config
                         'orig' => 'token',
                         'reqd' => true,
                         'type' => '`$STRING`',
+                        'index$' => 1,
                       ],
                     ],
                   ],
@@ -304,6 +305,7 @@ class TempmailApi2Config
                         'orig' => 'token',
                         'reqd' => true,
                         'type' => '`$STRING`',
+                        'index$' => 0,
                       ],
                     ],
                   ],
@@ -347,6 +349,7 @@ class TempmailApi2Config
                         'orig' => 'token',
                         'reqd' => true,
                         'type' => '`$STRING`',
+                        'index$' => 0,
                       ],
                     ],
                   ],

@@ -55,6 +55,9 @@ class DomainEntity
         return new DomainEntity($this->_client, $opts);
     }
 
+    /**
+     * @param Domain|array $args Domain data (assoc-array) to store.
+     */
     public function data_set($args): void
     {
         if ($args) {
@@ -63,12 +66,18 @@ class DomainEntity
         }
     }
 
+    /**
+     * @return Domain|array The current Domain data as an assoc-array.
+     */
     public function data_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetData");
         return Struct::clone($this->_data);
     }
 
+    /**
+     * @param array $args Match filter (any subset of Domain fields).
+     */
     public function match_set($args): void
     {
         if ($args) {
@@ -77,6 +86,9 @@ class DomainEntity
         }
     }
 
+    /**
+     * @return array The current match filter (any subset of Domain fields).
+     */
     public function match_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetMatch");
@@ -86,7 +98,16 @@ class DomainEntity
     
 
     
-    public function list($reqmatch, $ctrl = null): array
+    /**
+     * List Domain items matching the given filter.
+     *
+     * @param DomainListMatch|array|null $reqmatch Match filter (any subset
+     *   of Domain fields) as an assoc-array; DomainListMatch names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Domain[]|array A list of Domain items as assoc-arrays at
+     *   the SDK boundary; throws TempmailApi2Error on failure (item-5 convention).
+     */
+    public function list(?array $reqmatch = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -114,7 +135,7 @@ class DomainEntity
 
     
 
-    private function _run_op($ctx, callable $post_done): array
+    private function _run_op($ctx, callable $post_done): mixed
     {
         $utility = $this->_utility;
 

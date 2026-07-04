@@ -18,7 +18,6 @@ Create a new SDK client instance.
 | Name | Type | Description |
 | --- | --- | --- |
 | `options` | `object` | SDK configuration options. |
-| `options.apikey` | `string` | API key for authentication. |
 | `options.base` | `string` | Base URL for API requests. |
 | `options.prefix` | `string` | URL prefix appended after base. |
 | `options.suffix` | `string` | URL suffix appended after path. |
@@ -134,7 +133,7 @@ Alias for `TempmailApi2SDK.test()`.
 ## DomainEntity
 
 ```ts
-const domain = client.Domain()
+const domain = client.domain
 ```
 
 ### Fields
@@ -150,7 +149,7 @@ const domain = client.Domain()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Domain().list()
+const results = await client.domain.list()
 ```
 
 ### Common Methods
@@ -184,7 +183,7 @@ Return a copy of the entity options.
 ## EmailEntity
 
 ```ts
-const email = client.Email()
+const email = client.email
 ```
 
 ### Fields
@@ -202,7 +201,7 @@ const email = client.Email()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Email().list()
+const results = await client.email.list()
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -210,7 +209,7 @@ const results = await client.Email().list()
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Email().remove({ id: 'email_id' })
+const result = await client.email.remove({ id: 'email_id' })
 ```
 
 ### Common Methods
@@ -244,7 +243,7 @@ Return a copy of the entity options.
 ## InboxEntity
 
 ```ts
-const inbox = client.Inbox()
+const inbox = client.inbox
 ```
 
 ### Fields
@@ -263,7 +262,7 @@ const inbox = client.Inbox()
 Create a new entity with the given data.
 
 ```ts
-const result = await client.Inbox().create({
+const result = await client.inbox.create({
   username: /* `$STRING` */,
 })
 ```
@@ -273,7 +272,7 @@ const result = await client.Inbox().create({
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Inbox().load({ id: 'inbox_id' })
+const result = await client.inbox.load({ id: 'inbox_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -281,7 +280,7 @@ const result = await client.Inbox().load({ id: 'inbox_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Inbox().remove({ id: 'inbox_id' })
+const result = await client.inbox.remove({ id: 'inbox_id' })
 ```
 
 ### Common Methods

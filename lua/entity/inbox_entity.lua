@@ -79,6 +79,10 @@ end
 
 
 
+---@param reqmatch InboxLoadMatch
+---@param ctrl? table
+---@return Inbox
+---@return string? err
 function InboxEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -106,6 +110,10 @@ end
 
 
 
+---@param reqdata InboxCreateData
+---@param ctrl? table
+---@return Inbox
+---@return string? err
 function InboxEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -130,6 +138,10 @@ end
 
 
 
+---@param reqmatch InboxRemoveMatch
+---@param ctrl? table
+---@return Inbox
+---@return string? err
 function InboxEntity:remove(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

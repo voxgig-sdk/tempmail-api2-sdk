@@ -10,14 +10,18 @@ The Golang SDK for the TempmailApi2 API — an entity-oriented client using stan
 
 ## Install
 ```bash
-go get github.com/voxgig-sdk/tempmail-api2-sdk/go
+go get github.com/voxgig-sdk/tempmail-api2-sdk/go@latest
 ```
 
-If the module is not yet published to a registry, use a `replace` directive
-in your `go.mod` to point to a local checkout:
+The Go module proxy resolves the version from the `go/vX.Y.Z` GitHub
+release tag — see [Releases](https://github.com/voxgig-sdk/tempmail-api2-sdk/releases) for the available versions.
+
+To vendor from a local checkout instead, clone this repo alongside your
+project and add a `replace` directive pointing at the checked-out
+`go/` directory:
 
 ```bash
-go mod edit -replace github.com/voxgig-sdk/tempmail-api2-sdk/go=../path/to/github.com/voxgig-sdk/tempmail-api2-sdk/go
+go mod edit -replace github.com/voxgig-sdk/tempmail-api2-sdk/go=../tempmail-api2-sdk/go
 ```
 
 
@@ -33,16 +37,13 @@ package main
 
 import (
     "fmt"
-    "os"
 
     sdk "github.com/voxgig-sdk/tempmail-api2-sdk/go"
     "github.com/voxgig-sdk/tempmail-api2-sdk/go/core"
 )
 
 func main() {
-    client := sdk.NewTempmailApi2SDK(map[string]any{
-        "apikey": os.Getenv("TEMPMAIL-API2_APIKEY"),
-    })
+    client := sdk.New()
 ```
 
 ### 2. List domains
@@ -109,7 +110,7 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-result, err := client.Planet(nil).Load(
+result, err := client.Domain(nil).Load(
     map[string]any{"id": "test01"}, nil,
 )
 // result contains mock response data
@@ -144,8 +145,7 @@ client := sdk.NewTempmailApi2SDK(map[string]any{
 Create a `.env.local` file at the project root:
 
 ```
-TEMPMAIL-API2_TEST_LIVE=TRUE
-TEMPMAIL-API2_APIKEY=<your-key>
+TEMPMAIL_API2_TEST_LIVE=TRUE
 ```
 
 Then run:
@@ -167,7 +167,6 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `"apikey"` | `string` | API key for authentication. |
 | `"base"` | `string` | Base URL of the API server. |
 | `"prefix"` | `string` | URL path prefix prepended to all requests. |
 | `"suffix"` | `string` | URL path suffix appended to all requests. |
@@ -421,11 +420,11 @@ Entity instances are stateful. After a successful `Load`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-moon := client.Moon(nil)
-moon.Load(map[string]any{"planet_id": "earth", "id": "luna"}, nil)
+domain := client.Domain(nil)
+domain.Load(map[string]any{"id": "example_id"}, nil)
 
-// moon.Data() now returns the loaded moon data
-// moon.Match() returns the last match criteria
+// domain.Data() now returns the loaded domain data
+// domain.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

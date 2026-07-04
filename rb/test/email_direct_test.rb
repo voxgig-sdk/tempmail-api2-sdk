@@ -38,7 +38,7 @@ class EmailDirectTest < Minitest::Test
       params["token"] = "direct01"
     end
 
-    result, err = client.direct({
+    result = client.direct({
       "path" => "inbox/{token}/{email_id}",
       "method" => "GET",
       "params" => params,
@@ -47,8 +47,8 @@ class EmailDirectTest < Minitest::Test
       # Live mode is lenient: synthetic IDs frequently 4xx and the list-
       # response shape varies wildly across public APIs. Skip rather than
       # fail when the call doesn't return a usable list.
-      if !err.nil?
-        skip("list call failed (likely synthetic IDs against live API): #{err}")
+      if !result["err"].nil?
+        skip("list call failed (likely synthetic IDs against live API): #{result["err"]}")
         return
       end
       unless result["ok"]
@@ -61,7 +61,7 @@ class EmailDirectTest < Minitest::Test
         return
       end
     else
-      assert_nil err
+      assert_nil result["err"]
       assert result["ok"]
       assert_equal 200, Helpers.to_int(result["status"])
       assert result["data"].is_a?(Array)
@@ -81,14 +81,12 @@ def email_direct_setup(mockres)
   env = Runner.env_override({
     "TEMPMAILAPI__TEST_EMAIL_ENTID" => {},
     "TEMPMAILAPI__TEST_LIVE" => "FALSE",
-    "TEMPMAILAPI__APIKEY" => "NONE",
   })
 
   live = env["TEMPMAILAPI__TEST_LIVE"] == "TRUE"
 
   if live
     merged_opts = {
-      "apikey" => env["TEMPMAILAPI__APIKEY"],
     }
     client = TempmailApi2SDK.new(merged_opts)
     return {

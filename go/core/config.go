@@ -14,9 +14,6 @@ func MakeConfig() map[string]any {
 		},
 		"options": map[string]any{
 			"base": "https://api.tempmail.lol/v2",
-			"auth": map[string]any{
-				"prefix": "Bearer",
-			},
 			"headers": map[string]any{
 				"content-type": "application/json",
 			},
@@ -107,6 +104,7 @@ func MakeConfig() map[string]any {
 											"orig": "email_id",
 											"reqd": true,
 											"type": "`$STRING`",
+											"index$": 0,
 										},
 										map[string]any{
 											"active": true,
@@ -115,6 +113,7 @@ func MakeConfig() map[string]any {
 											"orig": "token",
 											"reqd": true,
 											"type": "`$STRING`",
+											"index$": 1,
 										},
 									},
 								},
@@ -160,6 +159,7 @@ func MakeConfig() map[string]any {
 											"orig": "email_id",
 											"reqd": true,
 											"type": "`$STRING`",
+											"index$": 0,
 										},
 										map[string]any{
 											"active": true,
@@ -168,6 +168,7 @@ func MakeConfig() map[string]any {
 											"orig": "token",
 											"reqd": true,
 											"type": "`$STRING`",
+											"index$": 1,
 										},
 									},
 								},
@@ -298,6 +299,7 @@ func MakeConfig() map[string]any {
 											"orig": "token",
 											"reqd": true,
 											"type": "`$STRING`",
+											"index$": 0,
 										},
 									},
 								},
@@ -341,6 +343,7 @@ func MakeConfig() map[string]any {
 											"orig": "token",
 											"reqd": true,
 											"type": "`$STRING`",
+											"index$": 0,
 										},
 									},
 								},

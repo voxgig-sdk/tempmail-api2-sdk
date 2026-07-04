@@ -14,9 +14,6 @@ local function make_config()
     },
     options = {
       base = "https://api.tempmail.lol/v2",
-      auth = {
-        prefix = "Bearer",
-      },
       headers = {
         ["content-type"] = "application/json",
       },
@@ -107,6 +104,7 @@ local function make_config()
                       ["orig"] = "email_id",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 0,
                     },
                     {
                       ["active"] = true,
@@ -115,6 +113,7 @@ local function make_config()
                       ["orig"] = "token",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 1,
                     },
                   },
                 },
@@ -160,6 +159,7 @@ local function make_config()
                       ["orig"] = "email_id",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 0,
                     },
                     {
                       ["active"] = true,
@@ -168,6 +168,7 @@ local function make_config()
                       ["orig"] = "token",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 1,
                     },
                   },
                 },
@@ -298,6 +299,7 @@ local function make_config()
                       ["orig"] = "token",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 0,
                     },
                   },
                 },
@@ -341,6 +343,7 @@ local function make_config()
                       ["orig"] = "token",
                       ["reqd"] = true,
                       ["type"] = "`$STRING`",
+                      ["index$"] = 0,
                     },
                   },
                 },

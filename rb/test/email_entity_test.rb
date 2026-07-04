@@ -46,16 +46,14 @@ class EmailEntityTest < Minitest::Test
       "token" => setup[:idmap]["token01"],
     }
 
-    email_ref01_list_result, err = email_ref01_ent.list(email_ref01_match, nil)
-    assert_nil err
+    email_ref01_list_result = email_ref01_ent.list(email_ref01_match, nil)
     assert email_ref01_list_result.is_a?(Array)
 
     # REMOVE
     email_ref01_match_rm0 = {
       "id" => email_ref01_data["id"],
     }
-    _, err = email_ref01_ent.remove(email_ref01_match_rm0, nil)
-    assert_nil err
+    email_ref01_ent.remove(email_ref01_match_rm0, nil)
 
     # LIST
     email_ref01_match_rt0 = {
@@ -63,8 +61,7 @@ class EmailEntityTest < Minitest::Test
       "token" => setup[:idmap]["token01"],
     }
 
-    email_ref01_list_rt0_result, err = email_ref01_ent.list(email_ref01_match_rt0, nil)
-    assert_nil err
+    email_ref01_list_rt0_result = email_ref01_ent.list(email_ref01_match_rt0, nil)
     assert email_ref01_list_rt0_result.is_a?(Array)
 
   end
@@ -103,7 +100,6 @@ def email_basic_setup(extra)
     "TEMPMAILAPI__TEST_EMAIL_ENTID" => idmap,
     "TEMPMAILAPI__TEST_LIVE" => "FALSE",
     "TEMPMAILAPI__TEST_EXPLAIN" => "FALSE",
-    "TEMPMAILAPI__APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -115,7 +111,6 @@ def email_basic_setup(extra)
   if env["TEMPMAILAPI__TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["TEMPMAILAPI__APIKEY"],
       },
       extra || {},
     ])

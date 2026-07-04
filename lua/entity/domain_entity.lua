@@ -81,6 +81,10 @@ end
 
 
 
+---@param reqmatch DomainListMatch
+---@param ctrl? table
+---@return Domain[]
+---@return string? err
 function DomainEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

@@ -9,12 +9,9 @@ The Lua SDK for the TempmailApi2 API — an entity-oriented client using Lua con
 
 
 ## Install
-```bash
-luarocks install voxgig-sdk-tempmail-api2
-```
-
-If the module is not yet published, add the source directory to
-your `LUA_PATH`:
+This package is not yet published to LuaRocks. Install it from the
+GitHub release tag (`lua/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/tempmail-api2-sdk/releases)),
+or add the source directory to your `LUA_PATH`:
 
 ```bash
 export LUA_PATH="path/to/lua/?.lua;path/to/lua/?/init.lua;;"
@@ -31,15 +28,13 @@ loading a specific record.
 ```lua
 local sdk = require("tempmail-api2_sdk")
 
-local client = sdk.new({
-  apikey = os.getenv("TEMPMAIL-API2_APIKEY"),
-})
+local client = sdk.new()
 ```
 
 ### 2. List domains
 
 ```lua
-local result, err = client:Domain():list()
+local result, err = client:domain():list()
 if err then error(err) end
 
 if type(result) == "table" then
@@ -93,7 +88,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:TempmailApi2():load({ id = "test01" })
+local result, err = client:domain():load({ id = "test01" })
 -- result contains mock response data
 ```
 
@@ -126,8 +121,7 @@ local client = sdk.new({
 Create a `.env.local` file at the project root:
 
 ```
-TEMPMAIL-API2_TEST_LIVE=TRUE
-TEMPMAIL-API2_APIKEY=<your-key>
+TEMPMAIL_API2_TEST_LIVE=TRUE
 ```
 
 Then run:
@@ -150,7 +144,6 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |
@@ -254,7 +247,7 @@ API path: `/inbox/create`
 
 ### Domain
 
-Create an instance: `const domain = client.Domain()`
+Create an instance: `const domain = client.domain`
 
 #### Operations
 
@@ -271,13 +264,13 @@ Create an instance: `const domain = client.Domain()`
 #### Example: List
 
 ```ts
-const domains = await client.Domain().list()
+const domains = await client.domain.list()
 ```
 
 
 ### Email
 
-Create an instance: `const email = client.Email()`
+Create an instance: `const email = client.email`
 
 #### Operations
 
@@ -297,13 +290,13 @@ Create an instance: `const email = client.Email()`
 #### Example: List
 
 ```ts
-const emails = await client.Email().list()
+const emails = await client.email.list()
 ```
 
 
 ### Inbox
 
-Create an instance: `const inbox = client.Inbox()`
+Create an instance: `const inbox = client.inbox`
 
 #### Operations
 
@@ -325,13 +318,13 @@ Create an instance: `const inbox = client.Inbox()`
 #### Example: Load
 
 ```ts
-const inbox = await client.Inbox().load({ id: 'inbox_id' })
+const inbox = await client.inbox.load({ id: 'inbox_id' })
 ```
 
 #### Example: Create
 
 ```ts
-const inbox = await client.Inbox().create({
+const inbox = await client.inbox.create({
   username: /* `$STRING` */,
 })
 ```
@@ -408,11 +401,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local moon = client:Moon(nil)
-moon:load({ planet_id = "earth", id = "luna" }, nil)
+local domain = client:domain()
+domain:load({ id = "example_id" })
 
--- moon:data_get() now returns the loaded moon data
--- moon:match_get() returns the last match criteria
+-- domain:data_get() now returns the loaded domain data
+-- domain:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

@@ -36,23 +36,20 @@ class InboxEntityTest < Minitest::Test
     inbox_ref01_data = Helpers.to_map(Vs.getprop(
       Vs.getpath(setup[:data], "new.inbox"), "inbox_ref01"))
 
-    inbox_ref01_data_result, err = inbox_ref01_ent.create(inbox_ref01_data, nil)
-    assert_nil err
+    inbox_ref01_data_result = inbox_ref01_ent.create(inbox_ref01_data, nil)
     inbox_ref01_data = Helpers.to_map(inbox_ref01_data_result)
     assert !inbox_ref01_data.nil?
 
     # LOAD
     inbox_ref01_match_dt0 = {}
-    inbox_ref01_data_dt0_loaded, err = inbox_ref01_ent.load(inbox_ref01_match_dt0, nil)
-    assert_nil err
+    inbox_ref01_data_dt0_loaded = inbox_ref01_ent.load(inbox_ref01_match_dt0, nil)
     assert !inbox_ref01_data_dt0_loaded.nil?
 
     # REMOVE
     inbox_ref01_match_rm0 = {
       "id" => inbox_ref01_data["id"],
     }
-    _, err = inbox_ref01_ent.remove(inbox_ref01_match_rm0, nil)
-    assert_nil err
+    inbox_ref01_ent.remove(inbox_ref01_match_rm0, nil)
 
   end
 end
@@ -90,7 +87,6 @@ def inbox_basic_setup(extra)
     "TEMPMAILAPI__TEST_INBOX_ENTID" => idmap,
     "TEMPMAILAPI__TEST_LIVE" => "FALSE",
     "TEMPMAILAPI__TEST_EXPLAIN" => "FALSE",
-    "TEMPMAILAPI__APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -102,7 +98,6 @@ def inbox_basic_setup(extra)
   if env["TEMPMAILAPI__TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["TEMPMAILAPI__APIKEY"],
       },
       extra || {},
     ])

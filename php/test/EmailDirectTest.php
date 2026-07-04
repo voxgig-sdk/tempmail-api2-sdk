@@ -43,7 +43,7 @@ class EmailDirectTest extends TestCase
             $params["token"] = "direct01";
         }
 
-        [$result, $err] = $client->direct([
+        $result = $client->direct([
             "path" => "inbox/{token}/{email_id}",
             "method" => "GET",
             "params" => $params,
@@ -52,8 +52,8 @@ class EmailDirectTest extends TestCase
             // Live mode is lenient: synthetic IDs frequently 4xx and the
             // list-response shape varies wildly across public APIs. Skip
             // rather than fail when the call doesn't return a usable list.
-            if ($err !== null) {
-                $this->markTestSkipped("list call failed (likely synthetic IDs against live API): " . (string)$err);
+            if (!empty($result["err"])) {
+                $this->markTestSkipped("list call failed (likely synthetic IDs against live API): " . (string)$result["err"]);
                 return;
             }
             if (empty($result["ok"])) {
@@ -66,7 +66,7 @@ class EmailDirectTest extends TestCase
                 return;
             }
         } else {
-            $this->assertNull($err);
+            $this->assertArrayNotHasKey("err", $result);
             $this->assertTrue($result["ok"]);
             $this->assertEquals(200, Helpers::to_int($result["status"]));
             $this->assertIsArray($result["data"]);
@@ -87,14 +87,12 @@ function email_direct_setup($mockres)
     $env = Runner::env_override([
         "TEMPMAILAPI__TEST_EMAIL_ENTID" => [],
         "TEMPMAILAPI__TEST_LIVE" => "FALSE",
-        "TEMPMAILAPI__APIKEY" => "NONE",
     ]);
 
     $live = $env["TEMPMAILAPI__TEST_LIVE"] === "TRUE";
 
     if ($live) {
         $merged_opts = [
-            "apikey" => $env["TEMPMAILAPI__APIKEY"],
         ];
         $client = new TempmailApi2SDK($merged_opts);
         return [

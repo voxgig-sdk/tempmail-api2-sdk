@@ -14,9 +14,13 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Domain,
+  DomainListMatch,
+} from '../TempmailApi2Types'
 
 // TODO: needs Entity superclass
-class DomainEntity extends TempmailApi2EntityBase {
+class DomainEntity extends TempmailApi2EntityBase<Domain> {
 
   constructor(client: TempmailApi2SDK, entopts: any) {
     super(client, entopts)
@@ -33,7 +37,7 @@ class DomainEntity extends TempmailApi2EntityBase {
 
 
 
-  async list(this: any, reqmatch?: any, ctrl?: Control) {
+  async list(this: any, reqmatch?: DomainListMatch, ctrl?: Control): Promise<Domain[]> {
 
     const utility = this._utility
 
@@ -133,7 +137,9 @@ class DomainEntity extends TempmailApi2EntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Domain[]> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

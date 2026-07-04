@@ -81,6 +81,10 @@ end
 
 
 
+---@param reqmatch EmailListMatch
+---@param ctrl? table
+---@return Email[]
+---@return string? err
 function EmailEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -107,6 +111,10 @@ end
 
 
 
+---@param reqmatch EmailRemoveMatch
+---@param ctrl? table
+---@return Email
+---@return string? err
 function EmailEntity:remove(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
