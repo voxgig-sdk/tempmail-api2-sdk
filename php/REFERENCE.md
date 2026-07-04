@@ -93,7 +93,7 @@ Prepare a fetch definition without sending the request. Returns the
 ## DomainEntity
 
 ```php
-$domain = $client->domain();
+$domain = $client->Domain();
 ```
 
 ### Fields
@@ -109,7 +109,7 @@ $domain = $client->domain();
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->domain()->list([]);
+$results = $client->Domain()->list([]);
 ```
 
 ### Common Methods
@@ -145,7 +145,7 @@ Return the entity name.
 ## EmailEntity
 
 ```php
-$email = $client->email();
+$email = $client->Email();
 ```
 
 ### Fields
@@ -163,7 +163,7 @@ $email = $client->email();
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->email()->list([]);
+$results = $client->Email()->list([]);
 ```
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
@@ -171,7 +171,7 @@ $results = $client->email()->list([]);
 Remove the entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->email()->remove(["id" => "email_id"]);
+$result = $client->Email()->remove(["id" => "email_id"]);
 ```
 
 ### Common Methods
@@ -207,7 +207,7 @@ Return the entity name.
 ## InboxEntity
 
 ```php
-$inbox = $client->inbox();
+$inbox = $client->Inbox();
 ```
 
 ### Fields
@@ -226,7 +226,7 @@ $inbox = $client->inbox();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->inbox()->create([
+$result = $client->Inbox()->create([
   "username" => /* `$STRING` */,
 ]);
 ```
@@ -236,7 +236,7 @@ $result = $client->inbox()->create([
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->inbox()->load(["id" => "inbox_id"]);
+$result = $client->Inbox()->load(["id" => "inbox_id"]);
 ```
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
@@ -244,7 +244,7 @@ $result = $client->inbox()->load(["id" => "inbox_id"]);
 Remove the entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->inbox()->remove(["id" => "inbox_id"]);
+$result = $client->Inbox()->remove(["id" => "inbox_id"]);
 ```
 
 ### Common Methods

@@ -91,7 +91,7 @@ same parameters as `direct()`.
 ## DomainEntity
 
 ```lua
-local domain = client:domain(nil)
+local domain = client:Domain(nil)
 ```
 
 ### Fields
@@ -107,7 +107,7 @@ local domain = client:domain(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:domain():list()
+local results, err = client:Domain():list()
 ```
 
 ### Common Methods
@@ -143,7 +143,7 @@ Return the entity name.
 ## EmailEntity
 
 ```lua
-local email = client:email(nil)
+local email = client:Email(nil)
 ```
 
 ### Fields
@@ -161,7 +161,7 @@ local email = client:email(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:email():list()
+local results, err = client:Email():list()
 ```
 
 #### `remove(reqmatch, ctrl) -> any, err`
@@ -169,7 +169,7 @@ local results, err = client:email():list()
 Remove the entity matching the given criteria.
 
 ```lua
-local result, err = client:email():remove({ id = "email_id" })
+local result, err = client:Email():remove({ id = "email_id" })
 ```
 
 ### Common Methods
@@ -205,7 +205,7 @@ Return the entity name.
 ## InboxEntity
 
 ```lua
-local inbox = client:inbox(nil)
+local inbox = client:Inbox(nil)
 ```
 
 ### Fields
@@ -224,7 +224,7 @@ local inbox = client:inbox(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:inbox():create({
+local result, err = client:Inbox():create({
   username = --[[ `$STRING` ]],
 })
 ```
@@ -234,7 +234,7 @@ local result, err = client:inbox():create({
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:inbox():load({ id = "inbox_id" })
+local result, err = client:Inbox():load({ id = "inbox_id" })
 ```
 
 #### `remove(reqmatch, ctrl) -> any, err`
@@ -242,7 +242,7 @@ local result, err = client:inbox():load({ id = "inbox_id" })
 Remove the entity matching the given criteria.
 
 ```lua
-local result, err = client:inbox():remove({ id = "inbox_id" })
+local result, err = client:Inbox():remove({ id = "inbox_id" })
 ```
 
 ### Common Methods

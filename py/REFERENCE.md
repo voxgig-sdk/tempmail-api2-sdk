@@ -88,7 +88,7 @@ Prepare a fetch definition without sending. Returns the `fetchdef` and raises on
 ## DomainEntity
 
 ```python
-domain = client.domain
+domain = client.Domain()
 ```
 
 ### Fields
@@ -104,7 +104,9 @@ domain = client.domain
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.domain.list({})
+results = client.Domain().list({})
+for domain in results:
+    print(domain)
 ```
 
 ### Common Methods
@@ -139,7 +141,7 @@ Return the entity name.
 ## EmailEntity
 
 ```python
-email = client.email
+email = client.Email()
 ```
 
 ### Fields
@@ -157,7 +159,9 @@ email = client.email
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.email.list({})
+results = client.Email().list({})
+for email in results:
+    print(email)
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -165,7 +169,7 @@ results = client.email.list({})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.email.remove({"id": "email_id"})
+result = client.Email().remove({"id": "email_id"})
 ```
 
 ### Common Methods
@@ -200,7 +204,7 @@ Return the entity name.
 ## InboxEntity
 
 ```python
-inbox = client.inbox
+inbox = client.Inbox()
 ```
 
 ### Fields
@@ -219,8 +223,8 @@ inbox = client.inbox
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.inbox.create({
-    "username": # `$STRING`,
+result = client.Inbox().create({
+    "username": ...,  # `$STRING`
 })
 ```
 
@@ -229,7 +233,7 @@ result = client.inbox.create({
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.inbox.load({"id": "inbox_id"})
+result = client.Inbox().load({"id": "inbox_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -237,7 +241,7 @@ result = client.inbox.load({"id": "inbox_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.inbox.remove({"id": "inbox_id"})
+result = client.Inbox().remove({"id": "inbox_id"})
 ```
 
 ### Common Methods

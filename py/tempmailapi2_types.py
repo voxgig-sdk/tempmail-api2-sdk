@@ -4,64 +4,62 @@
 # params (op.<name>.points[].args.params[]). Field/param types come from the
 # canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 # @voxgig/apidef VALID_CANON). Do not edit by hand.
+#
+# These are TypedDicts, not dataclasses: the SDK ops return/accept plain dicts
+# at runtime, and a TypedDict IS a dict shape, so the types match the runtime.
+# Optional (req:false) keys are modelled as TypedDict key-optionality
+# (total=False), split into a required base + total=False subclass when a type
+# has both required and optional keys.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Optional, Any
+from typing import TypedDict, Any
 
 
-@dataclass
-class Domain:
-    domain: Optional[list] = None
+class Domain(TypedDict, total=False):
+    domain: list
 
 
-@dataclass
-class DomainListMatch:
-    domain: Optional[list] = None
+class DomainListMatch(TypedDict, total=False):
+    domain: list
 
 
-@dataclass
-class Email:
-    content_type: Optional[str] = None
-    filename: Optional[str] = None
-    size: Optional[int] = None
+class Email(TypedDict, total=False):
+    content_type: str
+    filename: str
+    size: int
 
 
-@dataclass
-class EmailListMatch:
+class EmailListMatch(TypedDict):
     email_id: str
     token: str
 
 
-@dataclass
-class EmailRemoveMatch:
+class EmailRemoveMatch(TypedDict):
     email_id: str
     token: str
 
 
-@dataclass
-class Inbox:
+class InboxRequired(TypedDict):
     username: str
-    domain: Optional[str] = None
-    email: Optional[list] = None
-    token: Optional[str] = None
 
 
-@dataclass
-class InboxLoadMatch:
+class Inbox(InboxRequired, total=False):
+    domain: str
+    email: list
+    token: str
+
+
+class InboxLoadMatch(TypedDict):
     id: str
 
 
-@dataclass
-class InboxCreateData:
-    domain: Optional[str] = None
-    email: Optional[list] = None
-    token: Optional[str] = None
-    username: Optional[str] = None
+class InboxCreateData(TypedDict, total=False):
+    domain: str
+    email: list
+    token: str
+    username: str
 
 
-@dataclass
-class InboxRemoveMatch:
+class InboxRemoveMatch(TypedDict):
     id: str
-

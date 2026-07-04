@@ -220,57 +220,27 @@ class TempmailApi2SDK:
         }
 
 
-    @property
-    def domain(self):
-        """Idiomatic facade: client.domain.list() / client.domain.load({"id": ...})."""
-        from entity.domain_entity import DomainEntity
-        cached = getattr(self, "_domain", None)
-        if cached is None:
-            cached = DomainEntity(self, None)
-            self._domain = cached
-        return cached
-
-    def Domain(self, data=None):
-        # Deprecated: use client.domain instead.
+    def Domain(self, data=None) -> "DomainEntity":
+        """Entity factory: client.Domain().list({}) / client.Domain().load({"id": ...})."""
         from entity.domain_entity import DomainEntity
         return DomainEntity(self, data)
 
 
-    @property
-    def email(self):
-        """Idiomatic facade: client.email.list() / client.email.load({"id": ...})."""
-        from entity.email_entity import EmailEntity
-        cached = getattr(self, "_email", None)
-        if cached is None:
-            cached = EmailEntity(self, None)
-            self._email = cached
-        return cached
-
-    def Email(self, data=None):
-        # Deprecated: use client.email instead.
+    def Email(self, data=None) -> "EmailEntity":
+        """Entity factory: client.Email().list({}) / client.Email().load({"id": ...})."""
         from entity.email_entity import EmailEntity
         return EmailEntity(self, data)
 
 
-    @property
-    def inbox(self):
-        """Idiomatic facade: client.inbox.list() / client.inbox.load({"id": ...})."""
-        from entity.inbox_entity import InboxEntity
-        cached = getattr(self, "_inbox", None)
-        if cached is None:
-            cached = InboxEntity(self, None)
-            self._inbox = cached
-        return cached
-
-    def Inbox(self, data=None):
-        # Deprecated: use client.inbox instead.
+    def Inbox(self, data=None) -> "InboxEntity":
+        """Entity factory: client.Inbox().list({}) / client.Inbox().load({"id": ...})."""
         from entity.inbox_entity import InboxEntity
         return InboxEntity(self, data)
 
 
 
     @classmethod
-    def test(cls, testopts=None, sdkopts=None):
+    def test(cls, testopts=None, sdkopts=None) -> "TempmailApi2SDK":
         if sdkopts is None:
             sdkopts = {}
         sdkopts = vs.clone(sdkopts)
@@ -290,3 +260,11 @@ class TempmailApi2SDK:
         sdk.mode = "test"
 
         return sdk
+
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from entity.domain_entity import DomainEntity
+    from entity.email_entity import EmailEntity
+    from entity.inbox_entity import InboxEntity

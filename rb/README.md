@@ -28,16 +28,14 @@ require_relative "TempmailApi2_sdk"
 client = TempmailApi2SDK.new
 ```
 
-### 2. List domains
+### 2. List domain records
 
 ```ruby
 begin
-  result = client.domain.list
-  if result.is_a?(Array)
-    result.each do |item|
-      d = item.data_get
-      puts "#{d["id"]} #{d["name"]}"
-    end
+  # list returns an Array of Domain records — iterate directly.
+  domains = client.Domain.list
+  domains.each do |item|
+    puts "#{item["id"]} #{item["name"]}"
   end
 rescue => err
   warn "list failed: #{err}"
@@ -85,13 +83,17 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```ruby
-client = TempmailApi2SDK.test
+client = TempmailApi2SDK.test({
+  "entity" => { "domain" => { "test01" => { "id" => "test01" } } },
+})
 
-result = client.domain.load({ "id" => "test01" })
-# result contains mock response data
+# load returns the bare mock record (raises on error).
+domain = client.Domain.load({ "id" => "test01" })
+puts domain
 ```
 
 ### Use a custom fetch function
@@ -168,8 +170,8 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `prepare` | `(fetchargs) -> Hash` | Build an HTTP request definition without sending. Raises on error. |
 | `direct` | `(fetchargs) -> Hash` | Build and send an HTTP request. Returns a result hash (`result["ok"]`); does not raise. |
 | `Domain` | `(data) -> DomainEntity` | Create a Domain entity instance. |
-| `Email` | `(data) -> EmailEntity` | Create a Email entity instance. |
-| `Inbox` | `(data) -> InboxEntity` | Create a Inbox entity instance. |
+| `Email` | `(data) -> EmailEntity` | Create an Email entity instance. |
+| `Inbox` | `(data) -> InboxEntity` | Create an Inbox entity instance. |
 
 ### Entity interface
 
@@ -250,7 +252,7 @@ API path: `/inbox/create`
 
 ### Domain
 
-Create an instance: `const domain = client.domain`
+Create an instance: `domain = client.Domain`
 
 #### Operations
 
@@ -266,14 +268,15 @@ Create an instance: `const domain = client.domain`
 
 #### Example: List
 
-```ts
-const domains = await client.domain.list()
+```ruby
+# list returns an Array of Domain records (raises on error).
+domains = client.Domain.list
 ```
 
 
 ### Email
 
-Create an instance: `const email = client.email`
+Create an instance: `email = client.Email`
 
 #### Operations
 
@@ -292,14 +295,15 @@ Create an instance: `const email = client.email`
 
 #### Example: List
 
-```ts
-const emails = await client.email.list()
+```ruby
+# list returns an Array of Email records (raises on error).
+emails = client.Email.list
 ```
 
 
 ### Inbox
 
-Create an instance: `const inbox = client.inbox`
+Create an instance: `inbox = client.Inbox`
 
 #### Operations
 
@@ -320,15 +324,16 @@ Create an instance: `const inbox = client.inbox`
 
 #### Example: Load
 
-```ts
-const inbox = await client.inbox.load({ id: 'inbox_id' })
+```ruby
+# load returns the bare Inbox record (raises on error).
+inbox = client.Inbox.load({ "id" => "inbox_id" })
 ```
 
 #### Example: Create
 
-```ts
-const inbox = await client.inbox.create({
-  username: /* `$STRING` */,
+```ruby
+inbox = client.Inbox.create({
+  "username" => nil, # `$STRING`
 })
 ```
 
@@ -404,7 +409,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-domain = client.domain
+domain = client.Domain
 domain.load({ "id" => "example_id" })
 
 # domain.data_get now returns the loaded domain data

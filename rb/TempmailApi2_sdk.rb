@@ -208,39 +208,21 @@ class TempmailApi2SDK
   end
 
 
-  # Idiomatic facade: client.domain.list / client.domain.load({ "id" => ... })
-  def domain
-    require_relative 'entity/domain_entity'
-    @domain ||= DomainEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.domain instead.
+  # Canonical facade: client.Domain.list / client.Domain.load({ "id" => ... })
   def Domain(data = nil)
     require_relative 'entity/domain_entity'
     DomainEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.email.list / client.email.load({ "id" => ... })
-  def email
-    require_relative 'entity/email_entity'
-    @email ||= EmailEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.email instead.
+  # Canonical facade: client.Email.list / client.Email.load({ "id" => ... })
   def Email(data = nil)
     require_relative 'entity/email_entity'
     EmailEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.inbox.list / client.inbox.load({ "id" => ... })
-  def inbox
-    require_relative 'entity/inbox_entity'
-    @inbox ||= InboxEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.inbox instead.
+  # Canonical facade: client.Inbox.list / client.Inbox.load({ "id" => ... })
   def Inbox(data = nil)
     require_relative 'entity/inbox_entity'
     InboxEntity.new(self, data)

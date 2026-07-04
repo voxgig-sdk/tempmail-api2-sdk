@@ -233,10 +233,10 @@ class TempmailApi2SDK
 
     private $_domain = null;
 
-    // Idiomatic facade: $client->domain()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Domain() (PHP method
-    // names are case-insensitive).
-    public function domain($data = null)
+    // Canonical facade: $client->Domain()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->domain()
+    // resolves here too.
+    public function Domain($data = null)
     {
         require_once __DIR__ . '/entity/domain_entity.php';
         if ($data === null) {
@@ -251,10 +251,10 @@ class TempmailApi2SDK
 
     private $_email = null;
 
-    // Idiomatic facade: $client->email()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Email() (PHP method
-    // names are case-insensitive).
-    public function email($data = null)
+    // Canonical facade: $client->Email()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->email()
+    // resolves here too.
+    public function Email($data = null)
     {
         require_once __DIR__ . '/entity/email_entity.php';
         if ($data === null) {
@@ -269,10 +269,10 @@ class TempmailApi2SDK
 
     private $_inbox = null;
 
-    // Idiomatic facade: $client->inbox()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Inbox() (PHP method
-    // names are case-insensitive).
-    public function inbox($data = null)
+    // Canonical facade: $client->Inbox()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->inbox()
+    // resolves here too.
+    public function Inbox($data = null)
     {
         require_once __DIR__ . '/entity/inbox_entity.php';
         if ($data === null) {

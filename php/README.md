@@ -29,18 +29,16 @@ require_once 'tempmailapi2_sdk.php';
 $client = new TempmailApi2SDK();
 ```
 
-### 2. List domains
+### 2. List domain records
 
 ```php
 try {
-    $result = $client->domain()->list();
-    if (is_array($result)) {
-        foreach ($result as $item) {
-            $d = $item->data_get();
-            echo $d["id"] . " " . $d["name"] . "\n";
-        }
+    // list() returns an array of Domain records — iterate directly.
+    $domains = $client->Domain()->list();
+    foreach ($domains as $item) {
+        echo $item["id"] . " " . $item["name"] . "\n";
     }
-} catch (\Exception $err) {
+} catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
 ```
@@ -86,13 +84,17 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = TempmailApi2SDK::test();
+$client = TempmailApi2SDK::test([
+    "entity" => ["domain" => ["test01" => ["id" => "test01"]]],
+]);
 
-$result = $client->domain()->load(["id" => "test01"]);
-// $result contains mock response data
+// load() returns the bare mock record (throws on error).
+$domain = $client->Domain()->load(["id" => "test01"]);
+print_r($domain);
 ```
 
 ### Use a custom fetch function
@@ -172,8 +174,8 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `prepare` | `(array $fetchargs): array` | Build an HTTP request definition without sending. |
 | `direct` | `(array $fetchargs): array` | Build and send an HTTP request. |
 | `Domain` | `($data): DomainEntity` | Create a Domain entity instance. |
-| `Email` | `($data): EmailEntity` | Create a Email entity instance. |
-| `Inbox` | `($data): InboxEntity` | Create a Inbox entity instance. |
+| `Email` | `($data): EmailEntity` | Create an Email entity instance. |
+| `Inbox` | `($data): InboxEntity` | Create an Inbox entity instance. |
 
 ### Entity interface
 
@@ -255,7 +257,7 @@ API path: `/inbox/create`
 
 ### Domain
 
-Create an instance: `const domain = client.domain`
+Create an instance: `$domain = $client->Domain();`
 
 #### Operations
 
@@ -271,14 +273,15 @@ Create an instance: `const domain = client.domain`
 
 #### Example: List
 
-```ts
-const domains = await client.domain.list()
+```php
+// list() returns an array of Domain records (throws on error).
+$domains = $client->Domain()->list();
 ```
 
 
 ### Email
 
-Create an instance: `const email = client.email`
+Create an instance: `$email = $client->Email();`
 
 #### Operations
 
@@ -297,14 +300,15 @@ Create an instance: `const email = client.email`
 
 #### Example: List
 
-```ts
-const emails = await client.email.list()
+```php
+// list() returns an array of Email records (throws on error).
+$emails = $client->Email()->list();
 ```
 
 
 ### Inbox
 
-Create an instance: `const inbox = client.inbox`
+Create an instance: `$inbox = $client->Inbox();`
 
 #### Operations
 
@@ -325,16 +329,17 @@ Create an instance: `const inbox = client.inbox`
 
 #### Example: Load
 
-```ts
-const inbox = await client.inbox.load({ id: 'inbox_id' })
+```php
+// load() returns the bare Inbox record (throws on error).
+$inbox = $client->Inbox()->load(["id" => "inbox_id"]);
 ```
 
 #### Example: Create
 
-```ts
-const inbox = await client.inbox.create({
-  username: /* `$STRING` */,
-})
+```php
+$inbox = $client->Inbox()->create([
+    "username" => null, // `$STRING`
+]);
 ```
 
 
@@ -409,7 +414,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$domain = $client->domain();
+$domain = $client->Domain();
 $domain->load(["id" => "example_id"]);
 
 // $domain->dataGet() now returns the loaded domain data

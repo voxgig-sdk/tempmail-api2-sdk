@@ -133,7 +133,7 @@ Alias for `TempmailApi2SDK.test()`.
 ## DomainEntity
 
 ```ts
-const domain = client.domain
+const domain = client.Domain()
 ```
 
 ### Fields
@@ -149,7 +149,7 @@ const domain = client.domain
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.domain.list()
+const results = await client.Domain().list()
 ```
 
 ### Common Methods
@@ -183,7 +183,7 @@ Return a copy of the entity options.
 ## EmailEntity
 
 ```ts
-const email = client.email
+const email = client.Email()
 ```
 
 ### Fields
@@ -201,7 +201,7 @@ const email = client.email
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.email.list()
+const results = await client.Email().list()
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -209,7 +209,7 @@ const results = await client.email.list()
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.email.remove({ id: 'email_id' })
+const result = await client.Email().remove({ id: 'email_id' })
 ```
 
 ### Common Methods
@@ -243,7 +243,7 @@ Return a copy of the entity options.
 ## InboxEntity
 
 ```ts
-const inbox = client.inbox
+const inbox = client.Inbox()
 ```
 
 ### Fields
@@ -262,7 +262,7 @@ const inbox = client.inbox
 Create a new entity with the given data.
 
 ```ts
-const result = await client.inbox.create({
+const result = await client.Inbox().create({
   username: /* `$STRING` */,
 })
 ```
@@ -272,7 +272,7 @@ const result = await client.inbox.create({
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.inbox.load({ id: 'inbox_id' })
+const result = await client.Inbox().load({ id: 'inbox_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -280,7 +280,7 @@ const result = await client.inbox.load({ id: 'inbox_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.inbox.remove({ id: 'inbox_id' })
+const result = await client.Inbox().remove({ id: 'inbox_id' })
 ```
 
 ### Common Methods

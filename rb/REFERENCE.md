@@ -94,7 +94,7 @@ same parameters as `direct()`. Raises on error.
 ## DomainEntity
 
 ```ruby
-domain = client.domain
+domain = client.Domain
 ```
 
 ### Fields
@@ -110,7 +110,7 @@ domain = client.domain
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.domain.list(nil)
+results = client.Domain.list(nil)
 ```
 
 ### Common Methods
@@ -146,7 +146,7 @@ Return the entity name.
 ## EmailEntity
 
 ```ruby
-email = client.email
+email = client.Email
 ```
 
 ### Fields
@@ -164,7 +164,7 @@ email = client.email
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.email.list(nil)
+results = client.Email.list(nil)
 ```
 
 #### `remove(reqmatch, ctrl = nil) -> result`
@@ -172,7 +172,7 @@ results = client.email.list(nil)
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.email.remove({ "id" => "email_id" })
+result = client.Email.remove({ "id" => "email_id" })
 ```
 
 ### Common Methods
@@ -208,7 +208,7 @@ Return the entity name.
 ## InboxEntity
 
 ```ruby
-inbox = client.inbox
+inbox = client.Inbox
 ```
 
 ### Fields
@@ -227,7 +227,7 @@ inbox = client.inbox
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.inbox.create({
+result = client.Inbox.create({
   "username" => # `$STRING`,
 })
 ```
@@ -237,7 +237,7 @@ result = client.inbox.create({
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.inbox.load({ "id" => "inbox_id" })
+result = client.Inbox.load({ "id" => "inbox_id" })
 ```
 
 #### `remove(reqmatch, ctrl = nil) -> result`
@@ -245,7 +245,7 @@ result = client.inbox.load({ "id" => "inbox_id" })
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.inbox.remove({ "id" => "inbox_id" })
+result = client.Inbox.remove({ "id" => "inbox_id" })
 ```
 
 ### Common Methods
