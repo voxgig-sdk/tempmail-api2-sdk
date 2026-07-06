@@ -8,7 +8,7 @@ Complete API reference for the TempmailApi2 PHP SDK.
 ### Constructor
 
 ```php
-require_once __DIR__ . '/tempmail-api2_sdk.php';
+require_once __DIR__ . '/tempmailapi2_sdk.php';
 
 $client = new TempmailApi2SDK($options);
 ```
@@ -53,11 +53,11 @@ Create a new `EmailEntity` instance. Pass `null` for no initial data.
 
 Create a new `InboxEntity` instance. Pass `null` for no initial data.
 
-#### `optionsMap(): array`
+#### `options_map(): array`
 
 Return a deep copy of the current SDK options.
 
-#### `getUtility(): ProjectNameUtility`
+#### `get_utility(): TempmailApi2Utility`
 
 Return a copy of the SDK utility object.
 
@@ -100,33 +100,33 @@ $domain = $client->Domain();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$ARRAY`` | No |  |
+| `domain` | `array` | No |  |
 
 ### Operations
 
-#### `list(array $reqmatch, ?array $ctrl = null): mixed`
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
-List entities matching the given criteria. Returns an array. Throws on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
 
 ```php
-$results = $client->Domain()->list([]);
+$results = $client->Domain()->list();
 ```
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -135,7 +135,7 @@ Set the entity match criteria.
 Create a new `DomainEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -152,18 +152,18 @@ $email = $client->Email();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | ``$STRING`` | No |  |
-| `filename` | ``$STRING`` | No |  |
-| `size` | ``$INTEGER`` | No |  |
+| `content_type` | `string` | No |  |
+| `filename` | `string` | No |  |
+| `size` | `int` | No |  |
 
 ### Operations
 
-#### `list(array $reqmatch, ?array $ctrl = null): mixed`
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
-List entities matching the given criteria. Returns an array. Throws on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
 
 ```php
-$results = $client->Email()->list([]);
+$results = $client->Email()->list();
 ```
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
@@ -171,24 +171,24 @@ $results = $client->Email()->list([]);
 Remove the entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->Email()->remove(["id" => "email_id"]);
+$result = $client->Email()->remove();
 ```
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -197,7 +197,7 @@ Set the entity match criteria.
 Create a new `EmailEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -214,10 +214,10 @@ $inbox = $client->Inbox();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$STRING`` | No |  |
-| `email` | ``$ARRAY`` | No |  |
-| `token` | ``$STRING`` | No |  |
-| `username` | ``$STRING`` | Yes |  |
+| `domain` | `string` | No |  |
+| `email` | `array` | No |  |
+| `token` | `string` | No |  |
+| `username` | `string` | Yes |  |
 
 ### Operations
 
@@ -227,7 +227,7 @@ Create a new entity with the given data. Throws on error.
 
 ```php
 $result = $client->Inbox()->create([
-  "username" => /* `$STRING` */,
+  "username" => null, // string
 ]);
 ```
 
@@ -249,19 +249,19 @@ $result = $client->Inbox()->remove(["id" => "inbox_id"]);
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -270,7 +270,7 @@ Set the entity match criteria.
 Create a new `InboxEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 

@@ -66,8 +66,13 @@ class InboxEntity:
         return vs.clone(self._match)
 
     
-    def load(self, reqmatch: InboxLoadMatch, ctrl=None) -> Inbox:
+    def load(self, reqmatch=None, ctrl=None) -> Inbox:
         utility = self._utility
+        # reqmatch is optional: an entity with no id-like key loads with no
+        # match. Treat None as an empty match so client.Inbox().load()
+        # works with no args.
+        if reqmatch is None:
+            reqmatch = {}
         ctx = utility.make_context({
             "opname": "load",
             "ctrl": ctrl,
@@ -112,8 +117,13 @@ class InboxEntity:
     
 
     
-    def remove(self, reqmatch: InboxRemoveMatch, ctrl=None) -> Inbox:
+    def remove(self, reqmatch=None, ctrl=None) -> Inbox:
         utility = self._utility
+        # reqmatch is optional: an entity with no id-like key removes with no
+        # match. Treat None as an empty match so client.Inbox().remove()
+        # works with no args.
+        if reqmatch is None:
+            reqmatch = {}
         ctx = utility.make_context({
             "opname": "remove",
             "ctrl": ctrl,

@@ -10,6 +10,7 @@
 ---@field domain? table
 
 ---@class DomainListMatch
+---@field domain? table
 
 ---@class Email
 ---@field content_type? string
@@ -34,6 +35,10 @@
 ---@field id string
 
 ---@class InboxCreateData
+---@field domain? string
+---@field email? table
+---@field token? string
+---@field username string
 
 ---@class InboxRemoveMatch
 ---@field id string

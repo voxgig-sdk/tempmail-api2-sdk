@@ -9,7 +9,9 @@ export interface Domain {
   domain?: any[]
 }
 
-export type DomainListMatch = Partial<Domain>
+export interface DomainListMatch {
+  domain?: any[]
+}
 
 export interface Email {
   content_type?: string
@@ -38,7 +40,12 @@ export interface InboxLoadMatch {
   id: string
 }
 
-export type InboxCreateData = Partial<Inbox>
+export interface InboxCreateData {
+  domain?: string
+  email?: any[]
+  token?: string
+  username: string
+}
 
 export interface InboxRemoveMatch {
   id: string

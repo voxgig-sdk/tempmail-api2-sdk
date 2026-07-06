@@ -17,7 +17,7 @@ Domain = Struct.new(
   keyword_init: true
 )
 
-# Match filter for Domain#list (any subset of Domain fields).
+# Request payload for Domain#list.
 #
 # @!attribute [rw] domain
 #   @return [Array, nil]
@@ -99,7 +99,7 @@ InboxLoadMatch = Struct.new(
   keyword_init: true
 )
 
-# Match filter for Inbox#create (any subset of Inbox fields).
+# Request payload for Inbox#create.
 #
 # @!attribute [rw] domain
 #   @return [String, nil]
@@ -111,7 +111,7 @@ InboxLoadMatch = Struct.new(
 #   @return [String, nil]
 #
 # @!attribute [rw] username
-#   @return [String, nil]
+#   @return [String]
 InboxCreateData = Struct.new(
   :domain,
   :email,

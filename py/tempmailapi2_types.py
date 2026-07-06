@@ -54,11 +54,14 @@ class InboxLoadMatch(TypedDict):
     id: str
 
 
-class InboxCreateData(TypedDict, total=False):
+class InboxCreateDataRequired(TypedDict):
+    username: str
+
+
+class InboxCreateData(InboxCreateDataRequired, total=False):
     domain: str
     email: list
     token: str
-    username: str
 
 
 class InboxRemoveMatch(TypedDict):

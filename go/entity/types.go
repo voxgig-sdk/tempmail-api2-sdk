@@ -13,8 +13,7 @@ type Domain struct {
 	Domain *[]any `json:"domain,omitempty"`
 }
 
-// DomainListMatch mirrors the domain fields as an all-optional match
-// filter (Go analog of Partial<Domain>).
+// DomainListMatch is the typed request payload for Domain.ListTyped.
 type DomainListMatch struct {
 	Domain *[]any `json:"domain,omitempty"`
 }
@@ -51,13 +50,12 @@ type InboxLoadMatch struct {
 	Id string `json:"id"`
 }
 
-// InboxCreateData mirrors the inbox fields as an all-optional match
-// filter (Go analog of Partial<Inbox>).
+// InboxCreateData is the typed request payload for Inbox.CreateTyped.
 type InboxCreateData struct {
 	Domain *string `json:"domain,omitempty"`
 	Email *[]any `json:"email,omitempty"`
 	Token *string `json:"token,omitempty"`
-	Username *string `json:"username,omitempty"`
+	Username string `json:"username"`
 }
 
 // InboxRemoveMatch is the typed request payload for Inbox.RemoveTyped.

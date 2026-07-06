@@ -67,10 +67,12 @@ class InboxEntity
   
   # Load a single Inbox.
   #
-  # @param reqmatch [InboxLoadMatch, Hash, nil] match criteria (id/query fields)
+  # @param reqmatch [InboxLoadMatch, Hash, nil] match criteria (id/query fields);
+  #   optional — an entity with no id-like key loads with no match (nil is treated
+  #   as an empty match, so client.Inbox.load works with no args).
   # @param ctrl [Object, nil] optional per-call control
   # @return [Inbox, Hash] the loaded Inbox; raises TempmailApi2Error on failure
-  def load(reqmatch, ctrl = nil)
+  def load(reqmatch = nil, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
       "opname" => "load",
@@ -129,7 +131,7 @@ class InboxEntity
   # @param reqmatch [InboxRemoveMatch, Hash, nil] match criteria (id/query fields)
   # @param ctrl [Object, nil] optional per-call control
   # @return [Inbox, Hash] the removed Inbox; raises TempmailApi2Error on failure
-  def remove(reqmatch, ctrl = nil)
+  def remove(reqmatch = nil, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
       "opname" => "remove",

@@ -18,7 +18,7 @@ class Domain
     public ?array $domain = null;
 }
 
-/** Match filter for Domain#list (any subset of Domain fields). */
+/** Request payload for Domain#list. */
 class DomainListMatch
 {
     public ?array $domain = null;
@@ -61,13 +61,13 @@ class InboxLoadMatch
     public string $id;
 }
 
-/** Match filter for Inbox#create (any subset of Inbox fields). */
+/** Request payload for Inbox#create. */
 class InboxCreateData
 {
     public ?string $domain = null;
     public ?array $email = null;
     public ?string $token = null;
-    public ?string $username = null;
+    public string $username;
 }
 
 /** Request payload for Inbox#remove. */

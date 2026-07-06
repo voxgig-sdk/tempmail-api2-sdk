@@ -8,7 +8,7 @@ Complete API reference for the TempmailApi2 Ruby SDK.
 ### Constructor
 
 ```ruby
-require_relative 'tempmail-api2_sdk'
+require_relative 'TempmailApi2_sdk'
 
 client = TempmailApi2SDK.new(options)
 ```
@@ -101,16 +101,16 @@ domain = client.Domain
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$ARRAY`` | No |  |
+| `domain` | `Array` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Domain.list(nil)
+results = client.Domain.list
 ```
 
 ### Common Methods
@@ -153,18 +153,18 @@ email = client.Email
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | ``$STRING`` | No |  |
-| `filename` | ``$STRING`` | No |  |
-| `size` | ``$INTEGER`` | No |  |
+| `content_type` | `String` | No |  |
+| `filename` | `String` | No |  |
+| `size` | `Integer` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Email.list(nil)
+results = client.Email.list
 ```
 
 #### `remove(reqmatch, ctrl = nil) -> result`
@@ -172,7 +172,7 @@ results = client.Email.list(nil)
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.Email.remove({ "id" => "email_id" })
+result = client.Email.remove()
 ```
 
 ### Common Methods
@@ -215,10 +215,10 @@ inbox = client.Inbox
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$STRING`` | No |  |
-| `email` | ``$ARRAY`` | No |  |
-| `token` | ``$STRING`` | No |  |
-| `username` | ``$STRING`` | Yes |  |
+| `domain` | `String` | No |  |
+| `email` | `Array` | No |  |
+| `token` | `String` | No |  |
+| `username` | `String` | Yes |  |
 
 ### Operations
 
@@ -228,7 +228,7 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Inbox.create({
-  "username" => # `$STRING`,
+  "username" => "example", # String
 })
 ```
 

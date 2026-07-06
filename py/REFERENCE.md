@@ -8,7 +8,7 @@ Complete API reference for the TempmailApi2 Python SDK.
 ### Constructor
 
 ```python
-from tempmail-api2_sdk import TempmailApi2SDK
+from tempmailapi2_sdk import TempmailApi2SDK
 
 client = TempmailApi2SDK(options)
 ```
@@ -95,16 +95,16 @@ domain = client.Domain()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$ARRAY`` | No |  |
+| `domain` | `list` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list`
 
-List entities matching the given criteria. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Domain().list({})
+results = client.Domain().list()
 for domain in results:
     print(domain)
 ```
@@ -148,18 +148,18 @@ email = client.Email()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | ``$STRING`` | No |  |
-| `filename` | ``$STRING`` | No |  |
-| `size` | ``$INTEGER`` | No |  |
+| `content_type` | `str` | No |  |
+| `filename` | `str` | No |  |
+| `size` | `int` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list`
 
-List entities matching the given criteria. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Email().list({})
+results = client.Email().list()
 for email in results:
     print(email)
 ```
@@ -169,7 +169,7 @@ for email in results:
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.Email().remove({"id": "email_id"})
+result = client.Email().remove()
 ```
 
 ### Common Methods
@@ -211,10 +211,10 @@ inbox = client.Inbox()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$STRING`` | No |  |
-| `email` | ``$ARRAY`` | No |  |
-| `token` | ``$STRING`` | No |  |
-| `username` | ``$STRING`` | Yes |  |
+| `domain` | `str` | No |  |
+| `email` | `list` | No |  |
+| `token` | `str` | No |  |
+| `username` | `str` | Yes |  |
 
 ### Operations
 
@@ -224,7 +224,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Inbox().create({
-    "username": ...,  # `$STRING`
+    "username": "example",  # str
 })
 ```
 

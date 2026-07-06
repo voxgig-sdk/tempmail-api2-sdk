@@ -105,7 +105,7 @@ domain := client.Domain(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$ARRAY`` | No |  |
+| `domain` | `[]any` | No |  |
 
 ### Operations
 
@@ -151,9 +151,9 @@ email := client.Email(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | ``$STRING`` | No |  |
-| `filename` | ``$STRING`` | No |  |
-| `size` | ``$INTEGER`` | No |  |
+| `content_type` | `string` | No |  |
+| `filename` | `string` | No |  |
+| `size` | `int` | No |  |
 
 ### Operations
 
@@ -170,7 +170,7 @@ results, err := client.Email(nil).List(nil, nil)
 Remove the entity matching the given criteria.
 
 ```go
-result, err := client.Email(nil).Remove(map[string]any{"id": "email_id"}, nil)
+result, err := client.Email(nil).Remove(nil, nil)
 ```
 
 ### Common Methods
@@ -207,10 +207,10 @@ inbox := client.Inbox(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$STRING`` | No |  |
-| `email` | ``$ARRAY`` | No |  |
-| `token` | ``$STRING`` | No |  |
-| `username` | ``$STRING`` | Yes |  |
+| `domain` | `string` | No |  |
+| `email` | `[]any` | No |  |
+| `token` | `string` | No |  |
+| `username` | `string` | Yes |  |
 
 ### Operations
 
@@ -220,7 +220,7 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.Inbox(nil).Create(map[string]any{
-    "username": /* `$STRING` */,
+    "username": /* string */,
 }, nil)
 ```
 

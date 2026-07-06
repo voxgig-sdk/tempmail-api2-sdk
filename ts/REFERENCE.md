@@ -140,7 +140,7 @@ const domain = client.Domain()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$ARRAY`` | No |  |
+| `domain` | `any[]` | No |  |
 
 ### Operations
 
@@ -190,9 +190,9 @@ const email = client.Email()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | ``$STRING`` | No |  |
-| `filename` | ``$STRING`` | No |  |
-| `size` | ``$INTEGER`` | No |  |
+| `content_type` | `string` | No |  |
+| `filename` | `string` | No |  |
+| `size` | `number` | No |  |
 
 ### Operations
 
@@ -209,7 +209,7 @@ const results = await client.Email().list()
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Email().remove({ id: 'email_id' })
+const result = await client.Email().remove()
 ```
 
 ### Common Methods
@@ -250,10 +250,10 @@ const inbox = client.Inbox()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$STRING`` | No |  |
-| `email` | ``$ARRAY`` | No |  |
-| `token` | ``$STRING`` | No |  |
-| `username` | ``$STRING`` | Yes |  |
+| `domain` | `string` | No |  |
+| `email` | `any[]` | No |  |
+| `token` | `string` | No |  |
+| `username` | `string` | Yes |  |
 
 ### Operations
 
@@ -263,7 +263,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Inbox().create({
-  username: /* `$STRING` */,
+  username: /* string */,
 })
 ```
 

@@ -221,19 +221,19 @@ class TempmailApi2SDK:
 
 
     def Domain(self, data=None) -> "DomainEntity":
-        """Entity factory: client.Domain().list({}) / client.Domain().load({"id": ...})."""
+        """Entity factory: client.Domain().list() / client.Domain().load({"id": ...})."""
         from entity.domain_entity import DomainEntity
         return DomainEntity(self, data)
 
 
     def Email(self, data=None) -> "EmailEntity":
-        """Entity factory: client.Email().list({}) / client.Email().load({"id": ...})."""
+        """Entity factory: client.Email().list() / client.Email().load({"id": ...})."""
         from entity.email_entity import EmailEntity
         return EmailEntity(self, data)
 
 
     def Inbox(self, data=None) -> "InboxEntity":
-        """Entity factory: client.Inbox().list({}) / client.Inbox().load({"id": ...})."""
+        """Entity factory: client.Inbox().list() / client.Inbox().load({"id": ...})."""
         from entity.inbox_entity import InboxEntity
         return InboxEntity(self, data)
 

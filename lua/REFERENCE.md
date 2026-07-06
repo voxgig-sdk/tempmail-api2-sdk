@@ -98,7 +98,7 @@ local domain = client:Domain(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$ARRAY`` | No |  |
+| `domain` | `table` | No |  |
 
 ### Operations
 
@@ -150,9 +150,9 @@ local email = client:Email(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | ``$STRING`` | No |  |
-| `filename` | ``$STRING`` | No |  |
-| `size` | ``$INTEGER`` | No |  |
+| `content_type` | `string` | No |  |
+| `filename` | `string` | No |  |
+| `size` | `number` | No |  |
 
 ### Operations
 
@@ -169,7 +169,7 @@ local results, err = client:Email():list()
 Remove the entity matching the given criteria.
 
 ```lua
-local result, err = client:Email():remove({ id = "email_id" })
+local result, err = client:Email():remove()
 ```
 
 ### Common Methods
@@ -212,10 +212,10 @@ local inbox = client:Inbox(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | ``$STRING`` | No |  |
-| `email` | ``$ARRAY`` | No |  |
-| `token` | ``$STRING`` | No |  |
-| `username` | ``$STRING`` | Yes |  |
+| `domain` | `string` | No |  |
+| `email` | `table` | No |  |
+| `token` | `string` | No |  |
+| `username` | `string` | Yes |  |
 
 ### Operations
 
@@ -225,7 +225,7 @@ Create a new entity with the given data.
 
 ```lua
 local result, err = client:Inbox():create({
-  username = --[[ `$STRING` ]],
+  username = --[[ string ]],
 })
 ```
 
