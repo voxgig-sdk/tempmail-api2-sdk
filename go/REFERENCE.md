@@ -99,6 +99,7 @@ same parameters as `Direct()`.
 
 ```go
 domain := client.Domain(nil)
+fmt.Println(domain.GetName()) // "domain"
 ```
 
 ### Fields
@@ -115,6 +116,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Domain(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 ### Common Methods
@@ -145,6 +150,7 @@ Return the entity name.
 
 ```go
 email := client.Email(nil)
+fmt.Println(email.GetName()) // "email"
 ```
 
 ### Fields
@@ -163,6 +169,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Email(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Remove(reqmatch, ctrl map[string]any) (any, error)`
@@ -170,7 +180,11 @@ results, err := client.Email(nil).List(nil, nil)
 Remove the entity matching the given criteria.
 
 ```go
-result, err := client.Email(nil).Remove(nil, nil)
+result, err := client.Email(nil).Remove(map[string]any{"email_id": "email_id", "token": "token"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -201,6 +215,7 @@ Return the entity name.
 
 ```go
 inbox := client.Inbox(nil)
+fmt.Println(inbox.GetName()) // "inbox"
 ```
 
 ### Fields
@@ -214,22 +229,30 @@ inbox := client.Inbox(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Inbox(nil).Create(map[string]any{
-    "username": /* string */,
-}, nil)
-```
-
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
 
 Load a single entity matching the given criteria.
 
 ```go
 result, err := client.Inbox(nil).Load(map[string]any{"id": "inbox_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.Inbox(nil).Create(map[string]any{
+    "username": "example_username",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Remove(reqmatch, ctrl map[string]any) (any, error)`
@@ -238,6 +261,10 @@ Remove the entity matching the given criteria.
 
 ```go
 result, err := client.Inbox(nil).Remove(map[string]any{"id": "inbox_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods

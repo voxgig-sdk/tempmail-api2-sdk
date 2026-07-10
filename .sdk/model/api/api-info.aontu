@@ -16,9 +16,9 @@ main: {
           url: "https://api.tempmail.lol/v2"
         }
       ]
+      summary: "The Tempmail API provides users with disposable email addresses that can be used for temporary registrations or verifications."
       title: "Tempmail API"
       version: "2.0.0"
+      website: "https://api.tempmail.lol/v2/"
     }
   }
-}
-

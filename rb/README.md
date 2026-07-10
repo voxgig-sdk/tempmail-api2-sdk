@@ -360,7 +360,7 @@ inbox = client.Inbox.load({ "id" => "inbox_id" })
 
 ```ruby
 inbox = client.Inbox.create({
-  "username" => "example", # String
+  "username" => "example_username", # String
 })
 ```
 

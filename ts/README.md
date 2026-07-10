@@ -407,7 +407,7 @@ const inbox = await client.Inbox().load({ id: 'inbox_id' })
 
 ```ts
 const inbox = await client.Inbox().create({
-  username: /* string */,
+  username: 'example_username',
 })
 ```
 

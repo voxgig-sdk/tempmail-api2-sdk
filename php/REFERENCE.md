@@ -171,7 +171,7 @@ $results = $client->Email()->list();
 Remove the entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->Email()->remove();
+$result = $client->Email()->remove(["email_id" => "email_id", "token" => "token"]);
 ```
 
 ### Common Methods

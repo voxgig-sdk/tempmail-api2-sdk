@@ -209,7 +209,7 @@ const results = await client.Email().list()
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Email().remove()
+const result = await client.Email().remove({ email_id: 'email_id', token: 'token' })
 ```
 
 ### Common Methods
@@ -263,7 +263,7 @@ Create a new entity with the given data.
 
 ```ts
 const result = await client.Inbox().create({
-  username: /* string */,
+  username: 'example_username',
 })
 ```
 

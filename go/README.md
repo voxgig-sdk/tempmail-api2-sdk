@@ -367,8 +367,8 @@ Create an instance: `inbox := client.Inbox(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
@@ -394,8 +394,12 @@ fmt.Println(inbox) // the loaded record
 
 ```go
 result, err := client.Inbox(nil).Create(map[string]any{
-    "username": /* string */,
+    "username": "example_username",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 

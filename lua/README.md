@@ -353,7 +353,7 @@ local inbox, err = client:Inbox():load({ id = "inbox_id" })
 
 ```lua
 local inbox, err = client:Inbox():create({
-  username = nil, -- string
+  username = "example_username", -- string
 })
 ```
 

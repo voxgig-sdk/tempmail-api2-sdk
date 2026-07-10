@@ -6,9 +6,6 @@
     },
     "kit": {
       "config": {
-        "auth": {
-          "prefix": "Bearer"
-        },
         "docs_order": [
           "ts",
           "py",
@@ -611,14 +608,17 @@
           "url": "https://tempmail.lol"
         },
         "description": "The Tempmail API provides users with disposable email addresses that can be used for temporary registrations or verifications. It allows users to manage their temporary inboxes, retrieve emails, and perform various email-related operations securely and anonymously.",
+        "meta_source": "https://www.freepublicapis.com",
         "servers": [
           {
             "description": "Production server",
             "url": "https://api.tempmail.lol/v2"
           }
         ],
+        "summary": "The Tempmail API provides users with disposable email addresses that can be used for temporary registrations or verifications.",
         "title": "Tempmail API",
-        "version": "2.0.0"
+        "version": "2.0.0",
+        "website": "https://api.tempmail.lol/v2/"
       },
       "option": {},
       "target": {
@@ -671,6 +671,9 @@
           },
           "name": "go-cli",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },
@@ -721,6 +724,9 @@
           },
           "name": "go-mcp",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },

@@ -169,7 +169,7 @@ for email in results:
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.Email().remove()
+result = client.Email().remove({"email_id": "email_id", "token": "token"})
 ```
 
 ### Common Methods
@@ -224,7 +224,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Inbox().create({
-    "username": "example",  # str
+    "username": "example_username",  # str
 })
 ```
 

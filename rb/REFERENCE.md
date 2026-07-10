@@ -172,7 +172,7 @@ results = client.Email.list
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.Email.remove()
+result = client.Email.remove({ "email_id" => "email_id", "token" => "token" })
 ```
 
 ### Common Methods
@@ -228,7 +228,7 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Inbox.create({
-  "username" => "example", # String
+  "username" => "example_username", # String
 })
 ```
 

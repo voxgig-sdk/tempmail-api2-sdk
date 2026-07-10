@@ -169,7 +169,7 @@ local results, err = client:Email():list()
 Remove the entity matching the given criteria.
 
 ```lua
-local result, err = client:Email():remove()
+local result, err = client:Email():remove({ email_id = "email_id", token = "token" })
 ```
 
 ### Common Methods

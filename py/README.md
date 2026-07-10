@@ -363,7 +363,7 @@ inbox = client.Inbox().load({"id": "inbox_id"})
 
 ```python
 inbox = client.Inbox().create({
-    "username": "example",  # str
+    "username": "example_username",  # str
 })
 ```
 
