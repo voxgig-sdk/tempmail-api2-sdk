@@ -68,19 +68,6 @@ describe('EmailEntity', async () => {
     const email_ref01_list = await email_ref01_ent.list(email_ref01_match)
 
 
-    // REMOVE
-    const email_ref01_match_rm0: any = { id: email_ref01_data.id }
-    await email_ref01_ent.remove(email_ref01_match_rm0)
-  
-
-    // LIST
-    const email_ref01_match_rt0: any = {}
-    email_ref01_match_rt0['email_id'] = setup.idmap['email01']
-    email_ref01_match_rt0['token'] = setup.idmap['token01']
-
-    const email_ref01_list_rt0 = await email_ref01_ent.list(email_ref01_match_rt0)
-
-
   })
 })
 

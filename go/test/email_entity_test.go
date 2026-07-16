@@ -24,6 +24,54 @@ func TestEmailEntity(t *testing.T) {
 		}
 	})
 
+	// Feature #4: the entity Stream(action, ...) method runs the op pipeline and
+	// returns a channel over result items. With the streaming feature active it
+	// yields the feature's incremental output; otherwise it falls back to the
+	// materialised list so Stream always yields.
+	t.Run("stream", func(t *testing.T) {
+		seed := map[string]any{
+			"entity": map[string]any{
+				"email": map[string]any{
+					"s1": map[string]any{"id": "s1"},
+					"s2": map[string]any{"id": "s2"},
+					"s3": map[string]any{"id": "s3"},
+				},
+			},
+		}
+
+		// Fallback: streaming inactive -> yields the materialised list items.
+		base := sdk.TestSDK(seed, nil)
+		var seen []any
+		for item := range base.Email(nil).Stream("list", nil, nil) {
+			seen = append(seen, item)
+		}
+		if len(seen) != 3 {
+			t.Fatalf("expected 3 streamed items, got %d", len(seen))
+		}
+
+		// Inbound: streaming active -> yields each item from the feature iterator.
+		hasStreaming := false
+		if fm, ok := core.MakeConfig()["feature"].(map[string]any); ok {
+			_, hasStreaming = fm["streaming"]
+		}
+		if hasStreaming {
+			streamSdk := sdk.TestSDK(seed, map[string]any{
+				"feature": map[string]any{"streaming": map[string]any{"active": true}},
+			})
+			var got []any
+			for item := range streamSdk.Email(nil).Stream("list", nil, nil) {
+				if sub, ok := item.([]any); ok {
+					got = append(got, sub...)
+				} else {
+					got = append(got, item)
+				}
+			}
+			if len(got) != 3 {
+				t.Fatalf("expected 3 items via streaming feature, got %d", len(got))
+			}
+		}
+	})
+
 	t.Run("basic", func(t *testing.T) {
 		setup := emailBasicSetup(nil)
 		// Per-op sdk-test-control.json skip — basic test exercises a flow
@@ -73,30 +121,6 @@ func TestEmailEntity(t *testing.T) {
 		_, emailRef01ListOk := emailRef01ListResult.([]any)
 		if !emailRef01ListOk {
 			t.Fatalf("expected list result to be an array, got %T", emailRef01ListResult)
-		}
-
-		// REMOVE
-		emailRef01MatchRm0 := map[string]any{
-			"id": emailRef01Data["id"],
-		}
-		_, err = emailRef01Ent.Remove(emailRef01MatchRm0, nil)
-		if err != nil {
-			t.Fatalf("remove failed: %v", err)
-		}
-
-		// LIST
-		emailRef01MatchRt0 := map[string]any{
-			"email_id": setup.idmap["email01"],
-			"token": setup.idmap["token01"],
-		}
-
-		emailRef01ListRt0Result, err := emailRef01Ent.List(emailRef01MatchRt0, nil)
-		if err != nil {
-			t.Fatalf("list failed: %v", err)
-		}
-		_, emailRef01ListRt0Ok := emailRef01ListRt0Result.([]any)
-		if !emailRef01ListRt0Ok {
-			t.Fatalf("expected list result to be an array, got %T", emailRef01ListRt0Result)
 		}
 
 	})

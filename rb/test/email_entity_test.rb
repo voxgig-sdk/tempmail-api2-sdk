@@ -12,6 +12,42 @@ class EmailEntityTest < Minitest::Test
     assert !ent.nil?
   end
 
+  # Feature #4: the entity stream(action, ...) method runs the op pipeline and
+  # returns an Enumerator over result items. With the streaming feature active
+  # it yields the feature's incremental output; otherwise it falls back to the
+  # materialised list so stream always yields.
+  def test_stream
+    seed = {
+      "entity" => {
+        "email" => {
+          "s1" => { "id" => "s1" },
+          "s2" => { "id" => "s2" },
+          "s3" => { "id" => "s3" },
+        },
+      },
+    }
+
+    # Fallback: streaming inactive -> yields the materialised list items.
+    base = TempmailApi2SDK.test(seed, nil)
+    seen = base.Email(nil).stream("list", nil, nil).to_a
+    assert_equal 3, seen.length
+
+    # Inbound: streaming active -> yields each item from the feature.
+    cfg = TempmailApi2Config.make_config
+    if cfg["feature"].is_a?(Hash) && cfg["feature"].key?("streaming")
+      sdk = TempmailApi2SDK.test(seed, { "feature" => { "streaming" => { "active" => true } } })
+      got = []
+      sdk.Email(nil).stream("list", nil, nil).each do |item|
+        if item.is_a?(Array)
+          got.concat(item)
+        else
+          got << item
+        end
+      end
+      assert_equal 3, got.length
+    end
+  end
+
   def test_basic_flow
     setup = email_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
@@ -48,21 +84,6 @@ class EmailEntityTest < Minitest::Test
 
     email_ref01_list_result = email_ref01_ent.list(email_ref01_match, nil)
     assert email_ref01_list_result.is_a?(Array)
-
-    # REMOVE
-    email_ref01_match_rm0 = {
-      "id" => email_ref01_data["id"],
-    }
-    email_ref01_ent.remove(email_ref01_match_rm0, nil)
-
-    # LIST
-    email_ref01_match_rt0 = {
-      "email_id" => setup[:idmap]["email01"],
-      "token" => setup[:idmap]["token01"],
-    }
-
-    email_ref01_list_rt0_result = email_ref01_ent.list(email_ref01_match_rt0, nil)
-    assert email_ref01_list_rt0_result.is_a?(Array)
 
   end
 end

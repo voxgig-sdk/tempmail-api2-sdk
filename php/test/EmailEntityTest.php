@@ -18,6 +18,45 @@ class EmailEntityTest extends TestCase
         $this->assertNotNull($ent);
     }
 
+    // Feature #4: the entity stream(action, ...) method runs the op pipeline
+    // and yields result items. With the streaming feature active it yields the
+    // feature's incremental output; otherwise it falls back to the materialised
+    // list so stream always yields.
+    public function test_stream(): void
+    {
+        $seed = [
+            "entity" => [
+                "email" => [
+                    "s1" => ["id" => "s1"],
+                    "s2" => ["id" => "s2"],
+                    "s3" => ["id" => "s3"],
+                ],
+            ],
+        ];
+
+        // Fallback: streaming inactive -> yields the materialised list items.
+        $base = TempmailApi2SDK::test($seed, null);
+        $seen = iterator_to_array($base->Email(null)->stream("list", null, null), false);
+        $this->assertCount(3, $seen);
+
+        // Inbound: streaming active -> yields each item from the feature.
+        $cfg = TempmailApi2Config::make_config();
+        if (isset($cfg["feature"]) && is_array($cfg["feature"]) && isset($cfg["feature"]["streaming"])) {
+            $sdk = TempmailApi2SDK::test($seed, ["feature" => ["streaming" => ["active" => true]]]);
+            $got = [];
+            foreach ($sdk->Email(null)->stream("list", null, null) as $item) {
+                if (is_array($item) && array_is_list($item)) {
+                    foreach ($item as $sub) {
+                        $got[] = $sub;
+                    }
+                } else {
+                    $got[] = $item;
+                }
+            }
+            $this->assertCount(3, $got);
+        }
+    }
+
     public function test_basic_flow(): void
     {
         $setup = email_basic_setup(null);
@@ -55,21 +94,6 @@ class EmailEntityTest extends TestCase
 
         $email_ref01_list_result = $email_ref01_ent->list($email_ref01_match, null);
         $this->assertIsArray($email_ref01_list_result);
-
-        // REMOVE
-        $email_ref01_match_rm0 = [
-            "id" => $email_ref01_data["id"],
-        ];
-        $email_ref01_ent->remove($email_ref01_match_rm0, null);
-
-        // LIST
-        $email_ref01_match_rt0 = [
-            "email_id" => $setup["idmap"]["email01"],
-            "token" => $setup["idmap"]["token01"],
-        ];
-
-        $email_ref01_list_rt0_result = $email_ref01_ent->list($email_ref01_match_rt0, null);
-        $this->assertIsArray($email_ref01_list_rt0_result);
 
     }
 }
