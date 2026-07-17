@@ -1,4 +1,4 @@
--- ProjectName SDK exists test
+-- TempmailApi2 SDK exists test
 
 local sdk = require("tempmail-api2_sdk")
 
