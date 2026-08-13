@@ -43,7 +43,7 @@ local domains, err = client:Domain():list()
 if err then error(err) end
 
 for _, item in ipairs(domains) do
-  print(item["domain"])
+  print(item["domains"])
 end
 ```
 
@@ -54,7 +54,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local domains, err = client:Domain():list()
+local emails, err = client:Email():list()
 if err then error(err) end
 ```
 
@@ -112,7 +112,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Domain():list()
+local result, err = client:Email():list()
 -- result is the returned data; err is set on failure
 ```
 
@@ -224,9 +224,9 @@ data **directly** — there is no wrapper:
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
-    local domain, err = client:Domain():load()
+    local inbox, err = client:Inbox():load({ id = "example_id" })
     if err then error(err) end
-    -- domain is the loaded record
+    -- inbox is the loaded record
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.
@@ -237,7 +237,7 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 
 | Field | Description |
 | --- | --- |
-| `domain` |  |
+| `domains` |  |
 
 Operations: List.
 
@@ -247,7 +247,7 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `content_type` |  |
+| `contentType` |  |
 | `filename` |  |
 | `size` |  |
 
@@ -261,6 +261,7 @@ API path: `/inbox/{token}/{emailId}`
 | --- | --- |
 | `domain` |  |
 | `email` |  |
+| `emails` |  |
 | `token` |  |
 | `username` |  |
 
@@ -287,7 +288,7 @@ Create an instance: `local domain = client:Domain(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `table` |  |
+| `domains` | `table` |  |
 
 #### Example: List
 
@@ -311,7 +312,7 @@ Create an instance: `local email = client:Email(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `content_type` | `string` |  |
+| `contentType` | `string` |  |
 | `filename` | `string` |  |
 | `size` | `number` |  |
 
@@ -339,7 +340,8 @@ Create an instance: `local inbox = client:Inbox(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `domain` | `string` |  |
-| `email` | `table` |  |
+| `email` | `string` |  |
+| `emails` | `table` |  |
 | `token` | `string` |  |
 | `username` | `string` |  |
 
@@ -434,11 +436,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local domain = client:Domain()
-domain:list()
+local email = client:Email()
+email:list()
 
--- domain:data_get() now returns the domain data from the last list
--- domain:match_get() returns the last match criteria
+-- email:data_get() now returns the email data from the last list
+-- email:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

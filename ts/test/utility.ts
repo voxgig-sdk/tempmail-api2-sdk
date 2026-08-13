@@ -62,8 +62,8 @@ function makeCtrl(explain: boolean) {
 // Overrides configuration values with environment variables if available
 function envOverride(m: Record<string, any>) {
   if (
-    'TRUE' === process.env.TEMPMAILAPI2_TEST_LIVE ||
-    'TRUE' === process.env.TEMPMAILAPI2_TEST_OVERRIDE
+    'TRUE' === process.env.TEMPMAIL_API2_TEST_LIVE ||
+    'TRUE' === process.env.TEMPMAIL_API2_TEST_OVERRIDE
   ) {
     Object.entries(m).map(n => {
       let envval = process.env[n[0]]
@@ -74,7 +74,7 @@ function envOverride(m: Record<string, any>) {
     })
   }
 
-  m.TEMPMAILAPI2_TEST_EXPLAIN = process.env.TEMPMAILAPI2_TEST_EXPLAIN || m.TEMPMAILAPI2_TEST_EXPLAIN
+  m.TEMPMAIL_API2_TEST_EXPLAIN = process.env.TEMPMAIL_API2_TEST_EXPLAIN || m.TEMPMAIL_API2_TEST_EXPLAIN
 
   return m
 }

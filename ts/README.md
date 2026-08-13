@@ -35,7 +35,9 @@ const client = new TempmailApi2SDK()
 
 ### 2. List domain records
 
-`list()` resolves to an array of Domain objects — iterate it directly:
+`list()` resolves to an array of Domain ENTITIES — every operation
+resolves to entities, not raw records. Iterate them directly, and call
+`.data()` on one for the record it holds:
 
 ```ts
 const domains = await client.Domain().list()
@@ -52,8 +54,8 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const domains = await client.Domain().list()
-  console.log(domains)
+  const emails = await client.Email().list()
+  console.log(emails)
 } catch (err) {
   console.error('list failed:', err)
 }
@@ -119,9 +121,10 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = TempmailApi2SDK.test()
 
-const domain = await client.Domain().list()
-// domain is a bare entity populated with mock response data
-console.log(domain)
+const email = await client.Email().list()
+// email is the entity, populated with mock response data
+// — call email.data() for the record itself
+console.log(email)
 ```
 
 You can also use the instance method:
@@ -136,7 +139,7 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.Domain()
+const entity = client.Email()
 
 // First call runs the operation and stores its result
 await entity.list()
@@ -291,7 +294,7 @@ The `prepare()` method returns:
 
 | Field | Description |
 | --- | --- |
-| `domain` |  |
+| `domains` |  |
 
 Operations: list.
 
@@ -301,7 +304,7 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `content_type` |  |
+| `contentType` |  |
 | `filename` |  |
 | `size` |  |
 
@@ -315,6 +318,7 @@ API path: `/inbox/{token}/{emailId}`
 | --- | --- |
 | `domain` |  |
 | `email` |  |
+| `emails` |  |
 | `token` |  |
 | `username` |  |
 
@@ -341,7 +345,7 @@ Create an instance: `const domain = client.Domain()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `any[]` |  |
+| `domains` | `any[]` |  |
 
 #### Example: List
 
@@ -365,14 +369,14 @@ Create an instance: `const email = client.Email()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `content_type` | `string` |  |
+| `contentType` | `string` |  |
 | `filename` | `string` |  |
 | `size` | `number` |  |
 
 #### Example: List
 
 ```ts
-const emails = await client.Email().list()
+const emails = await client.Email().list({ email_id: "example", token: "example" })
 ```
 
 
@@ -393,7 +397,8 @@ Create an instance: `const inbox = client.Inbox()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `domain` | `string` |  |
-| `email` | `any[]` |  |
+| `email` | `string` |  |
+| `emails` | `any[]` |  |
 | `token` | `string` |  |
 | `username` | `string` |  |
 
@@ -481,11 +486,11 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const domain = client.Domain()
-await domain.list()
+const email = client.Email()
+await email.list()
 
-// domain.data() now returns the domain data from the last `list`
-// domain.match() returns the last match criteria
+// email.data() now returns the email data from the last `list`
+// email.match() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

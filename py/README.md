@@ -57,8 +57,8 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    domains = client.Domain().list()
-    print(domains)
+    emails = client.Email().list()
+    print(emails)
 except Exception as err:
     print(f"list failed: {err}")
 ```
@@ -124,9 +124,10 @@ Create a mock client for unit testing — no server required:
 ```python
 client = TempmailApi2SDK.test()
 
-# Entity ops return the bare record and raise on error.
-domain = client.Domain().list()
-# domain contains the mock response record
+# Entity ops return the ENTITY and raises on error;
+# call data_get() for the record.
+email = client.Email().list()
+# email contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -225,7 +226,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (a `dict` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (a `dict` for single-entity
 ops, a `list` for `list`) and raise on error. Wrap calls in
 `try`/`except` to handle failures.
 
@@ -247,7 +248,7 @@ On error, `ok` is `False` and `err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `domain` |  |
+| `domains` |  |
 
 Operations: List.
 
@@ -257,7 +258,7 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `content_type` |  |
+| `contentType` |  |
 | `filename` |  |
 | `size` |  |
 
@@ -271,6 +272,7 @@ API path: `/inbox/{token}/{emailId}`
 | --- | --- |
 | `domain` |  |
 | `email` |  |
+| `emails` |  |
 | `token` |  |
 | `username` |  |
 
@@ -297,7 +299,7 @@ Create an instance: `domain = client.Domain()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `list` |  |
+| `domains` | `list` |  |
 
 #### Example: List
 
@@ -321,14 +323,14 @@ Create an instance: `email = client.Email()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `content_type` | `str` |  |
+| `contentType` | `str` |  |
 | `filename` | `str` |  |
 | `size` | `int` |  |
 
 #### Example: List
 
 ```python
-emails = client.Email().list()
+emails = client.Email().list({"email_id": "example", "token": "example"})
 ```
 
 
@@ -349,7 +351,8 @@ Create an instance: `inbox = client.Inbox()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `domain` | `str` |  |
-| `email` | `list` |  |
+| `email` | `str` |  |
+| `emails` | `list` |  |
 | `token` | `str` |  |
 | `username` | `str` |  |
 
@@ -443,11 +446,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-domain = client.Domain()
-domain.list()
+email = client.Email()
+email.list()
 
-# domain.data_get() now returns the domain data from the last list
-# domain.match_get() returns the last match criteria
+# email.data_get() now returns the email data from the last list
+# email.match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

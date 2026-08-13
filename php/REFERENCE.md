@@ -100,7 +100,7 @@ $domain = $client->Domain();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `array` | No |  |
+| `domains` | `array` | No |  |
 
 ### Operations
 
@@ -152,7 +152,7 @@ $email = $client->Email();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | `string` | No |  |
+| `contentType` | `string` | No |  |
 | `filename` | `string` | No |  |
 | `size` | `int` | No |  |
 
@@ -215,7 +215,8 @@ $inbox = $client->Inbox();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `domain` | `string` | No |  |
-| `email` | `array` | No |  |
+| `email` | `string` | No |  |
+| `emails` | `array` | No |  |
 | `token` | `string` | No |  |
 | `username` | `string` | Yes |  |
 

@@ -38,7 +38,7 @@ try {
     // list() returns an array of Domain records — iterate directly.
     $domains = $client->Domain()->list();
     foreach ($domains as $item) {
-        echo $item["domain"] . "\n";
+        echo $item["domains"] . "\n";
     }
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
@@ -53,7 +53,7 @@ Entity operations throw a `\Throwable` on failure, so wrap them in
 
 ```php
 try {
-    $domains = $client->Domain()->list();
+    $emails = $client->Email()->list();
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -125,9 +125,10 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = TempmailApi2SDK::test();
 
-// Entity ops return the bare mock record (throws on error).
-$domain = $client->Domain()->list();
-print_r($domain);
+// Entity ops return the ENTITY (throws on error);
+// call data_get() for the mock record.
+$email = $client->Email()->list();
+print_r($email);
 ```
 
 ### Use a custom fetch function
@@ -229,7 +230,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (an `array` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (an `array` for single-entity
 ops, a `list` for `list`) and throw on error. Wrap calls in
 `try`/`catch` to handle failures.
 
@@ -251,7 +252,7 @@ On error, `ok` is `false` and `$err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `domain` |  |
+| `domains` |  |
 
 Operations: List.
 
@@ -261,7 +262,7 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `content_type` |  |
+| `contentType` |  |
 | `filename` |  |
 | `size` |  |
 
@@ -275,6 +276,7 @@ API path: `/inbox/{token}/{emailId}`
 | --- | --- |
 | `domain` |  |
 | `email` |  |
+| `emails` |  |
 | `token` |  |
 | `username` |  |
 
@@ -301,7 +303,7 @@ Create an instance: `$domain = $client->Domain();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `array` |  |
+| `domains` | `array` |  |
 
 #### Example: List
 
@@ -326,7 +328,7 @@ Create an instance: `$email = $client->Email();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `content_type` | `string` |  |
+| `contentType` | `string` |  |
 | `filename` | `string` |  |
 | `size` | `int` |  |
 
@@ -355,14 +357,15 @@ Create an instance: `$inbox = $client->Inbox();`
 | Field | Type | Description |
 | --- | --- | --- |
 | `domain` | `string` |  |
-| `email` | `array` |  |
+| `email` | `string` |  |
+| `emails` | `array` |  |
 | `token` | `string` |  |
 | `username` | `string` |  |
 
 #### Example: Load
 
 ```php
-// load() returns the bare Inbox record (throws on error).
+// load() returns the ENTITY — call data_get() for the Inbox record (throws on error).
 $inbox = $client->Inbox()->load(["id" => "inbox_id"]);
 ```
 
@@ -451,11 +454,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$domain = $client->Domain();
-$domain->list();
+$email = $client->Email();
+$email->list();
 
-// $domain->data_get() now returns the domain data from the last list
-// $domain->match_get() returns the last match criteria
+// $email->data_get() now returns the email data from the last list
+// $email->match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

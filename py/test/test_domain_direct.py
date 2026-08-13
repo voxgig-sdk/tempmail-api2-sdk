@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from tempmailapi2_sdk.utility.voxgig_struct import voxgig_struct as vs
 from tempmailapi2_sdk import TempmailApi2SDK
-from core import helpers
+from tempmailapi2_sdk.core import helpers
 from test import runner
 
 
@@ -58,11 +58,11 @@ def _domain_direct_setup(mockres):
     calls = []
 
     env = runner.env_override({
-        "TEMPMAILAPI__TEST_DOMAIN_ENTID": {},
-        "TEMPMAILAPI__TEST_LIVE": "FALSE",
+        "TEMPMAIL_API2_TEST_DOMAIN_ENTID": {},
+        "TEMPMAIL_API2_TEST_LIVE": "FALSE",
     })
 
-    live = env.get("TEMPMAILAPI__TEST_LIVE") == "TRUE"
+    live = env.get("TEMPMAIL_API2_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {

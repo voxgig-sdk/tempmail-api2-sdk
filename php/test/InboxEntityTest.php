@@ -33,7 +33,7 @@ class InboxEntityTest extends TestCase
         // The basic flow consumes synthetic IDs from the fixture. In live mode
         // without an *_ENTID env override, those IDs hit the live API and 4xx.
         if (!empty($setup["synthetic_only"])) {
-            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set TEMPMAILAPI__TEST_INBOX_ENTID JSON to run live");
+            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set TEMPMAIL_API2_TEST_INBOX_ENTID JSON to run live");
             return;
         }
         $client = $setup["client"];
@@ -44,7 +44,7 @@ class InboxEntityTest extends TestCase
             Vs::getpath($setup["data"], "new.inbox"), "inbox_ref01"));
 
         $inbox_ref01_data_result = $inbox_ref01_ent->create($inbox_ref01_data, null);
-        $inbox_ref01_data = Helpers::to_map($inbox_ref01_data_result);
+        $inbox_ref01_data = Helpers::to_map(is_object($inbox_ref01_data_result) && method_exists($inbox_ref01_data_result, 'data_get') ? $inbox_ref01_data_result->data_get() : $inbox_ref01_data_result);
         $this->assertNotNull($inbox_ref01_data);
 
         // LOAD
@@ -52,11 +52,6 @@ class InboxEntityTest extends TestCase
         $inbox_ref01_data_dt0_loaded = $inbox_ref01_ent->load($inbox_ref01_match_dt0, null);
         $this->assertNotNull($inbox_ref01_data_dt0_loaded);
 
-        // REMOVE
-        $inbox_ref01_match_rm0 = [
-            "id" => $inbox_ref01_data["id"],
-        ];
-        $inbox_ref01_ent->remove($inbox_ref01_match_rm0, null);
 
     }
 }
@@ -83,22 +78,22 @@ function inbox_basic_setup($extra)
     // Detect ENTID env override before envOverride consumes it. When live
     // mode is on without a real override, the basic test runs against synthetic
     // IDs from the fixture and 4xx's. Surface this so the test can skip.
-    $entid_env_raw = getenv("TEMPMAILAPI__TEST_INBOX_ENTID");
+    $entid_env_raw = getenv("TEMPMAIL_API2_TEST_INBOX_ENTID");
     $idmap_overridden = $entid_env_raw !== false && str_starts_with(trim($entid_env_raw), "{");
 
     $env = Runner::env_override([
-        "TEMPMAILAPI__TEST_INBOX_ENTID" => $idmap,
-        "TEMPMAILAPI__TEST_LIVE" => "FALSE",
-        "TEMPMAILAPI__TEST_EXPLAIN" => "FALSE",
+        "TEMPMAIL_API2_TEST_INBOX_ENTID" => $idmap,
+        "TEMPMAIL_API2_TEST_LIVE" => "FALSE",
+        "TEMPMAIL_API2_TEST_EXPLAIN" => "FALSE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
-        $env["TEMPMAILAPI__TEST_INBOX_ENTID"]);
+        $env["TEMPMAIL_API2_TEST_INBOX_ENTID"]);
     if ($idmap_resolved === null) {
         $idmap_resolved = Helpers::to_map($idmap);
     }
 
-    if ($env["TEMPMAILAPI__TEST_LIVE"] === "TRUE") {
+    if ($env["TEMPMAIL_API2_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
             ],
@@ -107,13 +102,13 @@ function inbox_basic_setup($extra)
         $client = new TempmailApi2SDK(Helpers::to_map($merged_opts));
     }
 
-    $live = $env["TEMPMAILAPI__TEST_LIVE"] === "TRUE";
+    $live = $env["TEMPMAIL_API2_TEST_LIVE"] === "TRUE";
     return [
         "client" => $client,
         "data" => $entity_data,
         "idmap" => $idmap_resolved,
         "env" => $env,
-        "explain" => $env["TEMPMAILAPI__TEST_EXPLAIN"] === "TRUE",
+        "explain" => $env["TEMPMAIL_API2_TEST_EXPLAIN"] === "TRUE",
         "live" => $live,
         "synthetic_only" => $live && !$idmap_overridden,
         "now" => (int)(microtime(true) * 1000),

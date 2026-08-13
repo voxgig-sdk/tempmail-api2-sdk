@@ -98,7 +98,7 @@ local domain = client:Domain(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `table` | No |  |
+| `domains` | `table` | No |  |
 
 ### Operations
 
@@ -150,7 +150,7 @@ local email = client:Email(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | `string` | No |  |
+| `contentType` | `string` | No |  |
 | `filename` | `string` | No |  |
 | `size` | `number` | No |  |
 
@@ -213,7 +213,8 @@ local inbox = client:Inbox(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `domain` | `string` | No |  |
-| `email` | `table` | No |  |
+| `email` | `string` | No |  |
+| `emails` | `table` | No |  |
 | `token` | `string` | No |  |
 | `username` | `string` | Yes |  |
 

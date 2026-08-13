@@ -28,7 +28,7 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"active": true,
-						"name": "domain",
+						"name": "domains",
 						"req": false,
 						"type": "`$ARRAY`",
 						"index$": 0,
@@ -43,6 +43,7 @@ func MakeConfig() map[string]any {
 							map[string]any{
 								"active": true,
 								"args": map[string]any{},
+								"kind": "http",
 								"method": "GET",
 								"orig": "/domains",
 								"parts": []any{
@@ -51,12 +52,11 @@ func MakeConfig() map[string]any {
 								"select": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
-									"res": "`body`",
+									"res": "`body.domains`",
 								},
 								"index$": 0,
 							},
 						},
-						"key$": "list",
 					},
 				},
 				"relations": map[string]any{
@@ -67,7 +67,7 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"active": true,
-						"name": "content_type",
+						"name": "contentType",
 						"req": false,
 						"type": "`$STRING`",
 						"index$": 0,
@@ -117,6 +117,7 @@ func MakeConfig() map[string]any {
 										},
 									},
 								},
+								"kind": "http",
 								"method": "GET",
 								"orig": "/inbox/{token}/{emailId}",
 								"parts": []any{
@@ -137,12 +138,11 @@ func MakeConfig() map[string]any {
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
-									"res": "`body`",
+									"res": "`body.attachments`",
 								},
 								"index$": 0,
 							},
 						},
-						"key$": "list",
 					},
 					"remove": map[string]any{
 						"input": "data",
@@ -172,6 +172,7 @@ func MakeConfig() map[string]any {
 										},
 									},
 								},
+								"kind": "http",
 								"method": "DELETE",
 								"orig": "/inbox/{token}/{emailId}",
 								"parts": []any{
@@ -197,7 +198,6 @@ func MakeConfig() map[string]any {
 								"index$": 0,
 							},
 						},
-						"key$": "remove",
 					},
 				},
 				"relations": map[string]any{
@@ -221,22 +221,29 @@ func MakeConfig() map[string]any {
 						"active": true,
 						"name": "email",
 						"req": false,
-						"type": "`$ARRAY`",
+						"type": "`$STRING`",
 						"index$": 1,
+					},
+					map[string]any{
+						"active": true,
+						"name": "emails",
+						"req": false,
+						"type": "`$ARRAY`",
+						"index$": 2,
 					},
 					map[string]any{
 						"active": true,
 						"name": "token",
 						"req": false,
 						"type": "`$STRING`",
-						"index$": 2,
+						"index$": 3,
 					},
 					map[string]any{
 						"active": true,
 						"name": "username",
 						"req": true,
 						"type": "`$STRING`",
-						"index$": 3,
+						"index$": 4,
 					},
 				},
 				"name": "inbox",
@@ -248,6 +255,7 @@ func MakeConfig() map[string]any {
 							map[string]any{
 								"active": true,
 								"args": map[string]any{},
+								"kind": "http",
 								"method": "POST",
 								"orig": "/inbox/create",
 								"parts": []any{
@@ -266,6 +274,7 @@ func MakeConfig() map[string]any {
 							map[string]any{
 								"active": true,
 								"args": map[string]any{},
+								"kind": "http",
 								"method": "POST",
 								"orig": "/inbox/custom",
 								"parts": []any{
@@ -282,7 +291,6 @@ func MakeConfig() map[string]any {
 								"index$": 1,
 							},
 						},
-						"key$": "create",
 					},
 					"load": map[string]any{
 						"input": "data",
@@ -303,6 +311,7 @@ func MakeConfig() map[string]any {
 										},
 									},
 								},
+								"kind": "http",
 								"method": "GET",
 								"orig": "/inbox/{token}",
 								"parts": []any{
@@ -326,7 +335,6 @@ func MakeConfig() map[string]any {
 								"index$": 0,
 							},
 						},
-						"key$": "load",
 					},
 					"remove": map[string]any{
 						"input": "data",
@@ -347,6 +355,7 @@ func MakeConfig() map[string]any {
 										},
 									},
 								},
+								"kind": "http",
 								"method": "DELETE",
 								"orig": "/inbox/{token}",
 								"parts": []any{
@@ -370,7 +379,6 @@ func MakeConfig() map[string]any {
 								"index$": 0,
 							},
 						},
-						"key$": "remove",
 					},
 				},
 				"relations": map[string]any{

@@ -26,7 +26,7 @@ class InboxEntityTest < Minitest::Test
     # The basic flow consumes synthetic IDs from the fixture. In live mode
     # without an *_ENTID env override, those IDs hit the live API and 4xx.
     if setup[:synthetic_only]
-      skip "live entity test uses synthetic IDs from fixture — set TEMPMAILAPI__TEST_INBOX_ENTID JSON to run live"
+      skip "live entity test uses synthetic IDs from fixture — set TEMPMAIL_API2_TEST_INBOX_ENTID JSON to run live"
       return
     end
     client = setup[:client]
@@ -37,7 +37,7 @@ class InboxEntityTest < Minitest::Test
       Vs.getpath(setup[:data], "new.inbox"), "inbox_ref01"))
 
     inbox_ref01_data_result = inbox_ref01_ent.create(inbox_ref01_data, nil)
-    inbox_ref01_data = Helpers.to_map(inbox_ref01_data_result)
+    inbox_ref01_data = Helpers.to_map(inbox_ref01_data_result.respond_to?(:data_get) ? inbox_ref01_data_result.data_get : inbox_ref01_data_result)
     assert !inbox_ref01_data.nil?
 
     # LOAD
@@ -45,11 +45,6 @@ class InboxEntityTest < Minitest::Test
     inbox_ref01_data_dt0_loaded = inbox_ref01_ent.load(inbox_ref01_match_dt0, nil)
     assert !inbox_ref01_data_dt0_loaded.nil?
 
-    # REMOVE
-    inbox_ref01_match_rm0 = {
-      "id" => inbox_ref01_data["id"],
-    }
-    inbox_ref01_ent.remove(inbox_ref01_match_rm0, nil)
 
   end
 end
@@ -80,22 +75,22 @@ def inbox_basic_setup(extra)
   # Detect ENTID env override before envOverride consumes it. When live
   # mode is on without a real override, the basic test runs against synthetic
   # IDs from the fixture and 4xx's. Surface this so the test can skip.
-  entid_env_raw = ENV["TEMPMAILAPI__TEST_INBOX_ENTID"]
+  entid_env_raw = ENV["TEMPMAIL_API2_TEST_INBOX_ENTID"]
   idmap_overridden = !entid_env_raw.nil? && entid_env_raw.strip.start_with?("{")
 
   env = Runner.env_override({
-    "TEMPMAILAPI__TEST_INBOX_ENTID" => idmap,
-    "TEMPMAILAPI__TEST_LIVE" => "FALSE",
-    "TEMPMAILAPI__TEST_EXPLAIN" => "FALSE",
+    "TEMPMAIL_API2_TEST_INBOX_ENTID" => idmap,
+    "TEMPMAIL_API2_TEST_LIVE" => "FALSE",
+    "TEMPMAIL_API2_TEST_EXPLAIN" => "FALSE",
   })
 
   idmap_resolved = Helpers.to_map(
-    env["TEMPMAILAPI__TEST_INBOX_ENTID"])
+    env["TEMPMAIL_API2_TEST_INBOX_ENTID"])
   if idmap_resolved.nil?
     idmap_resolved = Helpers.to_map(idmap)
   end
 
-  if env["TEMPMAILAPI__TEST_LIVE"] == "TRUE"
+  if env["TEMPMAIL_API2_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
       },
@@ -104,13 +99,13 @@ def inbox_basic_setup(extra)
     client = TempmailApi2SDK.new(Helpers.to_map(merged_opts))
   end
 
-  live = env["TEMPMAILAPI__TEST_LIVE"] == "TRUE"
+  live = env["TEMPMAIL_API2_TEST_LIVE"] == "TRUE"
   {
     client: client,
     data: entity_data,
     idmap: idmap_resolved,
     env: env,
-    explain: env["TEMPMAILAPI__TEST_EXPLAIN"] == "TRUE",
+    explain: env["TEMPMAIL_API2_TEST_EXPLAIN"] == "TRUE",
     live: live,
     synthetic_only: live && !idmap_overridden,
     now: (Time.now.to_f * 1000).to_i,

@@ -10,25 +10,25 @@
 
 # Domain entity data model.
 #
-# @!attribute [rw] domain
+# @!attribute [rw] domains
 #   @return [Array, nil]
 Domain = Struct.new(
-  :domain,
+  :domains,
   keyword_init: true
 )
 
 # Request payload for Domain#list.
 #
-# @!attribute [rw] domain
+# @!attribute [rw] domains
 #   @return [Array, nil]
 DomainListMatch = Struct.new(
-  :domain,
+  :domains,
   keyword_init: true
 )
 
 # Email entity data model.
 #
-# @!attribute [rw] content_type
+# @!attribute [rw] contentType
 #   @return [String, nil]
 #
 # @!attribute [rw] filename
@@ -37,7 +37,7 @@ DomainListMatch = Struct.new(
 # @!attribute [rw] size
 #   @return [Integer, nil]
 Email = Struct.new(
-  :content_type,
+  :contentType,
   :filename,
   :size,
   keyword_init: true
@@ -75,6 +75,9 @@ EmailRemoveMatch = Struct.new(
 #   @return [String, nil]
 #
 # @!attribute [rw] email
+#   @return [String, nil]
+#
+# @!attribute [rw] emails
 #   @return [Array, nil]
 #
 # @!attribute [rw] token
@@ -85,6 +88,7 @@ EmailRemoveMatch = Struct.new(
 Inbox = Struct.new(
   :domain,
   :email,
+  :emails,
   :token,
   :username,
   keyword_init: true
@@ -105,6 +109,9 @@ InboxLoadMatch = Struct.new(
 #   @return [String, nil]
 #
 # @!attribute [rw] email
+#   @return [String, nil]
+#
+# @!attribute [rw] emails
 #   @return [Array, nil]
 #
 # @!attribute [rw] token
@@ -115,6 +122,7 @@ InboxLoadMatch = Struct.new(
 InboxCreateData = Struct.new(
   :domain,
   :email,
+  :emails,
   :token,
   :username,
   keyword_init: true

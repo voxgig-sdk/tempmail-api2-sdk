@@ -106,7 +106,7 @@ fmt.Println(domain.GetName()) // "domain"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `[]any` | No |  |
+| `domains` | `[]any` | No |  |
 
 ### Operations
 
@@ -157,7 +157,7 @@ fmt.Println(email.GetName()) // "email"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | `string` | No |  |
+| `contentType` | `string` | No |  |
 | `filename` | `string` | No |  |
 | `size` | `int` | No |  |
 
@@ -223,7 +223,8 @@ fmt.Println(inbox.GetName()) // "inbox"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `domain` | `string` | No |  |
-| `email` | `[]any` | No |  |
+| `email` | `string` | No |  |
+| `emails` | `[]any` | No |  |
 | `token` | `string` | No |  |
 | `username` | `string` | Yes |  |
 

@@ -80,11 +80,11 @@ function email_direct_setup(mockres)
   local calls = {}
 
   local env = runner.env_override({
-    ["TEMPMAILAPI__TEST_EMAIL_ENTID"] = {},
-    ["TEMPMAILAPI__TEST_LIVE"] = "FALSE",
+    ["TEMPMAIL_API2_TEST_EMAIL_ENTID"] = {},
+    ["TEMPMAIL_API2_TEST_LIVE"] = "FALSE",
   })
 
-  local live = env["TEMPMAILAPI__TEST_LIVE"] == "TRUE"
+  local live = env["TEMPMAIL_API2_TEST_LIVE"] == "TRUE"
 
   if live then
     local merged_opts = {

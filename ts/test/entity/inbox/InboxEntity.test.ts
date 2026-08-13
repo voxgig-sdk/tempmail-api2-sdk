@@ -26,8 +26,8 @@ import {
 describe('InboxEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when TEMPMAILAPI2_TEST_LIVE=TRUE.
-  afterEach(liveDelay('TEMPMAILAPI2_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when TEMPMAIL_API2_TEST_LIVE=TRUE.
+  afterEach(liveDelay('TEMPMAIL_API2_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = TempmailApi2SDK.test()
@@ -38,7 +38,7 @@ describe('InboxEntity', async () => {
 
   test('basic', async (t) => {
 
-    const live = 'TRUE' === process.env.TEMPMAIL_API__TEST_LIVE
+    const live = 'TRUE' === process.env.TEMPMAIL_API2_TEST_LIVE
     for (const op of ['create', 'load', 'remove']) {
       if (maybeSkipControl(t, 'entityOp', 'inbox.' + op, live)) return
     }
@@ -48,7 +48,7 @@ describe('InboxEntity', async () => {
     // fixture (entity TestData.json). Those don't exist on the live API.
     // Skip live runs unless the user provided a real ENTID env override.
     if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set TEMPMAIL_API__TEST_INBOX_ENTID JSON to run live')
+      t.skip('live entity test uses synthetic IDs from fixture — set TEMPMAIL_API2_TEST_INBOX_ENTID JSON to run live')
       return
     }
     const client = setup.client
@@ -62,15 +62,11 @@ describe('InboxEntity', async () => {
     const inbox_ref01_ent = client.Inbox()
     let inbox_ref01_data = setup.data.new.inbox['inbox_ref01']
 
-    inbox_ref01_data = await inbox_ref01_ent.create(inbox_ref01_data)
+    inbox_ref01_data = (await inbox_ref01_ent.create(inbox_ref01_data)).data()
     assert(null != inbox_ref01_data)
 
 
 
-    // REMOVE
-    const inbox_ref01_match_rm0: any = { id: inbox_ref01_data.id }
-    await inbox_ref01_ent.remove(inbox_ref01_match_rm0)
-  
 
   })
 })
@@ -112,18 +108,18 @@ function basicSetup(extra?: any) {
   // basic flow consumes synthetic IDs from the fixture file; without an
   // override those synthetic IDs reach the live API and 4xx. Surface this
   // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['TEMPMAIL_API__TEST_INBOX_ENTID']
+  const idmapEnvVal = process.env['TEMPMAIL_API2_TEST_INBOX_ENTID']
   const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
 
   const env = envOverride({
-    'TEMPMAIL_API__TEST_INBOX_ENTID': idmap,
-    'TEMPMAIL_API__TEST_LIVE': 'FALSE',
-    'TEMPMAIL_API__TEST_EXPLAIN': 'FALSE',
+    'TEMPMAIL_API2_TEST_INBOX_ENTID': idmap,
+    'TEMPMAIL_API2_TEST_LIVE': 'FALSE',
+    'TEMPMAIL_API2_TEST_EXPLAIN': 'FALSE',
   })
 
-  idmap = env['TEMPMAIL_API__TEST_INBOX_ENTID']
+  idmap = env['TEMPMAIL_API2_TEST_INBOX_ENTID']
 
-  const live = 'TRUE' === env.TEMPMAIL_API__TEST_LIVE
+  const live = 'TRUE' === env.TEMPMAIL_API2_TEST_LIVE
 
   if (live) {
     client = new TempmailApi2SDK(merge([
@@ -140,7 +136,7 @@ function basicSetup(extra?: any) {
     client,
     struct,
     data: entityData,
-    explain: 'TRUE' === env.TEMPMAIL_API__TEST_EXPLAIN,
+    explain: 'TRUE' === env.TEMPMAIL_API2_TEST_EXPLAIN,
     live,
     syntheticOnly: live && !idmapOverridden,
     now: Date.now(),

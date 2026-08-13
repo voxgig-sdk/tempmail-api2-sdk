@@ -19,11 +19,15 @@ import {
 describe('DomainDirect', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when TEMPMAILAPI2_TEST_LIVE=TRUE.
-  afterEach(liveDelay('TEMPMAILAPI2_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when TEMPMAIL_API2_TEST_LIVE=TRUE.
+  afterEach(liveDelay('TEMPMAIL_API2_TEST_LIVE'))
 
   test('direct-exists', async () => {
     const sdk = new TempmailApi2SDK({
+      // Concrete base: a live construction must satisfy any server
+      // variables a templated base URL declares; overriding base with a
+      // literal (as the direct flow tests do) sidesteps the requirement.
+      base: 'http://localhost:8080',
       system: { fetch: async () => ({}) }
     })
     assert('function' === typeof sdk.direct)
@@ -77,17 +81,17 @@ function directSetup(mockres?: any) {
   const calls: any[] = []
 
   const env = envOverride({
-    'TEMPMAILAPI__TEST_DOMAIN_ENTID': {},
-    'TEMPMAILAPI__TEST_LIVE': 'FALSE',
+    'TEMPMAIL_API2_TEST_DOMAIN_ENTID': {},
+    'TEMPMAIL_API2_TEST_LIVE': 'FALSE',
   })
 
-  const live = 'TRUE' === env.TEMPMAILAPI__TEST_LIVE
+  const live = 'TRUE' === env.TEMPMAIL_API2_TEST_LIVE
 
   if (live) {
     const client = new TempmailApi2SDK({
     })
 
-    let idmap: any = env['TEMPMAILAPI__TEST_DOMAIN_ENTID']
+    let idmap: any = env['TEMPMAIL_API2_TEST_DOMAIN_ENTID']
     if ('string' === typeof idmap && idmap.startsWith('{')) {
       idmap = JSON.parse(idmap)
     }

@@ -68,12 +68,12 @@ Every entity operation returns `(value, error)`. Check `err` before
 using the value — there is no exception to catch:
 
 ```go
-domains, err := client.Domain(nil).List(nil, nil)
+emails, err := client.Email(nil).List(nil, nil)
 if err != nil {
     // handle err
     return
 }
-_ = domains
+_ = emails
 ```
 
 `Direct` follows the same `(value, error)` convention:
@@ -137,13 +137,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-domain, err := client.Domain(nil).List(
+email, err := client.Email(nil).List(
     nil, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(domain) // the returned mock data
+fmt.Println(email) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -266,7 +266,7 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 
 | Field | Description |
 | --- | --- |
-| `"domain"` |  |
+| `"domains"` |  |
 
 Operations: List.
 
@@ -276,7 +276,7 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `"content_type"` |  |
+| `"contentType"` |  |
 | `"filename"` |  |
 | `"size"` |  |
 
@@ -290,6 +290,7 @@ API path: `/inbox/{token}/{emailId}`
 | --- | --- |
 | `"domain"` |  |
 | `"email"` |  |
+| `"emails"` |  |
 | `"token"` |  |
 | `"username"` |  |
 
@@ -316,7 +317,7 @@ Create an instance: `domain := client.Domain(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `[]any` |  |
+| `domains` | `[]any` |  |
 
 #### Example: List
 
@@ -344,7 +345,7 @@ Create an instance: `email := client.Email(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `content_type` | `string` |  |
+| `contentType` | `string` |  |
 | `filename` | `string` |  |
 | `size` | `int` |  |
 
@@ -376,7 +377,8 @@ Create an instance: `inbox := client.Inbox(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `domain` | `string` |  |
-| `email` | `[]any` |  |
+| `email` | `string` |  |
+| `emails` | `[]any` |  |
 | `token` | `string` |  |
 | `username` | `string` |  |
 
@@ -476,11 +478,11 @@ Entity instances are stateful. After a successful `List`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-domain := client.Domain(nil)
-domain.List(nil, nil)
+email := client.Email(nil)
+email.List(nil, nil)
 
-// domain.Data() now returns the domain data from the last list
-// domain.Match() returns the last match criteria
+// email.Data() now returns the email data from the last list
+// email.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

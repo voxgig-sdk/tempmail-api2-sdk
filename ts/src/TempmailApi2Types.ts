@@ -6,15 +6,15 @@
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 
 export interface Domain {
-  domain?: any[]
+  domains?: any[]
 }
 
 export interface DomainListMatch {
-  domain?: any[]
+  domains?: any[]
 }
 
 export interface Email {
-  content_type?: string
+  contentType?: string
   filename?: string
   size?: number
 }
@@ -31,7 +31,8 @@ export interface EmailRemoveMatch {
 
 export interface Inbox {
   domain?: string
-  email?: any[]
+  email?: string
+  emails?: any[]
   token?: string
   username: string
 }
@@ -42,9 +43,16 @@ export interface InboxLoadMatch {
 
 export interface InboxCreateData {
   domain?: string
-  email?: any[]
+  email?: string
+  emails?: any[]
   token?: string
   username: string
+
+  // Selects a custom action instead of the plain create:
+  //   'create' | 'custom'
+  // The remaining keys are that action's own payload.
+  $action?: string
+  [action: string]: any
 }
 
 export interface InboxRemoveMatch {

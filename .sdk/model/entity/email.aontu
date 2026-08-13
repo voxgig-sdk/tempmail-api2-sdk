@@ -6,7 +6,7 @@ main: kit: entity: email: {
 
   fields: [
     {
-      name: "content_type"
+      name: "contentType"
       req: false
       type: "`$STRING`"
     }
@@ -66,7 +66,7 @@ main: kit: entity: email: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.attachments`"
           }
         }
       ]

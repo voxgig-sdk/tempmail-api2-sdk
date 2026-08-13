@@ -13,6 +13,11 @@ main: kit: entity: inbox: {
     {
       name: "email"
       req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "emails"
+      req: false
       type: "`$ARRAY`"
     }
     {

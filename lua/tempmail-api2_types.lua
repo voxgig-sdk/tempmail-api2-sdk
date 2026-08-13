@@ -7,13 +7,13 @@
 -- edit by hand.
 
 ---@class Domain
----@field domain? table
+---@field domains? table
 
 ---@class DomainListMatch
----@field domain? table
+---@field domains? table
 
 ---@class Email
----@field content_type? string
+---@field contentType? string
 ---@field filename? string
 ---@field size? number
 
@@ -27,7 +27,8 @@
 
 ---@class Inbox
 ---@field domain? string
----@field email? table
+---@field email? string
+---@field emails? table
 ---@field token? string
 ---@field username string
 
@@ -36,7 +37,8 @@
 
 ---@class InboxCreateData
 ---@field domain? string
----@field email? table
+---@field email? string
+---@field emails? table
 ---@field token? string
 ---@field username string
 

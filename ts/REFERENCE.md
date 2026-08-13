@@ -140,7 +140,7 @@ const domain = client.Domain()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `any[]` | No |  |
+| `domains` | `any[]` | No |  |
 
 ### Operations
 
@@ -190,7 +190,7 @@ const email = client.Email()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | `string` | No |  |
+| `contentType` | `string` | No |  |
 | `filename` | `string` | No |  |
 | `size` | `number` | No |  |
 
@@ -201,7 +201,7 @@ const email = client.Email()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Email().list()
+const results = await client.Email().list({ email_id: "example", token: "example" })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -251,9 +251,31 @@ const inbox = client.Inbox()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `domain` | `string` | No |  |
-| `email` | `any[]` | No |  |
+| `email` | `string` | No |  |
+| `emails` | `any[]` | No |  |
 | `token` | `string` | No |  |
 | `username` | `string` | Yes |  |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `create` | `/inbox/create` | `client.Inbox().create({ $action: 'create', ... })` |
+| `custom` | `/inbox/custom` | `client.Inbox().create({ $action: 'custom', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Inbox record — check the API definition for its shape.
+
+```ts
+const result = await client.Inbox().create({
+  $action: 'create',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 

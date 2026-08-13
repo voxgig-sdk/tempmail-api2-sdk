@@ -101,7 +101,7 @@ domain = client.Domain
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `Array` | No |  |
+| `domains` | `Array` | No |  |
 
 ### Operations
 
@@ -153,7 +153,7 @@ email = client.Email
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | `String` | No |  |
+| `contentType` | `String` | No |  |
 | `filename` | `String` | No |  |
 | `size` | `Integer` | No |  |
 
@@ -216,7 +216,8 @@ inbox = client.Inbox
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `domain` | `String` | No |  |
-| `email` | `Array` | No |  |
+| `email` | `String` | No |  |
+| `emails` | `Array` | No |  |
 | `token` | `String` | No |  |
 | `username` | `String` | Yes |  |
 

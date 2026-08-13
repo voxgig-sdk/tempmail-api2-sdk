@@ -21,7 +21,7 @@ class Config {
 
 
   main = {
-    name: 'ProjectName',
+    name: 'TempmailApi2',
   }
 
 
@@ -62,7 +62,7 @@ class Config {
       "fields": [
         {
           "active": true,
-          "name": "domain",
+          "name": "domains",
           "req": false,
           "type": "`$ARRAY`",
           "index$": 0
@@ -77,6 +77,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "GET",
               "orig": "/domains",
               "parts": [
@@ -85,7 +86,7 @@ class Config {
               "select": {},
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.domains`"
               },
               "index$": 0
             }
@@ -101,7 +102,7 @@ class Config {
       "fields": [
         {
           "active": true,
-          "name": "content_type",
+          "name": "contentType",
           "req": false,
           "type": "`$STRING`",
           "index$": 0
@@ -151,6 +152,7 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/inbox/{token}/{emailId}",
               "parts": [
@@ -171,7 +173,7 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.attachments`"
               },
               "index$": 0
             }
@@ -206,6 +208,7 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "DELETE",
               "orig": "/inbox/{token}/{emailId}",
               "parts": [
@@ -255,22 +258,29 @@ class Config {
           "active": true,
           "name": "email",
           "req": false,
-          "type": "`$ARRAY`",
+          "type": "`$STRING`",
           "index$": 1
+        },
+        {
+          "active": true,
+          "name": "emails",
+          "req": false,
+          "type": "`$ARRAY`",
+          "index$": 2
         },
         {
           "active": true,
           "name": "token",
           "req": false,
           "type": "`$STRING`",
-          "index$": 2
+          "index$": 3
         },
         {
           "active": true,
           "name": "username",
           "req": true,
           "type": "`$STRING`",
-          "index$": 3
+          "index$": 4
         }
       ],
       "name": "inbox",
@@ -282,6 +292,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "POST",
               "orig": "/inbox/create",
               "parts": [
@@ -300,6 +311,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "POST",
               "orig": "/inbox/custom",
               "parts": [
@@ -337,6 +349,7 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/inbox/{token}",
               "parts": [
@@ -381,6 +394,7 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "DELETE",
               "orig": "/inbox/{token}",
               "parts": [

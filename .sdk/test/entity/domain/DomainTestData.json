@@ -2,20 +2,20 @@
   "existing": {
     "domain": {
       "DOMAIN00": {
-        "domain": []
+        "domains": []
       },
       "DOMAIN01": {
-        "domain": []
+        "domains": []
       },
       "DOMAIN02": {
-        "domain": []
+        "domains": []
       }
     }
   },
   "new": {
     "domain": {
       "domain_ref01": {
-        "domain": []
+        "domains": []
       }
     }
   }

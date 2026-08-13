@@ -37,7 +37,7 @@ begin
   # list returns an Array of Domain records — iterate directly.
   domains = client.Domain.list
   domains.each do |item|
-    puts "#{item["domain"]}"
+    puts "#{item["domains"]}"
   end
 rescue => err
   warn "list failed: #{err}"
@@ -51,7 +51,7 @@ Entity operations raise on failure, so rescue them:
 
 ```ruby
 begin
-  domains = client.Domain.list()
+  emails = client.Email.list()
 rescue => err
   warn "list failed: #{err}"
 end
@@ -119,9 +119,10 @@ Create a mock client for unit testing — no server required:
 ```ruby
 client = TempmailApi2SDK.test
 
-# Entity ops return the bare mock record (raises on error).
-domain = client.Domain.list()
-puts domain
+# Entity ops return the ENTITY (raises on error);
+# call data_get for the mock record.
+email = client.Email.list()
+puts email
 ```
 
 ### Use a custom fetch function
@@ -241,7 +242,7 @@ returns a result `Hash` with these keys:
 
 | Field | Description |
 | --- | --- |
-| `domain` |  |
+| `domains` |  |
 
 Operations: List.
 
@@ -251,7 +252,7 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `content_type` |  |
+| `contentType` |  |
 | `filename` |  |
 | `size` |  |
 
@@ -265,6 +266,7 @@ API path: `/inbox/{token}/{emailId}`
 | --- | --- |
 | `domain` |  |
 | `email` |  |
+| `emails` |  |
 | `token` |  |
 | `username` |  |
 
@@ -291,7 +293,7 @@ Create an instance: `domain = client.Domain`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `Array` |  |
+| `domains` | `Array` |  |
 
 #### Example: List
 
@@ -316,7 +318,7 @@ Create an instance: `email = client.Email`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `content_type` | `String` |  |
+| `contentType` | `String` |  |
 | `filename` | `String` |  |
 | `size` | `Integer` |  |
 
@@ -345,14 +347,15 @@ Create an instance: `inbox = client.Inbox`
 | Field | Type | Description |
 | --- | --- | --- |
 | `domain` | `String` |  |
-| `email` | `Array` |  |
+| `email` | `String` |  |
+| `emails` | `Array` |  |
 | `token` | `String` |  |
 | `username` | `String` |  |
 
 #### Example: Load
 
 ```ruby
-# load returns the bare Inbox record (raises on error).
+# load returns the ENTITY — call data_get for the Inbox record (raises on error).
 inbox = client.Inbox.load({ "id" => "inbox_id" })
 ```
 
@@ -441,11 +444,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-domain = client.Domain
-domain.list()
+email = client.Email
+email.list()
 
-# domain.data_get now returns the domain data from the last list
-# domain.match_get returns the last match criteria
+# email.data_get now returns the email data from the last list
+# email.match_get returns the last match criteria
 ```
 
 Call `make` to create a fresh instance with the same configuration

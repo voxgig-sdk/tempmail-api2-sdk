@@ -95,7 +95,7 @@ domain = client.Domain()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `list` | No |  |
+| `domains` | `list` | No |  |
 
 ### Operations
 
@@ -148,7 +148,7 @@ email = client.Email()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `content_type` | `str` | No |  |
+| `contentType` | `str` | No |  |
 | `filename` | `str` | No |  |
 | `size` | `int` | No |  |
 
@@ -159,7 +159,7 @@ email = client.Email()
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Email().list()
+results = client.Email().list({"email_id": "example", "token": "example"})
 for email in results:
     print(email)
 ```
@@ -212,7 +212,8 @@ inbox = client.Inbox()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `domain` | `str` | No |  |
-| `email` | `list` | No |  |
+| `email` | `str` | No |  |
+| `emails` | `list` | No |  |
 | `token` | `str` | No |  |
 | `username` | `str` | Yes |  |
 

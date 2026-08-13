@@ -38,18 +38,27 @@ network, and no credentials:
 ### TypeScript
 
 ```ts
-const client = TempmailApi2SDK.test()
-const domains = await client.Domain().list()
-// domains is an array of bare Domain records populated with mock data
-console.log(domains)
+// The offline mock starts EMPTY — seed it with the records the test needs.
+// Shape: { entity: { <entity-name>: { <id>: <record> } } }
+const client = TempmailApi2SDK.test({
+  entity: {
+    email: {
+      test01: { id: 'test01' },
+    },
+  },
+})
+const emails = await client.Email().list()
+// emails is an array of Email entities, populated with mock data
+// — call emails[0].data() for the record itself
+console.log(emails)
 ```
 
 ### Python
 
 ```python
 client = TempmailApi2SDK.test()
-domains = client.Domain().list()
-print(domains)
+emails = client.Email().list()
+print(emails)
 ```
 
 ### PHP
@@ -57,16 +66,16 @@ print(domains)
 ```php
 // Seed fixture data so offline calls resolve without a live server.
 $client = TempmailApi2SDK::test([
-    "entity" => ["domain" => ["test01" => []]],
+    "entity" => ["email" => ["test01" => []]],
 ]);
-$domains = $client->Domain()->list();
+$emails = $client->Email()->list();
 ```
 
 ### Golang
 
 ```go
 client := sdk.Test()
-result, err := client.Domain(nil).List(
+result, err := client.Email(nil).List(
     nil, nil,
 )
 ```
@@ -76,16 +85,16 @@ result, err := client.Domain(nil).List(
 ```ruby
 # Seed fixture data so offline calls resolve without a live server.
 client = TempmailApi2SDK.test({
-  "entity" => { "domain" => { "test01" => {} } },
+  "entity" => { "email" => { "test01" => {} } },
 })
-domains = client.Domain.list()
+emails = client.Email.list()
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local results, err = client:Domain():list()
+local results, err = client:Email():list()
 ```
 
 ## Packages
@@ -110,7 +119,7 @@ import { TempmailApi2SDK } from '@voxgig-sdk/tempmail-api2'
 
 const client = new TempmailApi2SDK()
 
-// List all domains (returns Domain[])
+// List all domains (returns DomainEntity[] — .data() for the record)
 const domains = await client.Domain().list()
 for (const domain of domains) {
   console.log(domain)
@@ -157,7 +166,7 @@ The API exposes 3 entities:
 | --- | --- | --- |
 | **Domain** | The Domain entity (list). | `/domains` |
 | **Email** | The Email entity (list, remove). | `/inbox/{token}/{emailId}` |
-| **Inbox** | The Inbox entity (create, load, remove). | `/inbox/create` |
+| **Inbox** | The Inbox entity (create, load, remove). | `/inbox/{token}` |
 
 The operations available across these entities are **load**, **list**, **create**, **remove** — see each entity's
 own list above for exactly which it supports.
@@ -345,6 +354,9 @@ Pass custom features via the `extend` option at construction time.
 
 This SDK is generated from the upstream OpenAPI specification. It is an
 unofficial client and is not affiliated with the API provider.
+
+The OpenAPI spec(s) this SDK was generated from are kept in the
+[`.sdk/def/`](.sdk/def/) folder.
 
 - Upstream API: [https://tempmail.lol](https://tempmail.lol)
 

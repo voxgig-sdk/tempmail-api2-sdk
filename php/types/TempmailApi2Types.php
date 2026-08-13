@@ -15,19 +15,19 @@ declare(strict_types=1);
 /** Domain entity data model. */
 class Domain
 {
-    public ?array $domain = null;
+    public ?array $domains = null;
 }
 
 /** Request payload for Domain#list. */
 class DomainListMatch
 {
-    public ?array $domain = null;
+    public ?array $domains = null;
 }
 
 /** Email entity data model. */
 class Email
 {
-    public ?string $content_type = null;
+    public ?string $contentType = null;
     public ?string $filename = null;
     public ?int $size = null;
 }
@@ -50,7 +50,8 @@ class EmailRemoveMatch
 class Inbox
 {
     public ?string $domain = null;
-    public ?array $email = null;
+    public ?string $email = null;
+    public ?array $emails = null;
     public ?string $token = null;
     public string $username;
 }
@@ -65,7 +66,8 @@ class InboxLoadMatch
 class InboxCreateData
 {
     public ?string $domain = null;
-    public ?array $email = null;
+    public ?string $email = null;
+    public ?array $emails = null;
     public ?string $token = null;
     public string $username;
 }

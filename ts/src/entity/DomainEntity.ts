@@ -37,7 +37,7 @@ class DomainEntity extends TempmailApi2EntityBase<Domain> {
 
 
 
-  async list(this: any, reqmatch?: DomainListMatch, ctrl?: Control): Promise<Domain[]> {
+  async list(this: any, reqmatch?: DomainListMatch, ctrl?: Control): Promise<DomainEntity[]> {
 
     const utility = this._utility
 
