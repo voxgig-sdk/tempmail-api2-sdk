@@ -47,6 +47,23 @@ for (const domain of domains) {
 }
 ```
 
+### 3. Load an email
+
+Email is nested under email, so provide the `email_id`.
+`load()` returns the entity directly and throws on failure:
+
+```ts
+try {
+  const email = await client.Email().load({
+    email_id: 'example_email_id',
+    token: 'example_token',
+  })
+  console.log(email)
+} catch (err) {
+  console.error('load failed:', err)
+}
+```
+
 
 ## Error handling
 
@@ -54,10 +71,10 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const emails = await client.Email().list()
-  console.log(emails)
+  const inbox = await client.Inbox().load({ id: "example_id" })
+  console.log(inbox)
 } catch (err) {
-  console.error('list failed:', err)
+  console.error('load failed:', err)
 }
 ```
 
@@ -121,10 +138,10 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = TempmailApi2SDK.test()
 
-const email = await client.Email().list()
-// email is the entity, populated with mock response data
-// — call email.data() for the record itself
-console.log(email)
+const inbox = await client.Inbox().load({ id: 'test01' })
+// inbox is the entity, populated with mock response data
+// — call inbox.data() for the record itself
+console.log(inbox)
 ```
 
 You can also use the instance method:
@@ -139,10 +156,10 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.Email()
+const entity = client.Inbox()
 
 // First call runs the operation and stores its result
-await entity.list()
+await entity.load({ id: 'example' })
 
 // Subsequent calls reuse the stored state
 const data = entity.data()
@@ -304,11 +321,16 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `contentType` |  |
-| `filename` |  |
-| `size` |  |
+| `attachments` |  |
+| `body` |  |
+| `date` |  |
+| `from` |  |
+| `html` |  |
+| `id` |  |
+| `subject` |  |
+| `to` |  |
 
-Operations: list, remove.
+Operations: load, remove.
 
 API path: `/inbox/{token}/{emailId}`
 
@@ -362,21 +384,26 @@ Create an instance: `const email = client.Email()`
 
 | Method | Description |
 | --- | --- |
-| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 | `remove(match)` | Remove the matching entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `contentType` | `string` |  |
-| `filename` | `string` |  |
-| `size` | `number` |  |
+| `attachments` | `any[]` |  |
+| `body` | `string` |  |
+| `date` | `string` |  |
+| `from` | `string` |  |
+| `html` | `string` |  |
+| `id` | `string` |  |
+| `subject` | `string` |  |
+| `to` | `string` |  |
 
-#### Example: List
+#### Example: Load
 
 ```ts
-const emails = await client.Email().list({ email_id: "example", token: "example" })
+const email = await client.Email().load({ email_id: 'email_id', token: 'token' })
 ```
 
 
@@ -481,16 +508,16 @@ import { TempmailApi2SDK } from '@voxgig-sdk/tempmail-api2'
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const email = client.Email()
-await email.list()
+const inbox = client.Inbox()
+await inbox.load({ id: "example_id" })
 
-// email.data() now returns the email data from the last `list`
-// email.match() returns the last match criteria
+// inbox.data() now returns the inbox data from the last `load`
+// inbox.match() returns { id: "example_id" }
 ```
 
 Call `make()` to create a fresh instance with the same configuration

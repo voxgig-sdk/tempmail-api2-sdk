@@ -27,13 +27,18 @@ class DomainListMatch
 /** Email entity data model. */
 class Email
 {
-    public ?string $contentType = null;
-    public ?string $filename = null;
-    public ?int $size = null;
+    public ?array $attachments = null;
+    public ?string $body = null;
+    public ?string $date = null;
+    public ?string $from = null;
+    public ?string $html = null;
+    public ?string $id = null;
+    public ?string $subject = null;
+    public ?string $to = null;
 }
 
-/** Request payload for Email#list. */
-class EmailListMatch
+/** Request payload for Email#load. */
+class EmailLoadMatch
 {
     public string $email_id;
     public string $token;

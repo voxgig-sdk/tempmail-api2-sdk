@@ -50,6 +50,19 @@ except Exception as err:
     print(f"list failed: {err}")
 ```
 
+### 3. Load an email
+
+Email is nested under email, so provide the `email_id`.
+`load()` returns the ENTITY — call data_get() for the record — and raises on error.
+
+```python
+try:
+    email = client.Email().load({"email_id": "example_email_id", "token": "example_token"})
+    print(email)
+except Exception as err:
+    print(f"load failed: {err}")
+```
+
 
 ## Error handling
 
@@ -57,10 +70,10 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    emails = client.Email().list()
-    print(emails)
+    inbox = client.Inbox().load({"id": "example_id"})
+    print(inbox)
 except Exception as err:
-    print(f"list failed: {err}")
+    print(f"load failed: {err}")
 ```
 
 `direct()` does **not** raise — it returns the result envelope. Branch
@@ -126,8 +139,8 @@ client = TempmailApi2SDK.test()
 
 # Entity ops return the ENTITY and raises on error;
 # call data_get() for the record.
-email = client.Email().list()
-# email contains the mock response record
+inbox = client.Inbox().load({"id": "test01"})
+# inbox contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -258,11 +271,16 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `contentType` |  |
-| `filename` |  |
-| `size` |  |
+| `attachments` |  |
+| `body` |  |
+| `date` |  |
+| `from` |  |
+| `html` |  |
+| `id` |  |
+| `subject` |  |
+| `to` |  |
 
-Operations: List, Remove.
+Operations: Load, Remove.
 
 API path: `/inbox/{token}/{emailId}`
 
@@ -316,21 +334,26 @@ Create an instance: `email = client.Email()`
 
 | Method | Description |
 | --- | --- |
-| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 | `remove(match)` | Remove the matching entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `contentType` | `str` |  |
-| `filename` | `str` |  |
-| `size` | `int` |  |
+| `attachments` | `list` |  |
+| `body` | `str` |  |
+| `date` | `str` |  |
+| `from` | `str` |  |
+| `html` | `str` |  |
+| `id` | `str` |  |
+| `subject` | `str` |  |
+| `to` | `str` |  |
 
-#### Example: List
+#### Example: Load
 
 ```python
-emails = client.Email().list({"email_id": "example", "token": "example"})
+email = client.Email().load({"email_id": "email_id", "token": "token"})
 ```
 
 
@@ -442,15 +465,15 @@ Import entity or utility modules directly only when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-email = client.Email()
-email.list()
+inbox = client.Inbox()
+inbox.load({"id": "example_id"})
 
-# email.data_get() now returns the email data from the last list
-# email.match_get() returns the last match criteria
+# inbox.data_get() now returns the inbox data from the last load
+# inbox.match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

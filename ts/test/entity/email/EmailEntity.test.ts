@@ -39,7 +39,7 @@ describe('EmailEntity', async () => {
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.TEMPMAIL_API2_TEST_LIVE
-    for (const op of ['list']) {
+    for (const op of ['load']) {
       if (maybeSkipControl(t, 'entityOp', 'email.' + op, live)) return
     }
 
@@ -59,13 +59,12 @@ describe('EmailEntity', async () => {
 
     let email_ref01_data = Object.values(setup.data.existing.email)[0] as any
 
-    // LIST
+    // LOAD
     const email_ref01_ent = client.Email()
-    const email_ref01_match: any = {}
-    email_ref01_match['email_id'] = setup.idmap['email01']
-    email_ref01_match['token'] = setup.idmap['token01']
-
-    const email_ref01_list = (await email_ref01_ent.list(email_ref01_match)).map((e: any) => e.data())
+    const email_ref01_match_dt0: any = {}
+    email_ref01_match_dt0.id = email_ref01_data.id
+    const email_ref01_data_dt0 = (await email_ref01_ent.load(email_ref01_match_dt0)).data()
+    assert(email_ref01_data_dt0.id === email_ref01_data.id)
 
 
   })

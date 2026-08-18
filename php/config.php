@@ -5,6 +5,29 @@ declare(strict_types=1);
 
 class TempmailApi2Config
 {
+    /** @var array<string,mixed>|null */
+    private static ?array $shared_config = null;
+
+    /**
+     * Return the process-wide config, built once on first use. The SDK reads
+     * the config on every request and never writes to it, so one instance is
+     * shared by every client rather than rebuilt per client.
+     *
+     * PHP arrays are copy-on-write, so callers that do mutate the result get
+     * their own copy and cannot disturb the shared one.
+     */
+    public static function shared_config(): array
+    {
+        if (self::$shared_config === null) {
+            self::$shared_config = self::make_config();
+        }
+        return self::$shared_config;
+    }
+
+    /**
+     * Build a fresh, fully materialised config array. Every call rebuilds the
+     * whole structure, so prefer shared_config unless you need a private copy.
+     */
     public static function make_config(): array
     {
         return [
@@ -33,11 +56,8 @@ class TempmailApi2Config
         'domain' => [
           'fields' => [
             [
-              'active' => true,
               'name' => 'domains',
-              'req' => false,
               'type' => '`$ARRAY`',
-              'index$' => 0,
             ],
           ],
           'name' => 'domain',
@@ -47,7 +67,6 @@ class TempmailApi2Config
               'name' => 'list',
               'points' => [
                 [
-                  'active' => true,
                   'args' => [],
                   'kind' => 'http',
                   'method' => 'GET',
@@ -60,10 +79,8 @@ class TempmailApi2Config
                     'req' => '`reqdata`',
                     'res' => '`body.domains`',
                   ],
-                  'index$' => 0,
                 ],
               ],
-              'key$' => 'list',
             ],
           ],
           'relations' => [
@@ -73,54 +90,60 @@ class TempmailApi2Config
         'email' => [
           'fields' => [
             [
-              'active' => true,
-              'name' => 'contentType',
-              'req' => false,
-              'type' => '`$STRING`',
-              'index$' => 0,
+              'name' => 'attachments',
+              'type' => '`$ARRAY`',
             ],
             [
-              'active' => true,
-              'name' => 'filename',
-              'req' => false,
+              'name' => 'body',
               'type' => '`$STRING`',
-              'index$' => 1,
             ],
             [
-              'active' => true,
-              'name' => 'size',
-              'req' => false,
-              'type' => '`$INTEGER`',
-              'index$' => 2,
+              'name' => 'date',
+              'type' => '`$STRING`',
+            ],
+            [
+              'name' => 'from',
+              'type' => '`$STRING`',
+            ],
+            [
+              'name' => 'html',
+              'type' => '`$STRING`',
+            ],
+            [
+              'name' => 'id',
+              'type' => '`$STRING`',
+            ],
+            [
+              'name' => 'subject',
+              'type' => '`$STRING`',
+            ],
+            [
+              'name' => 'to',
+              'type' => '`$STRING`',
             ],
           ],
           'name' => 'email',
           'op' => [
-            'list' => [
+            'load' => [
               'input' => 'data',
-              'name' => 'list',
+              'name' => 'load',
               'points' => [
                 [
-                  'active' => true,
                   'args' => [
                     'params' => [
                       [
-                        'active' => true,
                         'kind' => 'param',
                         'name' => 'email_id',
                         'orig' => 'email_id',
                         'reqd' => true,
                         'type' => '`$STRING`',
-                        'index$' => 0,
                       ],
                       [
-                        'active' => true,
                         'kind' => 'param',
                         'name' => 'token',
                         'orig' => 'token',
                         'reqd' => true,
                         'type' => '`$STRING`',
-                        'index$' => 1,
                       ],
                     ],
                   ],
@@ -145,38 +168,31 @@ class TempmailApi2Config
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body.attachments`',
+                    'res' => '`body`',
                   ],
-                  'index$' => 0,
                 ],
               ],
-              'key$' => 'list',
             ],
             'remove' => [
               'input' => 'data',
               'name' => 'remove',
               'points' => [
                 [
-                  'active' => true,
                   'args' => [
                     'params' => [
                       [
-                        'active' => true,
                         'kind' => 'param',
                         'name' => 'email_id',
                         'orig' => 'email_id',
                         'reqd' => true,
                         'type' => '`$STRING`',
-                        'index$' => 0,
                       ],
                       [
-                        'active' => true,
                         'kind' => 'param',
                         'name' => 'token',
                         'orig' => 'token',
                         'reqd' => true,
                         'type' => '`$STRING`',
-                        'index$' => 1,
                       ],
                     ],
                   ],
@@ -203,10 +219,8 @@ class TempmailApi2Config
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'index$' => 0,
                 ],
               ],
-              'key$' => 'remove',
             ],
           ],
           'relations' => [
@@ -220,39 +234,25 @@ class TempmailApi2Config
         'inbox' => [
           'fields' => [
             [
-              'active' => true,
               'name' => 'domain',
-              'req' => false,
               'type' => '`$STRING`',
-              'index$' => 0,
             ],
             [
-              'active' => true,
               'name' => 'email',
-              'req' => false,
               'type' => '`$STRING`',
-              'index$' => 1,
             ],
             [
-              'active' => true,
               'name' => 'emails',
-              'req' => false,
               'type' => '`$ARRAY`',
-              'index$' => 2,
             ],
             [
-              'active' => true,
               'name' => 'token',
-              'req' => false,
               'type' => '`$STRING`',
-              'index$' => 3,
             ],
             [
-              'active' => true,
               'name' => 'username',
               'req' => true,
               'type' => '`$STRING`',
-              'index$' => 4,
             ],
           ],
           'name' => 'inbox',
@@ -262,7 +262,6 @@ class TempmailApi2Config
               'name' => 'create',
               'points' => [
                 [
-                  'active' => true,
                   'args' => [],
                   'kind' => 'http',
                   'method' => 'POST',
@@ -278,10 +277,8 @@ class TempmailApi2Config
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'index$' => 0,
                 ],
                 [
-                  'active' => true,
                   'args' => [],
                   'kind' => 'http',
                   'method' => 'POST',
@@ -297,27 +294,22 @@ class TempmailApi2Config
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'index$' => 1,
                 ],
               ],
-              'key$' => 'create',
             ],
             'load' => [
               'input' => 'data',
               'name' => 'load',
               'points' => [
                 [
-                  'active' => true,
                   'args' => [
                     'params' => [
                       [
-                        'active' => true,
                         'kind' => 'param',
                         'name' => 'id',
                         'orig' => 'token',
                         'reqd' => true,
                         'type' => '`$STRING`',
-                        'index$' => 0,
                       ],
                     ],
                   ],
@@ -342,27 +334,22 @@ class TempmailApi2Config
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'index$' => 0,
                 ],
               ],
-              'key$' => 'load',
             ],
             'remove' => [
               'input' => 'data',
               'name' => 'remove',
               'points' => [
                 [
-                  'active' => true,
                   'args' => [
                     'params' => [
                       [
-                        'active' => true,
                         'kind' => 'param',
                         'name' => 'id',
                         'orig' => 'token',
                         'reqd' => true,
                         'type' => '`$STRING`',
-                        'index$' => 0,
                       ],
                     ],
                   ],
@@ -387,10 +374,8 @@ class TempmailApi2Config
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'index$' => 0,
                 ],
               ],
-              'key$' => 'remove',
             ],
           ],
           'relations' => [

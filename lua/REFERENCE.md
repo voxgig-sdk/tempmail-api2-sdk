@@ -150,18 +150,23 @@ local email = client:Email(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `contentType` | `string` | No |  |
-| `filename` | `string` | No |  |
-| `size` | `number` | No |  |
+| `attachments` | `table` | No |  |
+| `body` | `string` | No |  |
+| `date` | `string` | No |  |
+| `from` | `string` | No |  |
+| `html` | `string` | No |  |
+| `id` | `string` | No |  |
+| `subject` | `string` | No |  |
+| `to` | `string` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl) -> any, err`
+#### `load(reqmatch, ctrl) -> any, err`
 
-List entities matching the given criteria. Returns an array.
+Load a single entity matching the given criteria.
 
 ```lua
-local results, err = client:Email():list()
+local result, err = client:Email():load({ email_id = "email_id", token = "token" })
 ```
 
 #### `remove(reqmatch, ctrl) -> any, err`

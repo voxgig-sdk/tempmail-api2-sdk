@@ -42,23 +42,23 @@ network, and no credentials:
 // Shape: { entity: { <entity-name>: { <id>: <record> } } }
 const client = TempmailApi2SDK.test({
   entity: {
-    email: {
-      test01: { id: 'test01' },
+    inbox: {
+      test01: { id: 'test01', username: 'example_username' },
     },
   },
 })
-const emails = await client.Email().list()
-// emails is an array of Email entities, populated with mock data
-// — call emails[0].data() for the record itself
-console.log(emails)
+const inbox = await client.Inbox().load({ id: 'test01' })
+// inbox is the Inbox entity, populated with mock data
+// — call inbox.data() for the record itself
+console.log(inbox)
 ```
 
 ### Python
 
 ```python
 client = TempmailApi2SDK.test()
-emails = client.Email().list()
-print(emails)
+inbox = client.Inbox().load({"id": "test01"})
+print(inbox)
 ```
 
 ### PHP
@@ -66,17 +66,17 @@ print(emails)
 ```php
 // Seed fixture data so offline calls resolve without a live server.
 $client = TempmailApi2SDK::test([
-    "entity" => ["email" => ["test01" => []]],
+    "entity" => ["inbox" => ["test01" => ["id" => "test01"]]],
 ]);
-$emails = $client->Email()->list();
+$inbox = $client->Inbox()->load(["id" => "test01"]);
 ```
 
 ### Golang
 
 ```go
 client := sdk.Test()
-result, err := client.Email(nil).List(
-    nil, nil,
+result, err := client.Inbox(nil).Load(
+    map[string]any{"id": "test01"}, nil,
 )
 ```
 
@@ -85,16 +85,16 @@ result, err := client.Email(nil).List(
 ```ruby
 # Seed fixture data so offline calls resolve without a live server.
 client = TempmailApi2SDK.test({
-  "entity" => { "email" => { "test01" => {} } },
+  "entity" => { "inbox" => { "test01" => { "id" => "test01" } } },
 })
-emails = client.Email.list()
+inbox = client.Inbox.load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local results, err = client:Email():list()
+local result, err = client:Inbox():load({ id = "test01" })
 ```
 
 ## Packages
@@ -124,6 +124,13 @@ const domains = await client.Domain().list()
 for (const domain of domains) {
   console.log(domain)
 }
+
+// Load a specific email (returns a Email)
+const email = await client.Email().load({
+  email_id: 'example_email_id',
+  token: 'example_token',
+})
+console.log(email)
 ```
 
 See the [TypeScript README](ts/README.md) for the full guide.
@@ -165,7 +172,7 @@ The API exposes 3 entities:
 | Entity | Description | API path |
 | --- | --- | --- |
 | **Domain** | The Domain entity (list). | `/domains` |
-| **Email** | The Email entity (list, remove). | `/inbox/{token}/{emailId}` |
+| **Email** | The Email entity (load, remove). | `/inbox/{token}/{emailId}` |
 | **Inbox** | The Inbox entity (create, load, remove). | `/inbox/{token}` |
 
 The operations available across these entities are **load**, **list**, **create**, **remove** — see each entity's
@@ -212,6 +219,15 @@ if err != nil {
     panic(err)
 }
 fmt.Println(domains)
+
+// Load a specific email
+email, err := client.Email(nil).Load(
+    map[string]any{"email_id": "example_email_id", "token": "example_token"}, nil,
+)
+if err != nil {
+    panic(err)
+}
+fmt.Println(email)
 ```
 
 ### Ruby

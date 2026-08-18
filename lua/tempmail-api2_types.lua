@@ -13,11 +13,16 @@
 ---@field domains? table
 
 ---@class Email
----@field contentType? string
----@field filename? string
----@field size? number
+---@field attachments? table
+---@field body? string
+---@field date? string
+---@field from? string
+---@field html? string
+---@field id? string
+---@field subject? string
+---@field to? string
 
----@class EmailListMatch
+---@class EmailLoadMatch
 ---@field email_id string
 ---@field token string
 

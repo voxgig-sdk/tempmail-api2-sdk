@@ -6,26 +6,56 @@ main: kit: entity: email: {
 
   fields: [
     {
-      name: "contentType"
+      name: "attachments"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "body"
       req: false
       type: "`$STRING`"
     }
     {
-      name: "filename"
+      name: "date"
       req: false
       type: "`$STRING`"
     }
     {
-      name: "size"
+      name: "from"
       req: false
-      type: "`$INTEGER`"
+      type: "`$STRING`"
+    }
+    {
+      name: "html"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "subject"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "to"
+      req: false
+      type: "`$STRING`"
     }
   ]
 
+  id: {
+    field: "id"
+    name: "id"
+  }
+
   name: "email"
   op: {
-    list: {
-      name: "list"
+    load: {
+      name: "load"
       points: [
         {
           args: {
@@ -66,7 +96,7 @@ main: kit: entity: email: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body.attachments`"
+            res: "`body`"
           }
         }
       ]

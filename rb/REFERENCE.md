@@ -153,18 +153,23 @@ email = client.Email
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `contentType` | `String` | No |  |
-| `filename` | `String` | No |  |
-| `size` | `Integer` | No |  |
+| `attachments` | `Array` | No |  |
+| `body` | `String` | No |  |
+| `date` | `String` | No |  |
+| `from` | `String` | No |  |
+| `html` | `String` | No |  |
+| `id` | `String` | No |  |
+| `subject` | `String` | No |  |
+| `to` | `String` | No |  |
 
 ### Operations
 
-#### `list(reqmatch = nil, ctrl = nil) -> Array`
+#### `load(reqmatch, ctrl = nil) -> result`
 
-List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
+Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-results = client.Email.list
+result = client.Email.load({ "email_id" => "email_id", "token" => "token" })
 ```
 
 #### `remove(reqmatch, ctrl = nil) -> result`

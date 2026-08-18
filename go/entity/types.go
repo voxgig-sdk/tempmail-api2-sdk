@@ -24,13 +24,18 @@ type DomainListMatch struct {
 
 // Email is the typed data model for the email entity.
 type Email struct {
-	ContentType *string `json:"contentType,omitempty"`
-	Filename *string `json:"filename,omitempty"`
-	Size *int `json:"size,omitempty"`
+	Attachments *[]any `json:"attachments,omitempty"`
+	Body *string `json:"body,omitempty"`
+	Date *string `json:"date,omitempty"`
+	From *string `json:"from,omitempty"`
+	Html *string `json:"html,omitempty"`
+	Id *string `json:"id,omitempty"`
+	Subject *string `json:"subject,omitempty"`
+	To *string `json:"to,omitempty"`
 }
 
-// EmailListMatch is the typed request payload for Email.ListTyped.
-type EmailListMatch struct {
+// EmailLoadMatch is the typed request payload for Email.LoadTyped.
+type EmailLoadMatch struct {
 	EmailId string `json:"email_id"`
 	Token string `json:"token"`
 }

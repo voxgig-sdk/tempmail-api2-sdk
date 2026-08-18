@@ -7,17 +7,23 @@ main: kit: flow: BasicEmailFlow:
   name: "BasicEmailFlow",
   step: [
     {
+      input: {
+        ref: "email_ref01",
+        srcdatavar: "email_ref01_data",
+        suffix: "_dt0"
+      }
+
       match: {
-        email_id: "email01",
+        id: "email01",
         token: "token01"
       }
 
-      op: "list",
+      op: "load",
       valid: [
         {
-          apply: "ItemExists",
+          apply: "TextFieldMark",
           def: {
-            ref: "email_ref01"
+            mark: "Mark01-email_ref01"
           }
         }
       ]

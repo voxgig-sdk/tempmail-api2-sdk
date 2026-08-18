@@ -45,6 +45,20 @@ try {
 }
 ```
 
+### 3. Load an email
+
+Email is nested under email, so provide the `email_id`.
+
+```php
+try {
+    // load() returns the ENTITY — call data_get() for the Email record (throws on error).
+    $email = $client->Email()->load(["email_id" => "example_email_id", "token" => "example_token"]);
+    print_r($email);
+} catch (\Throwable $err) {
+    echo "Error: " . $err->getMessage();
+}
+```
+
 
 ## Error handling
 
@@ -53,7 +67,7 @@ Entity operations throw a `\Throwable` on failure, so wrap them in
 
 ```php
 try {
-    $emails = $client->Email()->list();
+    $inbox = $client->Inbox()->load(["id" => "example_id"]);
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -120,15 +134,18 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = TempmailApi2SDK::test();
+$client = TempmailApi2SDK::test([
+    "entity" => ["inbox" => ["test01" => ["id" => "test01"]]],
+]);
 
 // Entity ops return the ENTITY (throws on error);
 // call data_get() for the mock record.
-$email = $client->Email()->list();
-print_r($email);
+$inbox = $client->Inbox()->load(["id" => "test01"]);
+print_r($inbox);
 ```
 
 ### Use a custom fetch function
@@ -262,11 +279,16 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `contentType` |  |
-| `filename` |  |
-| `size` |  |
+| `attachments` |  |
+| `body` |  |
+| `date` |  |
+| `from` |  |
+| `html` |  |
+| `id` |  |
+| `subject` |  |
+| `to` |  |
 
-Operations: List, Remove.
+Operations: Load, Remove.
 
 API path: `/inbox/{token}/{emailId}`
 
@@ -321,22 +343,27 @@ Create an instance: `$email = $client->Email();`
 
 | Method | Description |
 | --- | --- |
-| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 | `remove(match)` | Remove the matching entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `contentType` | `string` |  |
-| `filename` | `string` |  |
-| `size` | `int` |  |
+| `attachments` | `array` |  |
+| `body` | `string` |  |
+| `date` | `string` |  |
+| `from` | `string` |  |
+| `html` | `string` |  |
+| `id` | `string` |  |
+| `subject` | `string` |  |
+| `to` | `string` |  |
 
-#### Example: List
+#### Example: Load
 
 ```php
-// list() returns an array of Email records (throws on error).
-$emails = $client->Email()->list();
+// load() returns the ENTITY — call data_get() for the Email record (throws on error).
+$email = $client->Email()->load(["email_id" => "email_id", "token" => "token"]);
 ```
 
 
@@ -450,15 +477,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$email = $client->Email();
-$email->list();
+$inbox = $client->Inbox();
+$inbox->load(["id" => "example_id"]);
 
-// $email->data_get() now returns the email data from the last list
-// $email->match_get() returns the last match criteria
+// $inbox->data_get() now returns the inbox data from the last load
+// $inbox->match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

@@ -190,18 +190,23 @@ const email = client.Email()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `contentType` | `string` | No |  |
-| `filename` | `string` | No |  |
-| `size` | `number` | No |  |
+| `attachments` | `any[]` | No |  |
+| `body` | `string` | No |  |
+| `date` | `string` | No |  |
+| `from` | `string` | No |  |
+| `html` | `string` | No |  |
+| `id` | `string` | No |  |
+| `subject` | `string` | No |  |
+| `to` | `string` | No |  |
 
 ### Operations
 
-#### `list(match: object, ctrl?: object)`
+#### `load(match: object, ctrl?: object)`
 
-List entities matching the given criteria. Returns an array.
+Load a single entity matching the given criteria.
 
 ```ts
-const results = await client.Email().list({ email_id: "example", token: "example" })
+const result = await client.Email().load({ email_id: 'email_id', token: 'token' })
 ```
 
 #### `remove(match: object, ctrl?: object)`

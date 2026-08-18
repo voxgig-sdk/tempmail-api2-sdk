@@ -15,8 +15,7 @@ guide: {
   entity: email: {
     path: "/inbox/{token}/{emailId}": {
       rename: param: "emailId": *"email_id"
-      op: list: method: *GET
-      op: list: transform: res: *("`body.attachments`")|top
+      op: load: method: *GET
       op: remove: method: *DELETE
     }
   }

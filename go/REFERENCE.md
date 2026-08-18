@@ -157,22 +157,27 @@ fmt.Println(email.GetName()) // "email"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `contentType` | `string` | No |  |
-| `filename` | `string` | No |  |
-| `size` | `int` | No |  |
+| `attachments` | `[]any` | No |  |
+| `body` | `string` | No |  |
+| `date` | `string` | No |  |
+| `from` | `string` | No |  |
+| `html` | `string` | No |  |
+| `id` | `string` | No |  |
+| `subject` | `string` | No |  |
+| `to` | `string` | No |  |
 
 ### Operations
 
-#### `List(reqmatch, ctrl map[string]any) (any, error)`
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
 
-List entities matching the given criteria. Returns an array.
+Load a single entity matching the given criteria.
 
 ```go
-results, err := client.Email(nil).List(nil, nil)
+result, err := client.Email(nil).Load(map[string]any{"email_id": "email_id", "token": "token"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(results)
+fmt.Println(result)
 ```
 
 #### `Remove(reqmatch, ctrl map[string]any) (any, error)`

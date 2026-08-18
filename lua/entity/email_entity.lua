@@ -230,16 +230,14 @@ end
 
 
 
-
-
----@param reqmatch EmailListMatch
+---@param reqmatch EmailLoadMatch
 ---@param ctrl? table
----@return Email[]
+---@return Email
 ---@return string? err
-function EmailEntity:list(reqmatch, ctrl)
+function EmailEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
-    opname = "list",
+    opname = "load",
     ctrl = ctrl,
     match = self._match,
     data = self._data,
@@ -251,9 +249,14 @@ function EmailEntity:list(reqmatch, ctrl)
       if ctx.result.resmatch ~= nil then
         self._match = ctx.result.resmatch
       end
+      if ctx.result.resdata ~= nil then
+        self._data = helpers.to_map(vs.clone(ctx.result.resdata)) or {}
+      end
     end
   end)
 end
+
+
 
 
 

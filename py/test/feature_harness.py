@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from tempmailapi2_sdk.config import make_config
+from tempmailapi2_sdk.config import shared_config
 from tempmailapi2_sdk.features import _make_feature
 from tempmailapi2_sdk.core.control import TempmailApi2Control
 from tempmailapi2_sdk.core.error import TempmailApi2Error
@@ -24,7 +24,7 @@ from tempmailapi2_sdk.core.spec import TempmailApi2Spec
 
 # True when this SDK was generated with the named feature.
 def has_feature(name):
-    feature = make_config().get("feature")
+    feature = shared_config().get("feature")
     return isinstance(feature, dict) and feature.get(name) is not None
 
 

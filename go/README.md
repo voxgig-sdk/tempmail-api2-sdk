@@ -68,12 +68,12 @@ Every entity operation returns `(value, error)`. Check `err` before
 using the value — there is no exception to catch:
 
 ```go
-emails, err := client.Email(nil).List(nil, nil)
+inbox, err := client.Inbox(nil).Load(map[string]any{"id": "example_id"}, nil)
 if err != nil {
     // handle err
     return
 }
-_ = emails
+_ = inbox
 ```
 
 `Direct` follows the same `(value, error)` convention:
@@ -137,13 +137,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-email, err := client.Email(nil).List(
-    nil, nil,
+inbox, err := client.Inbox(nil).Load(
+    map[string]any{"id": "test01"}, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(email) // the returned mock data
+fmt.Println(inbox) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -276,11 +276,16 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `"contentType"` |  |
-| `"filename"` |  |
-| `"size"` |  |
+| `"attachments"` |  |
+| `"body"` |  |
+| `"date"` |  |
+| `"from"` |  |
+| `"html"` |  |
+| `"id"` |  |
+| `"subject"` |  |
+| `"to"` |  |
 
-Operations: List, Remove.
+Operations: Load, Remove.
 
 API path: `/inbox/{token}/{emailId}`
 
@@ -338,25 +343,30 @@ Create an instance: `email := client.Email(nil)`
 
 | Method | Description |
 | --- | --- |
-| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
 | `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `contentType` | `string` |  |
-| `filename` | `string` |  |
-| `size` | `int` |  |
+| `attachments` | `[]any` |  |
+| `body` | `string` |  |
+| `date` | `string` |  |
+| `from` | `string` |  |
+| `html` | `string` |  |
+| `id` | `string` |  |
+| `subject` | `string` |  |
+| `to` | `string` |  |
 
-#### Example: List
+#### Example: Load
 
 ```go
-emails, err := client.Email(nil).List(nil, nil)
+email, err := client.Email(nil).Load(map[string]any{"email_id": "email_id", "token": "token"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(emails) // the array of records
+fmt.Println(email) // the loaded record
 ```
 
 
@@ -474,15 +484,15 @@ like `core.ToMapAny`.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `List`, the entity
+Entity instances are stateful. After a successful `Load`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-email := client.Email(nil)
-email.List(nil, nil)
+inbox := client.Inbox(nil)
+inbox.Load(map[string]any{"id": "example_id"}, nil)
 
-// email.Data() now returns the email data from the last list
-// email.Match() returns the last match criteria
+// inbox.Data() now returns the inbox data from the last load
+// inbox.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

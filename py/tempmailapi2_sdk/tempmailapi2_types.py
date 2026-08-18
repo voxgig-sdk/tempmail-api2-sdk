@@ -25,12 +25,16 @@ class DomainListMatch(TypedDict, total=False):
 
 
 class Email(TypedDict, total=False):
-    contentType: str
-    filename: str
-    size: int
+    attachments: list
+    body: str
+    date: str
+    html: str
+    id: str
+    subject: str
+    to: str
 
 
-class EmailListMatch(TypedDict):
+class EmailLoadMatch(TypedDict):
     email_id: str
     token: str
 

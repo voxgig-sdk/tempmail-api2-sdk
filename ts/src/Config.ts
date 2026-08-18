@@ -36,7 +36,7 @@ class Config {
 
 
   options = {
-    base: 'https://api.tempmail.lol/v2',
+    base: "https://api.tempmail.lol/v2",
 
     headers: {
       "content-type": "application/json"
@@ -61,11 +61,8 @@ class Config {
     "domain": {
       "fields": [
         {
-          "active": true,
           "name": "domains",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 0
+          "type": "`$ARRAY`"
         }
       ],
       "name": "domain",
@@ -75,7 +72,6 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {},
               "kind": "http",
               "method": "GET",
@@ -87,11 +83,9 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body.domains`"
-              },
-              "index$": 0
+              }
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -101,54 +95,60 @@ class Config {
     "email": {
       "fields": [
         {
-          "active": true,
-          "name": "contentType",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "name": "attachments",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "filename",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "name": "body",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "size",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 2
+          "name": "date",
+          "type": "`$STRING`"
+        },
+        {
+          "name": "from",
+          "type": "`$STRING`"
+        },
+        {
+          "name": "html",
+          "type": "`$STRING`"
+        },
+        {
+          "name": "id",
+          "type": "`$STRING`"
+        },
+        {
+          "name": "subject",
+          "type": "`$STRING`"
+        },
+        {
+          "name": "to",
+          "type": "`$STRING`"
         }
       ],
       "name": "email",
       "op": {
-        "list": {
+        "load": {
           "input": "data",
-          "name": "list",
+          "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "email_id",
                     "orig": "email_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "token",
                     "orig": "token",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -173,38 +173,31 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body.attachments`"
-              },
-              "index$": 0
+                "res": "`body`"
+              }
             }
-          ],
-          "key$": "list"
+          ]
         },
         "remove": {
           "input": "data",
           "name": "remove",
           "points": [
             {
-              "active": true,
               "args": {
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "email_id",
                     "orig": "email_id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "token",
                     "orig": "token",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -230,11 +223,9 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              },
-              "index$": 0
+              }
             }
-          ],
-          "key$": "remove"
+          ]
         }
       },
       "relations": {
@@ -248,39 +239,25 @@ class Config {
     "inbox": {
       "fields": [
         {
-          "active": true,
           "name": "domain",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "email",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "emails",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 2
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "token",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "username",
           "req": true,
-          "type": "`$STRING`",
-          "index$": 4
+          "type": "`$STRING`"
         }
       ],
       "name": "inbox",
@@ -290,7 +267,6 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {},
               "kind": "http",
               "method": "POST",
@@ -305,11 +281,9 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              },
-              "index$": 0
+              }
             },
             {
-              "active": true,
               "args": {},
               "kind": "http",
               "method": "POST",
@@ -324,28 +298,23 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              },
-              "index$": 1
+              }
             }
-          ],
-          "key$": "create"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "token",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -369,28 +338,23 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              },
-              "index$": 0
+              }
             }
-          ],
-          "key$": "load"
+          ]
         },
         "remove": {
           "input": "data",
           "name": "remove",
           "points": [
             {
-              "active": true,
               "args": {
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "token",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ]
               },
@@ -414,11 +378,9 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              },
-              "index$": 0
+              }
             }
-          ],
-          "key$": "remove"
+          ]
         }
       },
       "relations": {

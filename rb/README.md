@@ -44,6 +44,20 @@ rescue => err
 end
 ```
 
+### 3. Load an email
+
+Email is nested under email, so provide the `email_id`.
+
+```ruby
+begin
+  # load returns the ENTITY — call data_get for the Email record (raises on error).
+  email = client.Email.load({ "email_id" => "example_email_id", "token" => "example_token" })
+  puts email
+rescue => err
+  warn "load failed: #{err}"
+end
+```
+
 
 ## Error handling
 
@@ -51,9 +65,9 @@ Entity operations raise on failure, so rescue them:
 
 ```ruby
 begin
-  emails = client.Email.list()
+  inbox = client.Inbox.load({ "id" => "example_id" })
 rescue => err
-  warn "list failed: #{err}"
+  warn "load failed: #{err}"
 end
 ```
 
@@ -114,15 +128,18 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```ruby
-client = TempmailApi2SDK.test
+client = TempmailApi2SDK.test({
+  "entity" => { "inbox" => { "test01" => { "id" => "test01" } } },
+})
 
 # Entity ops return the ENTITY (raises on error);
 # call data_get for the mock record.
-email = client.Email.list()
-puts email
+inbox = client.Inbox.load({ "id" => "test01" })
+puts inbox
 ```
 
 ### Use a custom fetch function
@@ -252,11 +269,16 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `contentType` |  |
-| `filename` |  |
-| `size` |  |
+| `attachments` |  |
+| `body` |  |
+| `date` |  |
+| `from` |  |
+| `html` |  |
+| `id` |  |
+| `subject` |  |
+| `to` |  |
 
-Operations: List, Remove.
+Operations: Load, Remove.
 
 API path: `/inbox/{token}/{emailId}`
 
@@ -311,22 +333,27 @@ Create an instance: `email = client.Email`
 
 | Method | Description |
 | --- | --- |
-| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 | `remove(match)` | Remove the matching entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `contentType` | `String` |  |
-| `filename` | `String` |  |
-| `size` | `Integer` |  |
+| `attachments` | `Array` |  |
+| `body` | `String` |  |
+| `date` | `String` |  |
+| `from` | `String` |  |
+| `html` | `String` |  |
+| `id` | `String` |  |
+| `subject` | `String` |  |
+| `to` | `String` |  |
 
-#### Example: List
+#### Example: Load
 
 ```ruby
-# list returns an Array of Email records (raises on error).
-emails = client.Email.list
+# load returns the ENTITY — call data_get for the Email record (raises on error).
+email = client.Email.load({ "email_id" => "email_id", "token" => "token" })
 ```
 
 
@@ -440,15 +467,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-email = client.Email
-email.list()
+inbox = client.Inbox
+inbox.load({ "id" => "example_id" })
 
-# email.data_get now returns the email data from the last list
-# email.match_get returns the last match criteria
+# inbox.data_get now returns the inbox data from the last load
+# inbox.match_get returns the last match criteria
 ```
 
 Call `make` to create a fresh instance with the same configuration

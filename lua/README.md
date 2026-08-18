@@ -47,6 +47,16 @@ for _, item in ipairs(domains) do
 end
 ```
 
+### 3. Load an email
+
+Email is nested under email, so provide the `email_id`.
+
+```lua
+local email, err = client:Email():load({ email_id = "example_email_id", token = "example_token" })
+if err then error(err) end
+print(email)
+```
+
 
 ## Error handling
 
@@ -54,7 +64,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local emails, err = client:Email():list()
+local inbox, err = client:Inbox():load({ id = "example_id" })
 if err then error(err) end
 ```
 
@@ -112,7 +122,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Email():list()
+local result, err = client:Inbox():load({ id = "test01" })
 -- result is the returned data; err is set on failure
 ```
 
@@ -224,9 +234,9 @@ data **directly** — there is no wrapper:
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
-    local inbox, err = client:Inbox():load({ id = "example_id" })
+    local email, err = client:Email():load()
     if err then error(err) end
-    -- inbox is the loaded record
+    -- email is the loaded record
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.
@@ -247,11 +257,16 @@ API path: `/domains`
 
 | Field | Description |
 | --- | --- |
-| `contentType` |  |
-| `filename` |  |
-| `size` |  |
+| `attachments` |  |
+| `body` |  |
+| `date` |  |
+| `from` |  |
+| `html` |  |
+| `id` |  |
+| `subject` |  |
+| `to` |  |
 
-Operations: List, Remove.
+Operations: Load, Remove.
 
 API path: `/inbox/{token}/{emailId}`
 
@@ -305,21 +320,26 @@ Create an instance: `local email = client:Email(nil)`
 
 | Method | Description |
 | --- | --- |
-| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 | `remove(match)` | Remove the matching entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `contentType` | `string` |  |
-| `filename` | `string` |  |
-| `size` | `number` |  |
+| `attachments` | `table` |  |
+| `body` | `string` |  |
+| `date` | `string` |  |
+| `from` | `string` |  |
+| `html` | `string` |  |
+| `id` | `string` |  |
+| `subject` | `string` |  |
+| `to` | `string` |  |
 
-#### Example: List
+#### Example: Load
 
 ```lua
-local emails, err = client:Email():list()
+local email, err = client:Email():load({ email_id = "email_id", token = "token" })
 ```
 
 
@@ -432,15 +452,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local email = client:Email()
-email:list()
+local inbox = client:Inbox()
+inbox:load({ id = "example_id" })
 
--- email:data_get() now returns the email data from the last list
--- email:match_get() returns the last match criteria
+-- inbox:data_get() now returns the inbox data from the last load
+-- inbox:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

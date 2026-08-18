@@ -14,12 +14,17 @@ export interface DomainListMatch {
 }
 
 export interface Email {
-  contentType?: string
-  filename?: string
-  size?: number
+  attachments?: any[]
+  body?: string
+  date?: string
+  from?: string
+  html?: string
+  id?: string
+  subject?: string
+  to?: string
 }
 
-export interface EmailListMatch {
+export interface EmailLoadMatch {
   email_id: string
   token: string
 }

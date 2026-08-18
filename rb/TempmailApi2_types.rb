@@ -28,29 +28,49 @@ DomainListMatch = Struct.new(
 
 # Email entity data model.
 #
-# @!attribute [rw] contentType
+# @!attribute [rw] attachments
+#   @return [Array, nil]
+#
+# @!attribute [rw] body
 #   @return [String, nil]
 #
-# @!attribute [rw] filename
+# @!attribute [rw] date
 #   @return [String, nil]
 #
-# @!attribute [rw] size
-#   @return [Integer, nil]
+# @!attribute [rw] from
+#   @return [String, nil]
+#
+# @!attribute [rw] html
+#   @return [String, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] subject
+#   @return [String, nil]
+#
+# @!attribute [rw] to
+#   @return [String, nil]
 Email = Struct.new(
-  :contentType,
-  :filename,
-  :size,
+  :attachments,
+  :body,
+  :date,
+  :from,
+  :html,
+  :id,
+  :subject,
+  :to,
   keyword_init: true
 )
 
-# Request payload for Email#list.
+# Request payload for Email#load.
 #
 # @!attribute [rw] email_id
 #   @return [String]
 #
 # @!attribute [rw] token
 #   @return [String]
-EmailListMatch = Struct.new(
+EmailLoadMatch = Struct.new(
   :email_id,
   :token,
   keyword_init: true

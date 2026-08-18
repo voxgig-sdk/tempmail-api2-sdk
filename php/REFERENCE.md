@@ -152,18 +152,23 @@ $email = $client->Email();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `contentType` | `string` | No |  |
-| `filename` | `string` | No |  |
-| `size` | `int` | No |  |
+| `attachments` | `array` | No |  |
+| `body` | `string` | No |  |
+| `date` | `string` | No |  |
+| `from` | `string` | No |  |
+| `html` | `string` | No |  |
+| `id` | `string` | No |  |
+| `subject` | `string` | No |  |
+| `to` | `string` | No |  |
 
 ### Operations
 
-#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
 
-List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$results = $client->Email()->list();
+$result = $client->Email()->load(["email_id" => "email_id", "token" => "token"]);
 ```
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
