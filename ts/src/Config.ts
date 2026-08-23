@@ -19,9 +19,20 @@ class Config {
     return fi
   }
 
+  // False for a feature added at runtime via options.extend (station's
+  // adopt path) - the constructor uses this to skip makeFeature for names
+  // no generated class backs.
+  hasFeature(this: any, fn: string) {
+    return null != FEATURE_CLASS[fn]
+  }
+
 
   main = {
     name: 'TempmailApi2',
+        slug: "tempmail-api2",
+    version: "0.0.1",
+    target: "ts",
+
   }
 
 
@@ -100,30 +111,37 @@ class Config {
         },
         {
           "name": "body",
+          "short": "Email body content",
           "type": "`$STRING`"
         },
         {
           "name": "date",
+          "short": "Timestamp when email was received",
           "type": "`$STRING`"
         },
         {
           "name": "from",
+          "short": "Sender email address",
           "type": "`$STRING`"
         },
         {
           "name": "html",
+          "short": "HTML version of email body",
           "type": "`$STRING`"
         },
         {
           "name": "id",
+          "short": "Unique identifier for the email",
           "type": "`$STRING`"
         },
         {
           "name": "subject",
+          "short": "Email subject",
           "type": "`$STRING`"
         },
         {
           "name": "to",
+          "short": "Recipient email address",
           "type": "`$STRING`"
         }
       ],
@@ -240,10 +258,12 @@ class Config {
       "fields": [
         {
           "name": "domain",
+          "short": "Domain for the email address (optional)",
           "type": "`$STRING`"
         },
         {
           "name": "email",
+          "short": "The generated temporary email address",
           "type": "`$STRING`"
         },
         {
@@ -252,11 +272,13 @@ class Config {
         },
         {
           "name": "token",
+          "short": "Authentication token for accessing the inbox",
           "type": "`$STRING`"
         },
         {
           "name": "username",
           "req": true,
+          "short": "Desired username for the email address",
           "type": "`$STRING`"
         }
       ],

@@ -8,11 +8,13 @@ main: kit: entity: inbox: {
     {
       name: "domain"
       req: false
+      short: "Domain for the email address (optional)"
       type: "`$STRING`"
     }
     {
       name: "email"
       req: false
+      short: "The generated temporary email address"
       type: "`$STRING`"
     }
     {
@@ -23,11 +25,13 @@ main: kit: entity: inbox: {
     {
       name: "token"
       req: false
+      short: "Authentication token for accessing the inbox"
       type: "`$STRING`"
     }
     {
       name: "username"
       req: true
+      short: "Desired username for the email address"
       type: "`$STRING`"
     }
   ]

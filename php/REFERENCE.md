@@ -153,13 +153,13 @@ $email = $client->Email();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `attachments` | `array` | No |  |
-| `body` | `string` | No |  |
-| `date` | `string` | No |  |
-| `from` | `string` | No |  |
-| `html` | `string` | No |  |
-| `id` | `string` | No |  |
-| `subject` | `string` | No |  |
-| `to` | `string` | No |  |
+| `body` | `string` | No | Email body content |
+| `date` | `string` | No | Timestamp when email was received |
+| `from` | `string` | No | Sender email address |
+| `html` | `string` | No | HTML version of email body |
+| `id` | `string` | No | Unique identifier for the email |
+| `subject` | `string` | No | Email subject |
+| `to` | `string` | No | Recipient email address |
 
 ### Operations
 
@@ -219,11 +219,11 @@ $inbox = $client->Inbox();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `string` | No |  |
-| `email` | `string` | No |  |
+| `domain` | `string` | No | Domain for the email address (optional) |
+| `email` | `string` | No | The generated temporary email address |
 | `emails` | `array` | No |  |
-| `token` | `string` | No |  |
-| `username` | `string` | Yes |  |
+| `token` | `string` | No | Authentication token for accessing the inbox |
+| `username` | `string` | Yes | Desired username for the email address |
 
 ### Operations
 

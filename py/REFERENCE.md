@@ -149,13 +149,13 @@ email = client.Email()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `attachments` | `list` | No |  |
-| `body` | `str` | No |  |
-| `date` | `str` | No |  |
-| `from` | `str` | No |  |
-| `html` | `str` | No |  |
-| `id` | `str` | No |  |
-| `subject` | `str` | No |  |
-| `to` | `str` | No |  |
+| `body` | `str` | No | Email body content |
+| `date` | `str` | No | Timestamp when email was received |
+| `from` | `str` | No | Sender email address |
+| `html` | `str` | No | HTML version of email body |
+| `id` | `str` | No | Unique identifier for the email |
+| `subject` | `str` | No | Email subject |
+| `to` | `str` | No | Recipient email address |
 
 ### Operations
 
@@ -214,11 +214,11 @@ inbox = client.Inbox()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `str` | No |  |
-| `email` | `str` | No |  |
+| `domain` | `str` | No | Domain for the email address (optional) |
+| `email` | `str` | No | The generated temporary email address |
 | `emails` | `list` | No |  |
-| `token` | `str` | No |  |
-| `username` | `str` | Yes |  |
+| `token` | `str` | No | Authentication token for accessing the inbox |
+| `username` | `str` | Yes | Desired username for the email address |
 
 ### Operations
 

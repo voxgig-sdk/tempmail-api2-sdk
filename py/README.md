@@ -272,13 +272,13 @@ API path: `/domains`
 | Field | Description |
 | --- | --- |
 | `attachments` |  |
-| `body` |  |
-| `date` |  |
-| `from` |  |
-| `html` |  |
-| `id` |  |
-| `subject` |  |
-| `to` |  |
+| `body` | Email body content |
+| `date` | Timestamp when email was received |
+| `from` | Sender email address |
+| `html` | HTML version of email body |
+| `id` | Unique identifier for the email |
+| `subject` | Email subject |
+| `to` | Recipient email address |
 
 Operations: Load, Remove.
 
@@ -288,11 +288,11 @@ API path: `/inbox/{token}/{emailId}`
 
 | Field | Description |
 | --- | --- |
-| `domain` |  |
-| `email` |  |
+| `domain` | Domain for the email address (optional) |
+| `email` | The generated temporary email address |
 | `emails` |  |
-| `token` |  |
-| `username` |  |
+| `token` | Authentication token for accessing the inbox |
+| `username` | Desired username for the email address |
 
 Operations: Create, Load, Remove.
 
@@ -342,13 +342,13 @@ Create an instance: `email = client.Email()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `attachments` | `list` |  |
-| `body` | `str` |  |
-| `date` | `str` |  |
-| `from` | `str` |  |
-| `html` | `str` |  |
-| `id` | `str` |  |
-| `subject` | `str` |  |
-| `to` | `str` |  |
+| `body` | `str` | Email body content |
+| `date` | `str` | Timestamp when email was received |
+| `from` | `str` | Sender email address |
+| `html` | `str` | HTML version of email body |
+| `id` | `str` | Unique identifier for the email |
+| `subject` | `str` | Email subject |
+| `to` | `str` | Recipient email address |
 
 #### Example: Load
 
@@ -373,11 +373,11 @@ Create an instance: `inbox = client.Inbox()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `str` |  |
-| `email` | `str` |  |
+| `domain` | `str` | Domain for the email address (optional) |
+| `email` | `str` | The generated temporary email address |
 | `emails` | `list` |  |
-| `token` | `str` |  |
-| `username` | `str` |  |
+| `token` | `str` | Authentication token for accessing the inbox |
+| `username` | `str` | Desired username for the email address |
 
 #### Example: Load
 

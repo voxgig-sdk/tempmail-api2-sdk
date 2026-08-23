@@ -83,42 +83,49 @@
               "active": true,
               "name": "body",
               "req": false,
+              "short": "Email body content",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "date",
               "req": false,
+              "short": "Timestamp when email was received",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "from",
               "req": false,
+              "short": "Sender email address",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "html",
               "req": false,
+              "short": "HTML version of email body",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Unique identifier for the email",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "subject",
               "req": false,
+              "short": "Email subject",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "to",
               "req": false,
+              "short": "Recipient email address",
               "type": "`$STRING`"
             }
           ],
@@ -251,12 +258,14 @@
               "active": true,
               "name": "domain",
               "req": false,
+              "short": "Domain for the email address (optional)",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "email",
               "req": false,
+              "short": "The generated temporary email address",
               "type": "`$STRING`"
             },
             {
@@ -269,12 +278,14 @@
               "active": true,
               "name": "token",
               "req": false,
+              "short": "Authentication token for accessing the inbox",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "username",
               "req": true,
+              "short": "Desired username for the email address",
               "type": "`$STRING`"
             }
           ],

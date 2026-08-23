@@ -270,13 +270,13 @@ API path: `/domains`
 | Field | Description |
 | --- | --- |
 | `attachments` |  |
-| `body` |  |
-| `date` |  |
-| `from` |  |
-| `html` |  |
-| `id` |  |
-| `subject` |  |
-| `to` |  |
+| `body` | Email body content |
+| `date` | Timestamp when email was received |
+| `from` | Sender email address |
+| `html` | HTML version of email body |
+| `id` | Unique identifier for the email |
+| `subject` | Email subject |
+| `to` | Recipient email address |
 
 Operations: Load, Remove.
 
@@ -286,11 +286,11 @@ API path: `/inbox/{token}/{emailId}`
 
 | Field | Description |
 | --- | --- |
-| `domain` |  |
-| `email` |  |
+| `domain` | Domain for the email address (optional) |
+| `email` | The generated temporary email address |
 | `emails` |  |
-| `token` |  |
-| `username` |  |
+| `token` | Authentication token for accessing the inbox |
+| `username` | Desired username for the email address |
 
 Operations: Create, Load, Remove.
 
@@ -341,13 +341,13 @@ Create an instance: `email = client.Email`
 | Field | Type | Description |
 | --- | --- | --- |
 | `attachments` | `Array` |  |
-| `body` | `String` |  |
-| `date` | `String` |  |
-| `from` | `String` |  |
-| `html` | `String` |  |
-| `id` | `String` |  |
-| `subject` | `String` |  |
-| `to` | `String` |  |
+| `body` | `String` | Email body content |
+| `date` | `String` | Timestamp when email was received |
+| `from` | `String` | Sender email address |
+| `html` | `String` | HTML version of email body |
+| `id` | `String` | Unique identifier for the email |
+| `subject` | `String` | Email subject |
+| `to` | `String` | Recipient email address |
 
 #### Example: Load
 
@@ -373,11 +373,11 @@ Create an instance: `inbox = client.Inbox`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `String` |  |
-| `email` | `String` |  |
+| `domain` | `String` | Domain for the email address (optional) |
+| `email` | `String` | The generated temporary email address |
 | `emails` | `Array` |  |
-| `token` | `String` |  |
-| `username` | `String` |  |
+| `token` | `String` | Authentication token for accessing the inbox |
+| `username` | `String` | Desired username for the email address |
 
 #### Example: Load
 

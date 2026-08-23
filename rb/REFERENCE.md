@@ -154,13 +154,13 @@ email = client.Email
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `attachments` | `Array` | No |  |
-| `body` | `String` | No |  |
-| `date` | `String` | No |  |
-| `from` | `String` | No |  |
-| `html` | `String` | No |  |
-| `id` | `String` | No |  |
-| `subject` | `String` | No |  |
-| `to` | `String` | No |  |
+| `body` | `String` | No | Email body content |
+| `date` | `String` | No | Timestamp when email was received |
+| `from` | `String` | No | Sender email address |
+| `html` | `String` | No | HTML version of email body |
+| `id` | `String` | No | Unique identifier for the email |
+| `subject` | `String` | No | Email subject |
+| `to` | `String` | No | Recipient email address |
 
 ### Operations
 
@@ -220,11 +220,11 @@ inbox = client.Inbox
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `String` | No |  |
-| `email` | `String` | No |  |
+| `domain` | `String` | No | Domain for the email address (optional) |
+| `email` | `String` | No | The generated temporary email address |
 | `emails` | `Array` | No |  |
-| `token` | `String` | No |  |
-| `username` | `String` | Yes |  |
+| `token` | `String` | No | Authentication token for accessing the inbox |
+| `username` | `String` | Yes | Desired username for the email address |
 
 ### Operations
 

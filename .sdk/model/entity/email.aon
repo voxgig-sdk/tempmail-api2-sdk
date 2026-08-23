@@ -13,36 +13,43 @@ main: kit: entity: email: {
     {
       name: "body"
       req: false
+      short: "Email body content"
       type: "`$STRING`"
     }
     {
       name: "date"
       req: false
+      short: "Timestamp when email was received"
       type: "`$STRING`"
     }
     {
       name: "from"
       req: false
+      short: "Sender email address"
       type: "`$STRING`"
     }
     {
       name: "html"
       req: false
+      short: "HTML version of email body"
       type: "`$STRING`"
     }
     {
       name: "id"
       req: false
+      short: "Unique identifier for the email"
       type: "`$STRING`"
     }
     {
       name: "subject"
       req: false
+      short: "Email subject"
       type: "`$STRING`"
     }
     {
       name: "to"
       req: false
+      short: "Recipient email address"
       type: "`$STRING`"
     }
   ]

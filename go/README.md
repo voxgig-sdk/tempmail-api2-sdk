@@ -6,7 +6,7 @@ The Golang SDK for the TempmailApi2 API — an entity-oriented client using stan
 
 It exposes the API as capitalised, semantic **Entities** — e.g. `client.Domain(nil)` — each with the same small set of operations (`List`, `Load`, `Create`, `Remove`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
-> Other languages, the CLI, and MCP server live alongside this one — see
+> Also generated from this model: `go-cli`, `go-mcp`, `lua`, `php`, `py`, `rb`, `ts` — see
 > the [top-level README](../README.md).
 
 
@@ -277,13 +277,13 @@ API path: `/domains`
 | Field | Description |
 | --- | --- |
 | `"attachments"` |  |
-| `"body"` |  |
-| `"date"` |  |
-| `"from"` |  |
-| `"html"` |  |
-| `"id"` |  |
-| `"subject"` |  |
-| `"to"` |  |
+| `"body"` | Email body content |
+| `"date"` | Timestamp when email was received |
+| `"from"` | Sender email address |
+| `"html"` | HTML version of email body |
+| `"id"` | Unique identifier for the email |
+| `"subject"` | Email subject |
+| `"to"` | Recipient email address |
 
 Operations: Load, Remove.
 
@@ -293,11 +293,11 @@ API path: `/inbox/{token}/{emailId}`
 
 | Field | Description |
 | --- | --- |
-| `"domain"` |  |
-| `"email"` |  |
+| `"domain"` | Domain for the email address (optional) |
+| `"email"` | The generated temporary email address |
 | `"emails"` |  |
-| `"token"` |  |
-| `"username"` |  |
+| `"token"` | Authentication token for accessing the inbox |
+| `"username"` | Desired username for the email address |
 
 Operations: Create, Load, Remove.
 
@@ -351,13 +351,13 @@ Create an instance: `email := client.Email(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `attachments` | `[]any` |  |
-| `body` | `string` |  |
-| `date` | `string` |  |
-| `from` | `string` |  |
-| `html` | `string` |  |
-| `id` | `string` |  |
-| `subject` | `string` |  |
-| `to` | `string` |  |
+| `body` | `string` | Email body content |
+| `date` | `string` | Timestamp when email was received |
+| `from` | `string` | Sender email address |
+| `html` | `string` | HTML version of email body |
+| `id` | `string` | Unique identifier for the email |
+| `subject` | `string` | Email subject |
+| `to` | `string` | Recipient email address |
 
 #### Example: Load
 
@@ -386,11 +386,11 @@ Create an instance: `inbox := client.Inbox(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `string` |  |
-| `email` | `string` |  |
+| `domain` | `string` | Domain for the email address (optional) |
+| `email` | `string` | The generated temporary email address |
 | `emails` | `[]any` |  |
-| `token` | `string` |  |
-| `username` | `string` |  |
+| `token` | `string` | Authentication token for accessing the inbox |
+| `username` | `string` | Desired username for the email address |
 
 #### Example: Load
 
