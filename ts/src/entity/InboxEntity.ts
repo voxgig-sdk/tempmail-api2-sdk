@@ -45,7 +45,8 @@ class InboxEntity extends TempmailApi2EntityBase<Inbox> {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -166,7 +167,8 @@ class InboxEntity extends TempmailApi2EntityBase<Inbox> {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -294,7 +296,8 @@ class InboxEntity extends TempmailApi2EntityBase<Inbox> {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

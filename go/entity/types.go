@@ -51,6 +51,7 @@ type Inbox struct {
 	Domain *string `json:"domain,omitempty"`
 	Email *string `json:"email,omitempty"`
 	Emails *[]any `json:"emails,omitempty"`
+	Id *string `json:"id,omitempty"`
 	Token *string `json:"token,omitempty"`
 	Username string `json:"username"`
 }
@@ -65,6 +66,7 @@ type InboxCreateData struct {
 	Domain *string `json:"domain,omitempty"`
 	Email *string `json:"email,omitempty"`
 	Emails *[]any `json:"emails,omitempty"`
+	Id *string `json:"id,omitempty"`
 	Token *string `json:"token,omitempty"`
 	Username string `json:"username"`
 }

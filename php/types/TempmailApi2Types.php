@@ -57,6 +57,7 @@ class Inbox
     public ?string $domain = null;
     public ?string $email = null;
     public ?array $emails = null;
+    public ?string $id = null;
     public ?string $token = null;
     public string $username;
 }
@@ -73,6 +74,7 @@ class InboxCreateData
     public ?string $domain = null;
     public ?string $email = null;
     public ?array $emails = null;
+    public ?string $id = null;
     public ?string $token = null;
     public string $username;
 }

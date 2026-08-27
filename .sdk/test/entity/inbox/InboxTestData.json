@@ -2,39 +2,39 @@
   "existing": {
     "inbox": {
       "INBOX00": {
-        "domain": "s32",
-        "email": "s33",
+        "domain": "s3c",
+        "email": "s3d",
         "emails": [],
-        "token": "s35",
-        "username": "s36",
-        "id": "INBOX00"
+        "id": "INBOX00",
+        "token": "s40",
+        "username": "s41"
       },
       "INBOX01": {
-        "domain": "s64",
-        "email": "s65",
+        "domain": "s78",
+        "email": "s79",
         "emails": [],
-        "token": "s67",
-        "username": "s68",
-        "id": "INBOX01"
+        "id": "INBOX01",
+        "token": "s7c",
+        "username": "s7d"
       },
       "INBOX02": {
-        "domain": "s96",
-        "email": "s97",
+        "domain": "sb4",
+        "email": "sb5",
         "emails": [],
-        "token": "s99",
-        "username": "s9a",
-        "id": "INBOX02"
+        "id": "INBOX02",
+        "token": "sb8",
+        "username": "sb9"
       }
     }
   },
   "new": {
     "inbox": {
       "inbox_ref01": {
-        "domain": "sc8",
-        "email": "sc9",
+        "domain": "sf0",
+        "email": "sf1",
         "emails": [],
-        "token": "scb",
-        "username": "scc"
+        "token": "sf4",
+        "username": "sf5"
       }
     }
   }

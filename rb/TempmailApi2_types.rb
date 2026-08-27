@@ -100,6 +100,9 @@ EmailRemoveMatch = Struct.new(
 # @!attribute [rw] emails
 #   @return [Array, nil]
 #
+# @!attribute [rw] id
+#   @return [String, nil]
+#
 # @!attribute [rw] token
 #   @return [String, nil]
 #
@@ -109,6 +112,7 @@ Inbox = Struct.new(
   :domain,
   :email,
   :emails,
+  :id,
   :token,
   :username,
   keyword_init: true
@@ -134,6 +138,9 @@ InboxLoadMatch = Struct.new(
 # @!attribute [rw] emails
 #   @return [Array, nil]
 #
+# @!attribute [rw] id
+#   @return [String, nil]
+#
 # @!attribute [rw] token
 #   @return [String, nil]
 #
@@ -143,6 +150,7 @@ InboxCreateData = Struct.new(
   :domain,
   :email,
   :emails,
+  :id,
   :token,
   :username,
   keyword_init: true

@@ -34,6 +34,7 @@
 ---@field domain? string
 ---@field email? string
 ---@field emails? table
+---@field id? string
 ---@field token? string
 ---@field username string
 
@@ -44,6 +45,7 @@
 ---@field domain? string
 ---@field email? string
 ---@field emails? table
+---@field id? string
 ---@field token? string
 ---@field username string
 

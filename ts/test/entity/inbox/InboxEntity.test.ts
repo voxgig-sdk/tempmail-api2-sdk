@@ -63,10 +63,20 @@ describe('InboxEntity', async () => {
     let inbox_ref01_data = setup.data.new.inbox['inbox_ref01']
 
     inbox_ref01_data = (await inbox_ref01_ent.create(inbox_ref01_data)).data()
-    assert(null != inbox_ref01_data)
+    assert(null != inbox_ref01_data.id)
 
 
+    // LOAD
+    const inbox_ref01_match_dt0: any = {}
+    inbox_ref01_match_dt0.id = inbox_ref01_data.id
+    const inbox_ref01_data_dt0 = (await inbox_ref01_ent.load(inbox_ref01_match_dt0)).data()
+    assert(inbox_ref01_data_dt0.id === inbox_ref01_data.id)
 
+
+    // REMOVE
+    const inbox_ref01_match_rm0: any = { id: inbox_ref01_data.id }
+    await inbox_ref01_ent.remove(inbox_ref01_match_rm0)
+  
 
   })
 })

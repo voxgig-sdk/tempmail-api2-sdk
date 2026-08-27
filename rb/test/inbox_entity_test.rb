@@ -39,12 +39,22 @@ class InboxEntityTest < Minitest::Test
     inbox_ref01_data_result = inbox_ref01_ent.create(inbox_ref01_data, nil)
     inbox_ref01_data = Helpers.to_map(inbox_ref01_data_result.respond_to?(:data_get) ? inbox_ref01_data_result.data_get : inbox_ref01_data_result)
     assert !inbox_ref01_data.nil?
+    assert !inbox_ref01_data["id"].nil?
 
     # LOAD
-    inbox_ref01_match_dt0 = {}
+    inbox_ref01_match_dt0 = {
+      "id" => inbox_ref01_data["id"],
+    }
     inbox_ref01_data_dt0_loaded = inbox_ref01_ent.load(inbox_ref01_match_dt0, nil)
-    assert !inbox_ref01_data_dt0_loaded.nil?
+    inbox_ref01_data_dt0_load_result = Helpers.to_map(inbox_ref01_data_dt0_loaded.respond_to?(:data_get) ? inbox_ref01_data_dt0_loaded.data_get : inbox_ref01_data_dt0_loaded)
+    assert !inbox_ref01_data_dt0_load_result.nil?
+    assert_equal inbox_ref01_data_dt0_load_result["id"], inbox_ref01_data["id"]
 
+    # REMOVE
+    inbox_ref01_match_rm0 = {
+      "id" => inbox_ref01_data["id"],
+    }
+    inbox_ref01_ent.remove(inbox_ref01_match_rm0, nil)
 
   end
 end

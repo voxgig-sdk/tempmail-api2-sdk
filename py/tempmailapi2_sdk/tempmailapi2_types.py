@@ -52,6 +52,7 @@ class Inbox(InboxRequired, total=False):
     domain: str
     email: str
     emails: list
+    id: str
     token: str
 
 
@@ -67,6 +68,7 @@ class InboxCreateData(InboxCreateDataRequired, total=False):
     domain: str
     email: str
     emails: list
+    id: str
     token: str
 
 

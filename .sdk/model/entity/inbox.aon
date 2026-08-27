@@ -23,6 +23,11 @@ main: kit: entity: inbox: {
       type: "`$ARRAY`"
     }
     {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
       name: "token"
       req: false
       short: "Authentication token for accessing the inbox"
@@ -35,6 +40,11 @@ main: kit: entity: inbox: {
       type: "`$STRING`"
     }
   ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
 
   name: "inbox"
   op: {

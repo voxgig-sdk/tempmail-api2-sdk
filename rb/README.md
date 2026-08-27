@@ -289,6 +289,7 @@ API path: `/inbox/{token}/{emailId}`
 | `domain` | Domain for the email address (optional) |
 | `email` | The generated temporary email address |
 | `emails` |  |
+| `id` |  |
 | `token` | Authentication token for accessing the inbox |
 | `username` | Desired username for the email address |
 
@@ -376,6 +377,7 @@ Create an instance: `inbox = client.Inbox`
 | `domain` | `String` | Domain for the email address (optional) |
 | `email` | `String` | The generated temporary email address |
 | `emails` | `Array` |  |
+| `id` | `String` |  |
 | `token` | `String` | Authentication token for accessing the inbox |
 | `username` | `String` | Desired username for the email address |
 

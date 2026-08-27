@@ -163,7 +163,7 @@ await entity.load({ id: 'example' })
 
 // Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data)
+console.log(data.id)
 ```
 
 ### Add custom middleware
@@ -341,6 +341,7 @@ API path: `/inbox/{token}/{emailId}`
 | `domain` | Domain for the email address (optional) |
 | `email` | The generated temporary email address |
 | `emails` |  |
+| `id` |  |
 | `token` | Authentication token for accessing the inbox |
 | `username` | Desired username for the email address |
 
@@ -426,6 +427,7 @@ Create an instance: `const inbox = client.Inbox()`
 | `domain` | `string` | Domain for the email address (optional) |
 | `email` | `string` | The generated temporary email address |
 | `emails` | `any[]` |  |
+| `id` | `string` |  |
 | `token` | `string` | Authentication token for accessing the inbox |
 | `username` | `string` | Desired username for the email address |
 

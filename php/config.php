@@ -42,6 +42,7 @@ class TempmailApi2Config
           'options' => [
             'active' => false,
           ],
+          'transport' => 'base',
         ],
             ],
             "options" => [
@@ -256,6 +257,10 @@ class TempmailApi2Config
             [
               'name' => 'emails',
               'type' => '`$ARRAY`',
+            ],
+            [
+              'name' => 'id',
+              'type' => '`$STRING`',
             ],
             [
               'name' => 'token',

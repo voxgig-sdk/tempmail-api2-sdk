@@ -299,6 +299,7 @@ API path: `/inbox/{token}/{emailId}`
 | `domain` | Domain for the email address (optional) |
 | `email` | The generated temporary email address |
 | `emails` |  |
+| `id` |  |
 | `token` | Authentication token for accessing the inbox |
 | `username` | Desired username for the email address |
 
@@ -386,6 +387,7 @@ Create an instance: `$inbox = $client->Inbox();`
 | `domain` | `string` | Domain for the email address (optional) |
 | `email` | `string` | The generated temporary email address |
 | `emails` | `array` |  |
+| `id` | `string` |  |
 | `token` | `string` | Authentication token for accessing the inbox |
 | `username` | `string` | Desired username for the email address |
 

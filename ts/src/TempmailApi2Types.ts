@@ -38,6 +38,7 @@ export interface Inbox {
   domain?: string
   email?: string
   emails?: any[]
+  id?: string
   token?: string
   username: string
 }
@@ -50,6 +51,7 @@ export interface InboxCreateData {
   domain?: string
   email?: string
   emails?: any[]
+  id?: string
   token?: string
   username: string
 

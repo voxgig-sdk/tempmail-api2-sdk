@@ -258,6 +258,7 @@ const inbox = client.Inbox()
 | `domain` | `string` | No | Domain for the email address (optional) |
 | `email` | `string` | No | The generated temporary email address |
 | `emails` | `any[]` | No |  |
+| `id` | `string` | No |  |
 | `token` | `string` | No | Authentication token for accessing the inbox |
 | `username` | `string` | Yes | Desired username for the email address |
 

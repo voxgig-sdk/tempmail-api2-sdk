@@ -43,13 +43,24 @@ describe("InboxEntity", function()
     assert.is_nil(err)
     inbox_ref01_data = helpers.to_map(type(inbox_ref01_data_result) == 'table' and inbox_ref01_data_result.data_get and inbox_ref01_data_result:data_get() or inbox_ref01_data_result)
     assert.is_not_nil(inbox_ref01_data)
+    assert.is_not_nil(inbox_ref01_data["id"])
 
     -- LOAD
-    local inbox_ref01_match_dt0 = {}
+    local inbox_ref01_match_dt0 = {
+      id = inbox_ref01_data["id"],
+    }
     local inbox_ref01_data_dt0_loaded, err = inbox_ref01_ent:load(inbox_ref01_match_dt0, nil)
     assert.is_nil(err)
-    assert.is_not_nil(inbox_ref01_data_dt0_loaded)
+    local inbox_ref01_data_dt0_load_result = helpers.to_map(type(inbox_ref01_data_dt0_loaded) == 'table' and inbox_ref01_data_dt0_loaded.data_get and inbox_ref01_data_dt0_loaded:data_get() or inbox_ref01_data_dt0_loaded)
+    assert.is_not_nil(inbox_ref01_data_dt0_load_result)
+    assert.are.equal(inbox_ref01_data_dt0_load_result["id"], inbox_ref01_data["id"])
 
+    -- REMOVE
+    local inbox_ref01_match_rm0 = {
+      id = inbox_ref01_data["id"],
+    }
+    local _, err = inbox_ref01_ent:remove(inbox_ref01_match_rm0, nil)
+    assert.is_nil(err)
 
   end)
 end)

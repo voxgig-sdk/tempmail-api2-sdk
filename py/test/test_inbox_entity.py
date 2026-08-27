@@ -46,12 +46,22 @@ class TestInboxEntity:
 
         inbox_ref01_data = helpers.to_map(runner.entity_data(inbox_ref01_ent.create(inbox_ref01_data, None)))
         assert inbox_ref01_data is not None
+        assert inbox_ref01_data["id"] is not None
 
         # LOAD
-        inbox_ref01_match_dt0 = {}
+        inbox_ref01_match_dt0 = {
+            "id": inbox_ref01_data["id"],
+        }
         inbox_ref01_data_dt0_loaded = inbox_ref01_ent.load(inbox_ref01_match_dt0, None)
-        assert inbox_ref01_data_dt0_loaded is not None
+        inbox_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(inbox_ref01_data_dt0_loaded))
+        assert inbox_ref01_data_dt0_load_result is not None
+        assert inbox_ref01_data_dt0_load_result["id"] == inbox_ref01_data["id"]
 
+        # REMOVE
+        inbox_ref01_match_rm0 = {
+            "id": inbox_ref01_data["id"],
+        }
+        inbox_ref01_ent.remove(inbox_ref01_match_rm0, None)
 
 
 

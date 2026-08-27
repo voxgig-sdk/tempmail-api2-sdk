@@ -217,6 +217,7 @@ inbox = client.Inbox()
 | `domain` | `str` | No | Domain for the email address (optional) |
 | `email` | `str` | No | The generated temporary email address |
 | `emails` | `list` | No |  |
+| `id` | `str` | No |  |
 | `token` | `str` | No | Authentication token for accessing the inbox |
 | `username` | `str` | Yes | Desired username for the email address |
 
