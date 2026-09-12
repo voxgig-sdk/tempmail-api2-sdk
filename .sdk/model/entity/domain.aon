@@ -20,8 +20,10 @@ main: kit: entity: domain: {
         {
           method: "GET"
           orig: "/domains"
-          parts: [
-            "domains"
+          segments: [
+            {
+              lit: "domains"
+            }
           ]
           transform: {
             req: "`reqdata`"

@@ -75,13 +75,18 @@ class TempmailApi2Config
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/domains',
-                  'parts' => [
-                    'domains',
+                  'segments' => [
+                    [
+                      'lit' => 'domains',
+                    ],
                   ],
                   'select' => [],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.domains`',
+                  ],
+                  'parts' => [
+                    'domains',
                   ],
                 ],
               ],
@@ -103,11 +108,13 @@ class TempmailApi2Config
               'type' => '`$STRING`',
             ],
             [
+              'format' => 'date-time',
               'name' => 'date',
               'short' => 'Timestamp when email was received',
               'type' => '`$STRING`',
             ],
             [
+              'format' => 'email',
               'name' => 'from',
               'short' => 'Sender email address',
               'type' => '`$STRING`',
@@ -128,10 +135,20 @@ class TempmailApi2Config
               'type' => '`$STRING`',
             ],
             [
+              'format' => 'email',
               'name' => 'to',
               'short' => 'Recipient email address',
               'type' => '`$STRING`',
             ],
+          ],
+          'id' => [
+            'field' => 'id',
+            'name' => 'id',
+            'parts' => [
+              'token',
+              'email_id',
+            ],
+            'sep' => '/',
           ],
           'name' => 'email',
           'op' => [
@@ -161,14 +178,20 @@ class TempmailApi2Config
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/inbox/{token}/{emailId}',
-                  'parts' => [
-                    'inbox',
-                    '{token}',
-                    '{email_id}',
-                  ],
                   'rename' => [
                     'param' => [
                       'emailId' => 'email_id',
+                    ],
+                  ],
+                  'segments' => [
+                    [
+                      'lit' => 'inbox',
+                    ],
+                    [
+                      'var' => 'token',
+                    ],
+                    [
+                      'var' => 'email_id',
                     ],
                   ],
                   'select' => [
@@ -180,6 +203,11 @@ class TempmailApi2Config
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
+                  ],
+                  'parts' => [
+                    'inbox',
+                    '{token}',
+                    '{email_id}',
                   ],
                 ],
               ],
@@ -210,14 +238,20 @@ class TempmailApi2Config
                   'kind' => 'http',
                   'method' => 'DELETE',
                   'orig' => '/inbox/{token}/{emailId}',
-                  'parts' => [
-                    'inbox',
-                    '{token}',
-                    '{email_id}',
-                  ],
                   'rename' => [
                     'param' => [
                       'emailId' => 'email_id',
+                    ],
+                  ],
+                  'segments' => [
+                    [
+                      'lit' => 'inbox',
+                    ],
+                    [
+                      'var' => 'token',
+                    ],
+                    [
+                      'var' => 'email_id',
                     ],
                   ],
                   'select' => [
@@ -229,6 +263,11 @@ class TempmailApi2Config
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
+                  ],
+                  'parts' => [
+                    'inbox',
+                    '{token}',
+                    '{email_id}',
                   ],
                 ],
               ],
@@ -250,6 +289,7 @@ class TempmailApi2Config
               'type' => '`$STRING`',
             ],
             [
+              'format' => 'email',
               'name' => 'email',
               'short' => 'The generated temporary email address',
               'type' => '`$STRING`',
@@ -274,6 +314,10 @@ class TempmailApi2Config
               'type' => '`$STRING`',
             ],
           ],
+          'id' => [
+            'field' => 'id',
+            'name' => 'id',
+          ],
           'name' => 'inbox',
           'op' => [
             'create' => [
@@ -285,9 +329,13 @@ class TempmailApi2Config
                   'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/inbox/create',
-                  'parts' => [
-                    'inbox',
-                    'create',
+                  'segments' => [
+                    [
+                      'lit' => 'inbox',
+                    ],
+                    [
+                      'lit' => 'create',
+                    ],
                   ],
                   'select' => [
                     '$action' => 'create',
@@ -296,15 +344,23 @@ class TempmailApi2Config
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
+                  'parts' => [
+                    'inbox',
+                    'create',
+                  ],
                 ],
                 [
                   'args' => [],
                   'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/inbox/custom',
-                  'parts' => [
-                    'inbox',
-                    'custom',
+                  'segments' => [
+                    [
+                      'lit' => 'inbox',
+                    ],
+                    [
+                      'lit' => 'custom',
+                    ],
                   ],
                   'select' => [
                     '$action' => 'custom',
@@ -312,6 +368,10 @@ class TempmailApi2Config
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
+                  ],
+                  'parts' => [
+                    'inbox',
+                    'custom',
                   ],
                 ],
               ],
@@ -335,13 +395,17 @@ class TempmailApi2Config
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/inbox/{token}',
-                  'parts' => [
-                    'inbox',
-                    '{id}',
-                  ],
                   'rename' => [
                     'param' => [
                       'token' => 'id',
+                    ],
+                  ],
+                  'segments' => [
+                    [
+                      'lit' => 'inbox',
+                    ],
+                    [
+                      'var' => 'id',
                     ],
                   ],
                   'select' => [
@@ -352,6 +416,10 @@ class TempmailApi2Config
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
+                  ],
+                  'parts' => [
+                    'inbox',
+                    '{id}',
                   ],
                 ],
               ],
@@ -375,13 +443,17 @@ class TempmailApi2Config
                   'kind' => 'http',
                   'method' => 'DELETE',
                   'orig' => '/inbox/{token}',
-                  'parts' => [
-                    'inbox',
-                    '{id}',
-                  ],
                   'rename' => [
                     'param' => [
                       'token' => 'id',
+                    ],
+                  ],
+                  'segments' => [
+                    [
+                      'lit' => 'inbox',
+                    ],
+                    [
+                      'var' => 'id',
                     ],
                   ],
                   'select' => [
@@ -392,6 +464,10 @@ class TempmailApi2Config
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
+                  ],
+                  'parts' => [
+                    'inbox',
+                    '{id}',
                   ],
                 ],
               ],

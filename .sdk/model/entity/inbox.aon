@@ -12,6 +12,7 @@ main: kit: entity: inbox: {
       type: "`$STRING`"
     }
     {
+      format: "email"
       name: "email"
       req: false
       short: "The generated temporary email address"
@@ -54,9 +55,13 @@ main: kit: entity: inbox: {
         {
           method: "POST"
           orig: "/inbox/create"
-          parts: [
-            "inbox"
-            "create"
+          segments: [
+            {
+              lit: "inbox"
+            }
+            {
+              lit: "create"
+            }
           ]
           select: {
             "$action": "create"
@@ -69,9 +74,13 @@ main: kit: entity: inbox: {
         {
           method: "POST"
           orig: "/inbox/custom"
-          parts: [
-            "inbox"
-            "custom"
+          segments: [
+            {
+              lit: "inbox"
+            }
+            {
+              lit: "custom"
+            }
           ]
           select: {
             "$action": "custom"
@@ -100,15 +109,19 @@ main: kit: entity: inbox: {
           }
           method: "GET"
           orig: "/inbox/{token}"
-          parts: [
-            "inbox"
-            "{id}"
-          ]
           rename: {
             param: {
               token: "id"
             }
           }
+          segments: [
+            {
+              lit: "inbox"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -138,15 +151,19 @@ main: kit: entity: inbox: {
           }
           method: "DELETE"
           orig: "/inbox/{token}"
-          parts: [
-            "inbox"
-            "{id}"
-          ]
           rename: {
             param: {
               token: "id"
             }
           }
+          segments: [
+            {
+              lit: "inbox"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"

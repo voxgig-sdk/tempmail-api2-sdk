@@ -10,6 +10,17 @@ const FEATURE_CLASS: Record<string, typeof BaseFeature> = {
 }
 
 
+// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
+// the model's active plugin groups. A feature that takes a `plugins` option
+// (secrets over sekreto) reads its own entry; a feature with no plugins has
+// none. Named imports above make each definition statically reachable, so
+// an SDK carries exactly the plugin modules its model selects — the same
+// leanness the old side-effect registry imports bought, without a registry.
+const FEATURE_PLUGINS: Record<string, any[]> = {
+  
+}
+
+
 class Config {
 
   makeFeature(this: any, fn: string) {
@@ -88,14 +99,19 @@ class Config {
               "kind": "http",
               "method": "GET",
               "orig": "/domains",
-              "parts": [
-                "domains"
+              "segments": [
+                {
+                  "lit": "domains"
+                }
               ],
               "select": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body.domains`"
-              }
+              },
+              "parts": [
+                "domains"
+              ]
             }
           ]
         }
@@ -116,11 +132,13 @@ class Config {
           "type": "`$STRING`"
         },
         {
+          "format": "date-time",
           "name": "date",
           "short": "Timestamp when email was received",
           "type": "`$STRING`"
         },
         {
+          "format": "email",
           "name": "from",
           "short": "Sender email address",
           "type": "`$STRING`"
@@ -141,11 +159,21 @@ class Config {
           "type": "`$STRING`"
         },
         {
+          "format": "email",
           "name": "to",
           "short": "Recipient email address",
           "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id",
+        "parts": [
+          "token",
+          "email_id"
+        ],
+        "sep": "/"
+      },
       "name": "email",
       "op": {
         "load": {
@@ -174,16 +202,22 @@ class Config {
               "kind": "http",
               "method": "GET",
               "orig": "/inbox/{token}/{emailId}",
-              "parts": [
-                "inbox",
-                "{token}",
-                "{email_id}"
-              ],
               "rename": {
                 "param": {
                   "emailId": "email_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "inbox"
+                },
+                {
+                  "var": "token"
+                },
+                {
+                  "var": "email_id"
+                }
+              ],
               "select": {
                 "exist": [
                   "email_id",
@@ -193,7 +227,12 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "inbox",
+                "{token}",
+                "{email_id}"
+              ]
             }
           ]
         },
@@ -223,16 +262,22 @@ class Config {
               "kind": "http",
               "method": "DELETE",
               "orig": "/inbox/{token}/{emailId}",
-              "parts": [
-                "inbox",
-                "{token}",
-                "{email_id}"
-              ],
               "rename": {
                 "param": {
                   "emailId": "email_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "inbox"
+                },
+                {
+                  "var": "token"
+                },
+                {
+                  "var": "email_id"
+                }
+              ],
               "select": {
                 "exist": [
                   "email_id",
@@ -242,7 +287,12 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "inbox",
+                "{token}",
+                "{email_id}"
+              ]
             }
           ]
         }
@@ -263,6 +313,7 @@ class Config {
           "type": "`$STRING`"
         },
         {
+          "format": "email",
           "name": "email",
           "short": "The generated temporary email address",
           "type": "`$STRING`"
@@ -287,6 +338,10 @@ class Config {
           "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "inbox",
       "op": {
         "create": {
@@ -298,9 +353,13 @@ class Config {
               "kind": "http",
               "method": "POST",
               "orig": "/inbox/create",
-              "parts": [
-                "inbox",
-                "create"
+              "segments": [
+                {
+                  "lit": "inbox"
+                },
+                {
+                  "lit": "create"
+                }
               ],
               "select": {
                 "$action": "create"
@@ -308,16 +367,24 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "inbox",
+                "create"
+              ]
             },
             {
               "args": {},
               "kind": "http",
               "method": "POST",
               "orig": "/inbox/custom",
-              "parts": [
-                "inbox",
-                "custom"
+              "segments": [
+                {
+                  "lit": "inbox"
+                },
+                {
+                  "lit": "custom"
+                }
               ],
               "select": {
                 "$action": "custom"
@@ -325,7 +392,11 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "inbox",
+                "custom"
+              ]
             }
           ]
         },
@@ -348,15 +419,19 @@ class Config {
               "kind": "http",
               "method": "GET",
               "orig": "/inbox/{token}",
-              "parts": [
-                "inbox",
-                "{id}"
-              ],
               "rename": {
                 "param": {
                   "token": "id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "inbox"
+                },
+                {
+                  "var": "id"
+                }
+              ],
               "select": {
                 "exist": [
                   "id"
@@ -365,7 +440,11 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "inbox",
+                "{id}"
+              ]
             }
           ]
         },
@@ -388,15 +467,19 @@ class Config {
               "kind": "http",
               "method": "DELETE",
               "orig": "/inbox/{token}",
-              "parts": [
-                "inbox",
-                "{id}"
-              ],
               "rename": {
                 "param": {
                   "token": "id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "inbox"
+                },
+                {
+                  "var": "id"
+                }
+              ],
               "select": {
                 "exist": [
                   "id"
@@ -405,7 +488,11 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "inbox",
+                "{id}"
+              ]
             }
           ]
         }
@@ -421,6 +508,7 @@ class Config {
 const config = new Config()
 
 export {
-  config
+  config,
+  FEATURE_PLUGINS,
 }
 
