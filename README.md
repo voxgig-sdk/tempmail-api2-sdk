@@ -105,7 +105,7 @@ local result, err = client:Inbox():load({ id = "test01" })
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/tempmail-api2` | publish pending — [install from git tag](https://github.com/voxgig-sdk/tempmail-api2-sdk/releases) |
+| TypeScript | `@voxgig-sdk/tempmail-api2-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/tempmail-api2-sdk/releases) |
 | Python | `voxgig-sdk-tempmail-api2` | publish pending — [install from git tag](https://github.com/voxgig-sdk/tempmail-api2-sdk/releases) |
 | PHP | `voxgig-sdk/tempmail-api2` | publish pending — [install from git tag](https://github.com/voxgig-sdk/tempmail-api2-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/tempmail-api2-sdk/go` | `go get github.com/voxgig-sdk/tempmail-api2-sdk/go@latest` |
@@ -119,7 +119,7 @@ local result, err = client:Inbox():load({ id = "test01" })
 ### TypeScript
 
 ```ts
-import { TempmailApi2SDK } from '@voxgig-sdk/tempmail-api2'
+import { TempmailApi2SDK } from '@voxgig-sdk/tempmail-api2-sdk'
 
 const client = new TempmailApi2SDK()
 
