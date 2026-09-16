@@ -53,6 +53,12 @@ main: kit: entity: inbox: {
       name: "create"
       points: [
         {
+          contract: {
+            id: "POST /inbox/create"
+            json: "{\"operationId\":\"createInbox\",\"parameters\":[],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"email\":{\"description\":\"The generated temporary email address\",\"format\":\"email\",\"type\":\"string\"},\"token\":{\"description\":\"Authentication token for accessing the inbox\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successfully created temporary inbox\"},\"400\":{\"description\":\"Bad request\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "POST"
           orig: "/inbox/create"
           segments: [
@@ -72,6 +78,12 @@ main: kit: entity: inbox: {
           }
         }
         {
+          contract: {
+            id: "POST /inbox/custom"
+            json: "{\"operationId\":\"createCustomInbox\",\"parameters\":[],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"domain\":{\"description\":\"Domain for the email address (optional)\",\"type\":\"string\"},\"username\":{\"description\":\"Desired username for the email address\",\"type\":\"string\"}},\"required\":[\"username\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"email\":{\"description\":\"The created custom email address\",\"format\":\"email\",\"type\":\"string\"},\"token\":{\"description\":\"Authentication token for accessing the inbox\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successfully created custom inbox\"},\"400\":{\"description\":\"Bad request - Username already taken or invalid\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "POST"
           orig: "/inbox/custom"
           segments: [
@@ -106,6 +118,12 @@ main: kit: entity: inbox: {
                 type: "`$STRING`"
               }
             ]
+          }
+          contract: {
+            id: "GET /inbox/{token}"
+            json: "{\"operationId\":\"getInbox\",\"parameters\":[{\"description\":\"The authentication token for the inbox\",\"in\":\"path\",\"name\":\"token\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"emails\":{\"items\":{\"properties\":{\"body\":{\"description\":\"Email body content\",\"type\":\"string\"},\"date\":{\"description\":\"Timestamp when email was received\",\"format\":\"date-time\",\"type\":\"string\"},\"from\":{\"description\":\"Sender email address\",\"format\":\"email\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier for the email\",\"type\":\"string\"},\"subject\":{\"description\":\"Email subject\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successfully retrieved inbox messages\"},\"401\":{\"description\":\"Unauthorized - Invalid token\"},\"404\":{\"description\":\"Inbox not found\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
           }
           method: "GET"
           orig: "/inbox/{token}"
@@ -148,6 +166,12 @@ main: kit: entity: inbox: {
                 type: "`$STRING`"
               }
             ]
+          }
+          contract: {
+            id: "DELETE /inbox/{token}"
+            json: "{\"operationId\":\"deleteInbox\",\"parameters\":[{\"description\":\"The authentication token for the inbox\",\"in\":\"path\",\"name\":\"token\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"message\":{\"example\":\"Inbox deleted successfully\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Inbox successfully deleted\"},\"401\":{\"description\":\"Unauthorized - Invalid token\"},\"404\":{\"description\":\"Inbox not found\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
           }
           method: "DELETE"
           orig: "/inbox/{token}"

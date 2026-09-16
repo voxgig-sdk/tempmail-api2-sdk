@@ -37,5 +37,224 @@
         "username": "sf5"
       }
     }
+  },
+  "requests": {
+    "POST /inbox/create": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "createInbox",
+        "parameters": [],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "email": {
+                      "description": "The generated temporary email address",
+                      "format": "email",
+                      "type": "string"
+                    },
+                    "token": {
+                      "description": "Authentication token for accessing the inbox",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successfully created temporary inbox"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "securitySource": "unspecified"
+      }
+    },
+    "POST /inbox/custom": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "createCustomInbox",
+        "parameters": [],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "domain": {
+                    "description": "Domain for the email address (optional)",
+                    "type": "string"
+                  },
+                  "username": {
+                    "description": "Desired username for the email address",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "email": {
+                      "description": "The created custom email address",
+                      "format": "email",
+                      "type": "string"
+                    },
+                    "token": {
+                      "description": "Authentication token for accessing the inbox",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successfully created custom inbox"
+          },
+          "400": {
+            "description": "Bad request - Username already taken or invalid"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /inbox/{token}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getInbox",
+        "parameters": [
+          {
+            "description": "The authentication token for the inbox",
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "emails": {
+                      "items": {
+                        "properties": {
+                          "body": {
+                            "description": "Email body content",
+                            "type": "string"
+                          },
+                          "date": {
+                            "description": "Timestamp when email was received",
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "from": {
+                            "description": "Sender email address",
+                            "format": "email",
+                            "type": "string"
+                          },
+                          "id": {
+                            "description": "Unique identifier for the email",
+                            "type": "string"
+                          },
+                          "subject": {
+                            "description": "Email subject",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successfully retrieved inbox messages"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid token"
+          },
+          "404": {
+            "description": "Inbox not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "securitySource": "unspecified"
+      }
+    },
+    "DELETE /inbox/{token}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "deleteInbox",
+        "parameters": [
+          {
+            "description": "The authentication token for the inbox",
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "example": "Inbox deleted successfully",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Inbox successfully deleted"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid token"
+          },
+          "404": {
+            "description": "Inbox not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "securitySource": "unspecified"
+      }
+    }
   }
 }

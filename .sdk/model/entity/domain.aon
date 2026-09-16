@@ -18,6 +18,12 @@ main: kit: entity: domain: {
       name: "list"
       points: [
         {
+          contract: {
+            id: "GET /domains"
+            json: "{\"operationId\":\"getDomains\",\"parameters\":[],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"domains\":{\"example\":[\"tempmail.lol\",\"temp.lol\"],\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successfully retrieved domains\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "GET"
           orig: "/domains"
           segments: [

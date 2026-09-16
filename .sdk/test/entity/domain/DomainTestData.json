@@ -18,5 +18,43 @@
         "domains": []
       }
     }
+  },
+  "requests": {
+    "GET /domains": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getDomains",
+        "parameters": [],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "domains": {
+                      "example": [
+                        "tempmail.lol",
+                        "temp.lol"
+                      ],
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successfully retrieved domains"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "securitySource": "unspecified"
+      }
+    }
   }
 }

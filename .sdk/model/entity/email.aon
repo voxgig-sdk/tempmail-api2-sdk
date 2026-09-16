@@ -91,6 +91,12 @@ main: kit: entity: email: {
               }
             ]
           }
+          contract: {
+            id: "GET /inbox/{token}/{emailId}"
+            json: "{\"operationId\":\"getEmail\",\"parameters\":[{\"description\":\"The authentication token for the inbox\",\"in\":\"path\",\"name\":\"token\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The unique identifier of the email\",\"in\":\"path\",\"name\":\"emailId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"attachments\":{\"items\":{\"properties\":{\"contentType\":{\"type\":\"string\"},\"filename\":{\"type\":\"string\"},\"size\":{\"type\":\"integer\"}},\"type\":\"object\"},\"type\":\"array\"},\"body\":{\"description\":\"Email body content\",\"type\":\"string\"},\"date\":{\"description\":\"Timestamp when email was received\",\"format\":\"date-time\",\"type\":\"string\"},\"from\":{\"description\":\"Sender email address\",\"format\":\"email\",\"type\":\"string\"},\"html\":{\"description\":\"HTML version of email body\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier for the email\",\"type\":\"string\"},\"subject\":{\"description\":\"Email subject\",\"type\":\"string\"},\"to\":{\"description\":\"Recipient email address\",\"format\":\"email\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successfully retrieved email\"},\"401\":{\"description\":\"Unauthorized - Invalid token\"},\"404\":{\"description\":\"Email not found\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "GET"
           orig: "/inbox/{token}/{emailId}"
           rename: {
@@ -143,6 +149,12 @@ main: kit: entity: email: {
                 type: "`$STRING`"
               }
             ]
+          }
+          contract: {
+            id: "DELETE /inbox/{token}/{emailId}"
+            json: "{\"operationId\":\"deleteEmail\",\"parameters\":[{\"description\":\"The authentication token for the inbox\",\"in\":\"path\",\"name\":\"token\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The unique identifier of the email\",\"in\":\"path\",\"name\":\"emailId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"message\":{\"example\":\"Email deleted successfully\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Email successfully deleted\"},\"401\":{\"description\":\"Unauthorized - Invalid token\"},\"404\":{\"description\":\"Email not found\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
           }
           method: "DELETE"
           orig: "/inbox/{token}/{emailId}"
