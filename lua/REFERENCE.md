@@ -217,12 +217,8 @@ local inbox = client:Inbox(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `string` | No | Domain for the email address (optional) |
-| `email` | `string` | No | The generated temporary email address |
 | `emails` | `table` | No |  |
 | `id` | `string` | No |  |
-| `token` | `string` | No | Authentication token for accessing the inbox |
-| `username` | `string` | Yes | Desired username for the email address |
 
 ### Operations
 
@@ -232,7 +228,6 @@ Create a new entity with the given data.
 
 ```lua
 local result, err = client:Inbox():create({
-  username = --[[ string ]],
 })
 ```
 

@@ -293,12 +293,8 @@ API path: `/inbox/{token}/{emailId}`
 
 | Field | Description |
 | --- | --- |
-| `"domain"` | Domain for the email address (optional) |
-| `"email"` | The generated temporary email address |
 | `"emails"` |  |
 | `"id"` |  |
-| `"token"` | Authentication token for accessing the inbox |
-| `"username"` | Desired username for the email address |
 
 Operations: Create, Load, Remove.
 
@@ -387,12 +383,8 @@ Create an instance: `inbox := client.Inbox(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `string` | Domain for the email address (optional) |
-| `email` | `string` | The generated temporary email address |
 | `emails` | `[]any` |  |
 | `id` | `string` |  |
-| `token` | `string` | Authentication token for accessing the inbox |
-| `username` | `string` | Desired username for the email address |
 
 #### Example: Load
 
@@ -408,7 +400,6 @@ fmt.Println(inbox) // the loaded record
 
 ```go
 result, err := client.Inbox(nil).Create(map[string]any{
-    "username": "example_username",
 }, nil)
 if err != nil {
     panic(err)

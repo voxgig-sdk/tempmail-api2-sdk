@@ -219,12 +219,8 @@ $inbox = $client->Inbox();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `string` | No | Domain for the email address (optional) |
-| `email` | `string` | No | The generated temporary email address |
 | `emails` | `array` | No |  |
 | `id` | `string` | No |  |
-| `token` | `string` | No | Authentication token for accessing the inbox |
-| `username` | `string` | Yes | Desired username for the email address |
 
 ### Operations
 
@@ -234,7 +230,6 @@ Create a new entity with the given data. Throws on error.
 
 ```php
 $result = $client->Inbox()->create([
-  "username" => null, // string
 ]);
 ```
 

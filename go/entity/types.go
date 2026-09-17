@@ -48,12 +48,8 @@ type EmailRemoveMatch struct {
 
 // Inbox is the typed data model for the inbox entity.
 type Inbox struct {
-	Domain *string `json:"domain,omitempty"`
-	Email *string `json:"email,omitempty"`
 	Emails *[]any `json:"emails,omitempty"`
 	Id *string `json:"id,omitempty"`
-	Token *string `json:"token,omitempty"`
-	Username string `json:"username"`
 }
 
 // InboxLoadMatch is the typed request payload for Inbox.LoadTyped.
@@ -63,12 +59,8 @@ type InboxLoadMatch struct {
 
 // InboxCreateData is the typed request payload for Inbox.CreateTyped.
 type InboxCreateData struct {
-	Domain *string `json:"domain,omitempty"`
-	Email *string `json:"email,omitempty"`
 	Emails *[]any `json:"emails,omitempty"`
 	Id *string `json:"id,omitempty"`
-	Token *string `json:"token,omitempty"`
-	Username string `json:"username"`
 }
 
 // InboxRemoveMatch is the typed request payload for Inbox.RemoveTyped.

@@ -343,12 +343,8 @@ API path: `/inbox/{token}/{emailId}`
 
 | Field | Description |
 | --- | --- |
-| `domain` | Domain for the email address (optional) |
-| `email` | The generated temporary email address |
 | `emails` |  |
 | `id` |  |
-| `token` | Authentication token for accessing the inbox |
-| `username` | Desired username for the email address |
 
 Operations: create, load, remove.
 
@@ -429,12 +425,8 @@ Create an instance: `const inbox = client.Inbox()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `string` | Domain for the email address (optional) |
-| `email` | `string` | The generated temporary email address |
 | `emails` | `any[]` |  |
 | `id` | `string` |  |
-| `token` | `string` | Authentication token for accessing the inbox |
-| `username` | `string` | Desired username for the email address |
 
 #### Example: Load
 
@@ -446,7 +438,6 @@ const inbox = await client.Inbox().load({ id: 'inbox_id' })
 
 ```ts
 const inbox = await client.Inbox().create({
-  username: 'example_username',
 })
 ```
 

@@ -341,33 +341,11 @@ def make_config():
       "inbox": {
         "fields": [
           {
-            "name": "domain",
-            "short": "Domain for the email address (optional)",
-            "type": "`$STRING`",
-          },
-          {
-            "format": "email",
-            "name": "email",
-            "short": "The generated temporary email address",
-            "type": "`$STRING`",
-          },
-          {
             "name": "emails",
             "type": "`$ARRAY`",
           },
           {
             "name": "id",
-            "type": "`$STRING`",
-          },
-          {
-            "name": "token",
-            "short": "Authentication token for accessing the inbox",
-            "type": "`$STRING`",
-          },
-          {
-            "name": "username",
-            "req": True,
-            "short": "Desired username for the email address",
             "type": "`$STRING`",
           },
         ],

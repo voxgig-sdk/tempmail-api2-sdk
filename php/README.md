@@ -297,12 +297,8 @@ API path: `/inbox/{token}/{emailId}`
 
 | Field | Description |
 | --- | --- |
-| `domain` | Domain for the email address (optional) |
-| `email` | The generated temporary email address |
 | `emails` |  |
 | `id` |  |
-| `token` | Authentication token for accessing the inbox |
-| `username` | Desired username for the email address |
 
 Operations: Create, Load, Remove.
 
@@ -385,12 +381,8 @@ Create an instance: `$inbox = $client->Inbox();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `string` | Domain for the email address (optional) |
-| `email` | `string` | The generated temporary email address |
 | `emails` | `array` |  |
 | `id` | `string` |  |
-| `token` | `string` | Authentication token for accessing the inbox |
-| `username` | `string` | Desired username for the email address |
 
 #### Example: Load
 
@@ -403,7 +395,6 @@ $inbox = $client->Inbox()->load(["id" => "inbox_id"]);
 
 ```php
 $inbox = $client->Inbox()->create([
-    "username" => null, // string
 ]);
 ```
 
@@ -550,6 +541,7 @@ Use `Helpers::to_map()` to safely validate that a value is an array.
 php/
 ├── tempmailapi2_sdk.php          -- Main SDK class
 ├── config.php                     -- Configuration
+├── schema.php                     -- Generated option + entity specs
 ├── features.php                   -- Feature factory
 ├── core/                          -- Core types and context
 ├── entity/                        -- Entity implementations

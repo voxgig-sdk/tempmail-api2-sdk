@@ -1,5 +1,5 @@
 # Flows
 
-@"BasicDomainFlow.aon"
-@"BasicEmailFlow.aon"
-@"BasicInboxFlow.aon"
+@"./BasicDomainFlow.aon"
+@"./BasicEmailFlow.aon"
+@"./BasicInboxFlow.aon"

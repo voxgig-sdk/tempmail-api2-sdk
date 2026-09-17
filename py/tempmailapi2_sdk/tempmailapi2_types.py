@@ -44,32 +44,18 @@ class EmailRemoveMatch(TypedDict):
     token: str
 
 
-class InboxRequired(TypedDict):
-    username: str
-
-
-class Inbox(InboxRequired, total=False):
-    domain: str
-    email: str
+class Inbox(TypedDict, total=False):
     emails: list
     id: str
-    token: str
 
 
 class InboxLoadMatch(TypedDict):
     id: str
 
 
-class InboxCreateDataRequired(TypedDict):
-    username: str
-
-
-class InboxCreateData(InboxCreateDataRequired, total=False):
-    domain: str
-    email: str
+class InboxCreateData(TypedDict, total=False):
     emails: list
     id: str
-    token: str
 
 
 class InboxRemoveMatch(TypedDict):

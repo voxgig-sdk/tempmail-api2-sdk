@@ -288,12 +288,8 @@ API path: `/inbox/{token}/{emailId}`
 
 | Field | Description |
 | --- | --- |
-| `domain` | Domain for the email address (optional) |
-| `email` | The generated temporary email address |
 | `emails` |  |
 | `id` |  |
-| `token` | Authentication token for accessing the inbox |
-| `username` | Desired username for the email address |
 
 Operations: Create, Load, Remove.
 
@@ -374,12 +370,8 @@ Create an instance: `inbox = client.Inbox()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `str` | Domain for the email address (optional) |
-| `email` | `str` | The generated temporary email address |
 | `emails` | `list` |  |
 | `id` | `str` |  |
-| `token` | `str` | Authentication token for accessing the inbox |
-| `username` | `str` | Desired username for the email address |
 
 #### Example: Load
 
@@ -391,7 +383,6 @@ inbox = client.Inbox().load({"id": "inbox_id"})
 
 ```python
 inbox = client.Inbox().create({
-    "username": "example_username",  # str
 })
 ```
 
@@ -538,6 +529,7 @@ Use `helpers.to_map()` to safely validate that a value is a dict.
 py/
 ├── tempmailapi2_sdk.py         -- Main SDK module
 ├── config.py                    -- Configuration
+├── schema.py                    -- Generated option + entity specs
 ├── features.py                  -- Feature factory
 ├── core/                        -- Core types and context
 ├── entity/                      -- Entity implementations

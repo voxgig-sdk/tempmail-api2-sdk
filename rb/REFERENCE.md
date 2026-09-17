@@ -220,12 +220,8 @@ inbox = client.Inbox
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `domain` | `String` | No | Domain for the email address (optional) |
-| `email` | `String` | No | The generated temporary email address |
 | `emails` | `Array` | No |  |
 | `id` | `String` | No |  |
-| `token` | `String` | No | Authentication token for accessing the inbox |
-| `username` | `String` | Yes | Desired username for the email address |
 
 ### Operations
 
@@ -235,7 +231,6 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Inbox.create({
-  "username" => "example_username", # String
 })
 ```
 

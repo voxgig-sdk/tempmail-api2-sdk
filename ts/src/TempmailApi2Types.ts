@@ -35,12 +35,8 @@ export interface EmailRemoveMatch {
 }
 
 export interface Inbox {
-  domain?: string
-  email?: string
   emails?: any[]
   id?: string
-  token?: string
-  username: string
 }
 
 export interface InboxLoadMatch {
@@ -48,12 +44,8 @@ export interface InboxLoadMatch {
 }
 
 export interface InboxCreateData {
-  domain?: string
-  email?: string
   emails?: any[]
   id?: string
-  token?: string
-  username: string
 
   // Selects a custom action instead of the plain create:
   //   'create' | 'custom'

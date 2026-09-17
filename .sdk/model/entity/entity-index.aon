@@ -1,5 +1,5 @@
 # Entity Models
 
-@"domain.aon"
-@"email.aon"
-@"inbox.aon"
+@"./domain.aon"
+@"./email.aon"
+@"./inbox.aon"

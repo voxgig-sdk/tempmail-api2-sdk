@@ -23,23 +23,15 @@ export interface EmailRemoveMatch {
     token: string;
 }
 export interface Inbox {
-    domain?: string;
-    email?: string;
     emails?: any[];
     id?: string;
-    token?: string;
-    username: string;
 }
 export interface InboxLoadMatch {
     id: string;
 }
 export interface InboxCreateData {
-    domain?: string;
-    email?: string;
     emails?: any[];
     id?: string;
-    token?: string;
-    username: string;
     $action?: string;
     [action: string]: any;
 }

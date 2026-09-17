@@ -274,12 +274,8 @@ API path: `/inbox/{token}/{emailId}`
 
 | Field | Description |
 | --- | --- |
-| `domain` | Domain for the email address (optional) |
-| `email` | The generated temporary email address |
 | `emails` |  |
 | `id` |  |
-| `token` | Authentication token for accessing the inbox |
-| `username` | Desired username for the email address |
 
 Operations: Create, Load, Remove.
 
@@ -360,12 +356,8 @@ Create an instance: `local inbox = client:Inbox(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `string` | Domain for the email address (optional) |
-| `email` | `string` | The generated temporary email address |
 | `emails` | `table` |  |
 | `id` | `string` |  |
-| `token` | `string` | Authentication token for accessing the inbox |
-| `username` | `string` | Desired username for the email address |
 
 #### Example: Load
 
@@ -377,7 +369,6 @@ local inbox, err = client:Inbox():load({ id = "inbox_id" })
 
 ```lua
 local inbox, err = client:Inbox():create({
-  username = "example_username", -- string
 })
 ```
 
@@ -524,6 +515,7 @@ Use `helpers.to_map()` to safely validate that a value is a table.
 lua/
 ├── tempmail-api2_sdk.lua    -- Main SDK module
 ├── config.lua               -- Configuration
+├── schema.lua               -- Generated option + entity specs
 ├── features.lua             -- Feature factory
 ├── core/                    -- Core types and context
 ├── entity/                  -- Entity implementations

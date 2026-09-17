@@ -286,12 +286,8 @@ API path: `/inbox/{token}/{emailId}`
 
 | Field | Description |
 | --- | --- |
-| `domain` | Domain for the email address (optional) |
-| `email` | The generated temporary email address |
 | `emails` |  |
 | `id` |  |
-| `token` | Authentication token for accessing the inbox |
-| `username` | Desired username for the email address |
 
 Operations: Create, Load, Remove.
 
@@ -374,12 +370,8 @@ Create an instance: `inbox = client.Inbox`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `domain` | `String` | Domain for the email address (optional) |
-| `email` | `String` | The generated temporary email address |
 | `emails` | `Array` |  |
 | `id` | `String` |  |
-| `token` | `String` | Authentication token for accessing the inbox |
-| `username` | `String` | Desired username for the email address |
 
 #### Example: Load
 
@@ -392,7 +384,6 @@ inbox = client.Inbox.load({ "id" => "inbox_id" })
 
 ```ruby
 inbox = client.Inbox.create({
-  "username" => "example_username", # String
 })
 ```
 
@@ -539,6 +530,7 @@ Use `Helpers.to_map()` to safely validate that a value is a hash.
 rb/
 ├── TempmailApi2_sdk.rb       -- Main SDK module
 ├── config.rb                  -- Configuration
+├── schema.rb                  -- Generated option + entity specs
 ├── features.rb                -- Feature factory
 ├── core/                      -- Core types and context
 ├── entity/                    -- Entity implementations

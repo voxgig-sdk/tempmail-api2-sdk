@@ -213,31 +213,10 @@ declare class Config {
             };
         };
         inbox: {
-            fields: ({
-                name: string;
-                short: string;
-                type: string;
-                format?: undefined;
-                req?: undefined;
-            } | {
-                format: string;
-                name: string;
-                short: string;
-                type: string;
-                req?: undefined;
-            } | {
+            fields: {
                 name: string;
                 type: string;
-                short?: undefined;
-                format?: undefined;
-                req?: undefined;
-            } | {
-                name: string;
-                req: boolean;
-                short: string;
-                type: string;
-                format?: undefined;
-            })[];
+            }[];
             id: {
                 field: string;
                 name: string;

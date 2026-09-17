@@ -316,33 +316,11 @@ func MakeConfig() map[string]any {
 			"inbox": map[string]any{
 				"fields": []any{
 					map[string]any{
-						"name": "domain",
-						"short": "Domain for the email address (optional)",
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"format": "email",
-						"name": "email",
-						"short": "The generated temporary email address",
-						"type": "`$STRING`",
-					},
-					map[string]any{
 						"name": "emails",
 						"type": "`$ARRAY`",
 					},
 					map[string]any{
 						"name": "id",
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"name": "token",
-						"short": "Authentication token for accessing the inbox",
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"name": "username",
-						"req": true,
-						"short": "Desired username for the email address",
 						"type": "`$STRING`",
 					},
 				},

@@ -6,19 +6,6 @@ main: kit: entity: inbox: {
 
   fields: [
     {
-      name: "domain"
-      req: false
-      short: "Domain for the email address (optional)"
-      type: "`$STRING`"
-    }
-    {
-      format: "email"
-      name: "email"
-      req: false
-      short: "The generated temporary email address"
-      type: "`$STRING`"
-    }
-    {
       name: "emails"
       req: false
       type: "`$ARRAY`"
@@ -26,18 +13,6 @@ main: kit: entity: inbox: {
     {
       name: "id"
       req: false
-      type: "`$STRING`"
-    }
-    {
-      name: "token"
-      req: false
-      short: "Authentication token for accessing the inbox"
-      type: "`$STRING`"
-    }
-    {
-      name: "username"
-      req: true
-      short: "Desired username for the email address"
       type: "`$STRING`"
     }
   ]

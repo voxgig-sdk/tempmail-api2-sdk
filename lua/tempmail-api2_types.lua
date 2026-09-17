@@ -31,23 +31,15 @@
 ---@field token string
 
 ---@class Inbox
----@field domain? string
----@field email? string
 ---@field emails? table
 ---@field id? string
----@field token? string
----@field username string
 
 ---@class InboxLoadMatch
 ---@field id string
 
 ---@class InboxCreateData
----@field domain? string
----@field email? string
 ---@field emails? table
 ---@field id? string
----@field token? string
----@field username string
 
 ---@class InboxRemoveMatch
 ---@field id string

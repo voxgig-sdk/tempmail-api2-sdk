@@ -91,30 +91,14 @@ EmailRemoveMatch = Struct.new(
 
 # Inbox entity data model.
 #
-# @!attribute [rw] domain
-#   @return [String, nil]
-#
-# @!attribute [rw] email
-#   @return [String, nil]
-#
 # @!attribute [rw] emails
 #   @return [Array, nil]
 #
 # @!attribute [rw] id
 #   @return [String, nil]
-#
-# @!attribute [rw] token
-#   @return [String, nil]
-#
-# @!attribute [rw] username
-#   @return [String]
 Inbox = Struct.new(
-  :domain,
-  :email,
   :emails,
   :id,
-  :token,
-  :username,
   keyword_init: true
 )
 
@@ -129,30 +113,14 @@ InboxLoadMatch = Struct.new(
 
 # Request payload for Inbox#create.
 #
-# @!attribute [rw] domain
-#   @return [String, nil]
-#
-# @!attribute [rw] email
-#   @return [String, nil]
-#
 # @!attribute [rw] emails
 #   @return [Array, nil]
 #
 # @!attribute [rw] id
 #   @return [String, nil]
-#
-# @!attribute [rw] token
-#   @return [String, nil]
-#
-# @!attribute [rw] username
-#   @return [String]
 InboxCreateData = Struct.new(
-  :domain,
-  :email,
   :emails,
   :id,
-  :token,
-  :username,
   keyword_init: true
 )
 

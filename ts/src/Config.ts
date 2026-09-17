@@ -127,15 +127,15 @@ class Config {
 
     entity: {
       
-      domain: {
-      },
-
-      email: {
-      },
-
-      inbox: {
-      },
-
+        domain: {
+        },
+  
+        email: {
+        },
+  
+        inbox: {
+        },
+  
     }
   }
 
@@ -368,33 +368,11 @@ class Config {
     "inbox": {
       "fields": [
         {
-          "name": "domain",
-          "short": "Domain for the email address (optional)",
-          "type": "`$STRING`"
-        },
-        {
-          "format": "email",
-          "name": "email",
-          "short": "The generated temporary email address",
-          "type": "`$STRING`"
-        },
-        {
           "name": "emails",
           "type": "`$ARRAY`"
         },
         {
           "name": "id",
-          "type": "`$STRING`"
-        },
-        {
-          "name": "token",
-          "short": "Authentication token for accessing the inbox",
-          "type": "`$STRING`"
-        },
-        {
-          "name": "username",
-          "req": true,
-          "short": "Desired username for the email address",
           "type": "`$STRING`"
         }
       ],

@@ -54,12 +54,8 @@ class EmailRemoveMatch
 /** Inbox entity data model. */
 class Inbox
 {
-    public ?string $domain = null;
-    public ?string $email = null;
     public ?array $emails = null;
     public ?string $id = null;
-    public ?string $token = null;
-    public string $username;
 }
 
 /** Request payload for Inbox#load. */
@@ -71,12 +67,8 @@ class InboxLoadMatch
 /** Request payload for Inbox#create. */
 class InboxCreateData
 {
-    public ?string $domain = null;
-    public ?string $email = null;
     public ?array $emails = null;
     public ?string $id = null;
-    public ?string $token = null;
-    public string $username;
 }
 
 /** Request payload for Inbox#remove. */
