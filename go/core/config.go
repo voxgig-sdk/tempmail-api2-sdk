@@ -93,6 +93,7 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "domains",
+						"title": "Domains",
 						"type": "`$ARRAY`",
 					},
 				},
@@ -103,7 +104,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/domains",
@@ -112,14 +112,16 @@ func MakeConfig() map[string]any {
 										"lit": "domains",
 									},
 								},
-								"select": map[string]any{},
+								"parts": []any{
+									"domains",
+								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.domains`",
 								},
-								"parts": []any{
-									"domains",
-								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 						},
 					},
@@ -132,45 +134,53 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "attachments",
+						"title": "Attachments",
 						"type": "`$ARRAY`",
 					},
 					map[string]any{
 						"name": "body",
+						"title": "Body",
+						"type": "`$STRING`",
 						"short": "Email body content",
-						"type": "`$STRING`",
 					},
 					map[string]any{
-						"format": "date-time",
 						"name": "date",
-						"short": "Timestamp when email was received",
+						"title": "Date",
 						"type": "`$STRING`",
+						"short": "Timestamp when email was received",
+						"format": "date-time",
 					},
 					map[string]any{
-						"format": "email",
 						"name": "from",
-						"short": "Sender email address",
+						"title": "From",
 						"type": "`$STRING`",
+						"short": "Sender email address",
+						"format": "email",
 					},
 					map[string]any{
 						"name": "html",
-						"short": "HTML version of email body",
+						"title": "Html",
 						"type": "`$STRING`",
+						"short": "HTML version of email body",
 					},
 					map[string]any{
 						"name": "id",
-						"short": "Unique identifier for the email",
+						"title": "Id",
 						"type": "`$STRING`",
+						"short": "Unique identifier for the email",
 					},
 					map[string]any{
 						"name": "subject",
-						"short": "Email subject",
+						"title": "Subject",
 						"type": "`$STRING`",
+						"short": "Email subject",
 					},
 					map[string]any{
-						"format": "email",
 						"name": "to",
-						"short": "Recipient email address",
+						"title": "To",
 						"type": "`$STRING`",
+						"short": "Recipient email address",
+						"format": "email",
 					},
 				},
 				"id": map[string]any{
@@ -189,32 +199,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "email_id",
-											"orig": "email_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "token",
-											"orig": "token",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/inbox/{token}/{emailId}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"emailId": "email_id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "inbox",
@@ -226,20 +213,43 @@ func MakeConfig() map[string]any {
 										"var": "email_id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"email_id",
-										"token",
+								"parts": []any{
+									"inbox",
+									"{token}",
+									"{email_id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"emailId": "email_id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"inbox",
-									"{token}",
-									"{email_id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "email_id",
+											"orig": "email_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "token",
+											"orig": "token",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"email_id",
+										"token",
+									},
 								},
 							},
 						},
@@ -249,32 +259,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "email_id",
-											"orig": "email_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "param",
-											"name": "token",
-											"orig": "token",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/inbox/{token}/{emailId}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"emailId": "email_id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "inbox",
@@ -286,20 +273,43 @@ func MakeConfig() map[string]any {
 										"var": "email_id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"email_id",
-										"token",
+								"parts": []any{
+									"inbox",
+									"{token}",
+									"{email_id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"emailId": "email_id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"inbox",
-									"{token}",
-									"{email_id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "email_id",
+											"orig": "email_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+										map[string]any{
+											"name": "token",
+											"orig": "token",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"email_id",
+										"token",
+									},
 								},
 							},
 						},
@@ -308,7 +318,7 @@ func MakeConfig() map[string]any {
 				"relations": map[string]any{
 					"ancestors": []any{
 						[]any{
-							"inbox",
+							"$.main.kit.entity.inbox",
 						},
 					},
 				},
@@ -317,10 +327,12 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "emails",
+						"title": "Emails",
 						"type": "`$ARRAY`",
 					},
 					map[string]any{
 						"name": "id",
+						"title": "Id",
 						"type": "`$STRING`",
 					},
 				},
@@ -335,7 +347,6 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/inbox/create",
@@ -347,20 +358,21 @@ func MakeConfig() map[string]any {
 										"lit": "create",
 									},
 								},
-								"select": map[string]any{
-									"$action": "create",
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"inbox",
 									"create",
 								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{},
+								"select": map[string]any{
+									"$action": "create",
+								},
 							},
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/inbox/custom",
@@ -372,16 +384,18 @@ func MakeConfig() map[string]any {
 										"lit": "custom",
 									},
 								},
-								"select": map[string]any{
-									"$action": "custom",
+								"parts": []any{
+									"inbox",
+									"custom",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"inbox",
-									"custom",
+								"args": map[string]any{},
+								"select": map[string]any{
+									"$action": "custom",
 								},
 							},
 						},
@@ -391,25 +405,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "token",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/inbox/{token}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"token": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "inbox",
@@ -418,18 +416,34 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"inbox",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"token": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"inbox",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "token",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
 								},
 							},
 						},
@@ -439,25 +453,9 @@ func MakeConfig() map[string]any {
 						"name": "remove",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "token",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "DELETE",
 								"orig": "/inbox/{token}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"token": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "inbox",
@@ -466,18 +464,34 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"inbox",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"token": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"inbox",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "token",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
 								},
 							},
 						},

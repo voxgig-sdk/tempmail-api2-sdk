@@ -1,0 +1,203 @@
+# Entity: email
+
+main: kit: entity: email: {
+
+  alias: field: {}
+
+  fields: {
+    attachments: {
+      h: "Attachments"
+      n: "attachments"
+      r: false
+      t: "`$ARRAY`"
+    }
+    body: {
+      h: "Body"
+      n: "body"
+      r: false
+      sh: "Email body content"
+      t: "`$STRING`"
+    }
+    date: {
+      fo: "date-time"
+      h: "Date"
+      n: "date"
+      r: false
+      sh: "Timestamp when email was received"
+      t: "`$STRING`"
+    }
+    from: {
+      fo: "email"
+      h: "From"
+      n: "from"
+      r: false
+      sh: "Sender email address"
+      t: "`$STRING`"
+    }
+    html: {
+      h: "Html"
+      n: "html"
+      r: false
+      sh: "HTML version of email body"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      sh: "Unique identifier for the email"
+      t: "`$STRING`"
+    }
+    subject: {
+      h: "Subject"
+      n: "subject"
+      r: false
+      sh: "Email subject"
+      t: "`$STRING`"
+    }
+    to: {
+      fo: "email"
+      h: "To"
+      n: "to"
+      r: false
+      sh: "Recipient email address"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+    parts: [
+      "token"
+      "email_id"
+    ]
+    sep: "/"
+  }
+
+  name: "email"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /inbox/{token}/{emailId}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "email_id"
+                or: "email_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "token"
+                or: "token"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/inbox/{token}/{emailId}"
+          q: {
+            exist: [
+              "email_id"
+              "token"
+            ]
+          }
+          r: {
+            param: {
+              emailId: "email_id"
+            }
+          }
+          s: [
+            {
+              lit: "inbox"
+            }
+            {
+              var: "token"
+            }
+            {
+              var: "email_id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /inbox/{token}/{emailId}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "email_id"
+                or: "email_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "token"
+                or: "token"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/inbox/{token}/{emailId}"
+          q: {
+            exist: [
+              "email_id"
+              "token"
+            ]
+          }
+          r: {
+            param: {
+              emailId: "email_id"
+            }
+          }
+          s: [
+            {
+              lit: "inbox"
+            }
+            {
+              var: "token"
+            }
+            {
+              var: "email_id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.inbox")]
+  ]
+
+}

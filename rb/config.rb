@@ -101,6 +101,7 @@ module TempmailApi2Config
           "fields" => [
             {
               "name" => "domains",
+              "title" => "Domains",
               "type" => "`$ARRAY`",
             },
           ],
@@ -111,7 +112,6 @@ module TempmailApi2Config
               "name" => "list",
               "points" => [
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/domains",
@@ -120,14 +120,16 @@ module TempmailApi2Config
                       "lit" => "domains",
                     },
                   ],
-                  "select" => {},
+                  "parts" => [
+                    "domains",
+                  ],
+                  "rename" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body.domains`",
                   },
-                  "parts" => [
-                    "domains",
-                  ],
+                  "args" => {},
+                  "select" => {},
                 },
               ],
             },
@@ -140,45 +142,53 @@ module TempmailApi2Config
           "fields" => [
             {
               "name" => "attachments",
+              "title" => "Attachments",
               "type" => "`$ARRAY`",
             },
             {
               "name" => "body",
+              "title" => "Body",
+              "type" => "`$STRING`",
               "short" => "Email body content",
-              "type" => "`$STRING`",
             },
             {
-              "format" => "date-time",
               "name" => "date",
-              "short" => "Timestamp when email was received",
+              "title" => "Date",
               "type" => "`$STRING`",
+              "short" => "Timestamp when email was received",
+              "format" => "date-time",
             },
             {
-              "format" => "email",
               "name" => "from",
-              "short" => "Sender email address",
+              "title" => "From",
               "type" => "`$STRING`",
+              "short" => "Sender email address",
+              "format" => "email",
             },
             {
               "name" => "html",
-              "short" => "HTML version of email body",
+              "title" => "Html",
               "type" => "`$STRING`",
+              "short" => "HTML version of email body",
             },
             {
               "name" => "id",
-              "short" => "Unique identifier for the email",
+              "title" => "Id",
               "type" => "`$STRING`",
+              "short" => "Unique identifier for the email",
             },
             {
               "name" => "subject",
-              "short" => "Email subject",
+              "title" => "Subject",
               "type" => "`$STRING`",
+              "short" => "Email subject",
             },
             {
-              "format" => "email",
               "name" => "to",
-              "short" => "Recipient email address",
+              "title" => "To",
               "type" => "`$STRING`",
+              "short" => "Recipient email address",
+              "format" => "email",
             },
           ],
           "id" => {
@@ -197,32 +207,9 @@ module TempmailApi2Config
               "name" => "load",
               "points" => [
                 {
-                  "args" => {
-                    "params" => [
-                      {
-                        "kind" => "param",
-                        "name" => "email_id",
-                        "orig" => "email_id",
-                        "reqd" => true,
-                        "type" => "`$STRING`",
-                      },
-                      {
-                        "kind" => "param",
-                        "name" => "token",
-                        "orig" => "token",
-                        "reqd" => true,
-                        "type" => "`$STRING`",
-                      },
-                    ],
-                  },
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/inbox/{token}/{emailId}",
-                  "rename" => {
-                    "param" => {
-                      "emailId" => "email_id",
-                    },
-                  },
                   "segments" => [
                     {
                       "lit" => "inbox",
@@ -234,21 +221,44 @@ module TempmailApi2Config
                       "var" => "email_id",
                     },
                   ],
+                  "parts" => [
+                    "inbox",
+                    "{token}",
+                    "{email_id}",
+                  ],
+                  "rename" => {
+                    "param" => {
+                      "emailId" => "email_id",
+                    },
+                  },
+                  "transform" => {
+                    "req" => "`reqdata`",
+                    "res" => "`body`",
+                  },
+                  "args" => {
+                    "params" => [
+                      {
+                        "name" => "email_id",
+                        "orig" => "email_id",
+                        "type" => "`$STRING`",
+                        "kind" => "param",
+                        "reqd" => true,
+                      },
+                      {
+                        "name" => "token",
+                        "orig" => "token",
+                        "type" => "`$STRING`",
+                        "kind" => "param",
+                        "reqd" => true,
+                      },
+                    ],
+                  },
                   "select" => {
                     "exist" => [
                       "email_id",
                       "token",
                     ],
                   },
-                  "transform" => {
-                    "req" => "`reqdata`",
-                    "res" => "`body`",
-                  },
-                  "parts" => [
-                    "inbox",
-                    "{token}",
-                    "{email_id}",
-                  ],
                 },
               ],
             },
@@ -257,32 +267,9 @@ module TempmailApi2Config
               "name" => "remove",
               "points" => [
                 {
-                  "args" => {
-                    "params" => [
-                      {
-                        "kind" => "param",
-                        "name" => "email_id",
-                        "orig" => "email_id",
-                        "reqd" => true,
-                        "type" => "`$STRING`",
-                      },
-                      {
-                        "kind" => "param",
-                        "name" => "token",
-                        "orig" => "token",
-                        "reqd" => true,
-                        "type" => "`$STRING`",
-                      },
-                    ],
-                  },
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/inbox/{token}/{emailId}",
-                  "rename" => {
-                    "param" => {
-                      "emailId" => "email_id",
-                    },
-                  },
                   "segments" => [
                     {
                       "lit" => "inbox",
@@ -294,21 +281,44 @@ module TempmailApi2Config
                       "var" => "email_id",
                     },
                   ],
+                  "parts" => [
+                    "inbox",
+                    "{token}",
+                    "{email_id}",
+                  ],
+                  "rename" => {
+                    "param" => {
+                      "emailId" => "email_id",
+                    },
+                  },
+                  "transform" => {
+                    "req" => "`reqdata`",
+                    "res" => "`body`",
+                  },
+                  "args" => {
+                    "params" => [
+                      {
+                        "name" => "email_id",
+                        "orig" => "email_id",
+                        "type" => "`$STRING`",
+                        "kind" => "param",
+                        "reqd" => true,
+                      },
+                      {
+                        "name" => "token",
+                        "orig" => "token",
+                        "type" => "`$STRING`",
+                        "kind" => "param",
+                        "reqd" => true,
+                      },
+                    ],
+                  },
                   "select" => {
                     "exist" => [
                       "email_id",
                       "token",
                     ],
                   },
-                  "transform" => {
-                    "req" => "`reqdata`",
-                    "res" => "`body`",
-                  },
-                  "parts" => [
-                    "inbox",
-                    "{token}",
-                    "{email_id}",
-                  ],
                 },
               ],
             },
@@ -316,7 +326,7 @@ module TempmailApi2Config
           "relations" => {
             "ancestors" => [
               [
-                "inbox",
+                "$.main.kit.entity.inbox",
               ],
             ],
           },
@@ -325,10 +335,12 @@ module TempmailApi2Config
           "fields" => [
             {
               "name" => "emails",
+              "title" => "Emails",
               "type" => "`$ARRAY`",
             },
             {
               "name" => "id",
+              "title" => "Id",
               "type" => "`$STRING`",
             },
           ],
@@ -343,7 +355,6 @@ module TempmailApi2Config
               "name" => "create",
               "points" => [
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/inbox/create",
@@ -355,20 +366,21 @@ module TempmailApi2Config
                       "lit" => "create",
                     },
                   ],
-                  "select" => {
-                    "$action" => "create",
-                  },
-                  "transform" => {
-                    "req" => "`reqdata`",
-                    "res" => "`body`",
-                  },
                   "parts" => [
                     "inbox",
                     "create",
                   ],
+                  "rename" => {},
+                  "transform" => {
+                    "req" => "`reqdata`",
+                    "res" => "`body`",
+                  },
+                  "args" => {},
+                  "select" => {
+                    "$action" => "create",
+                  },
                 },
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/inbox/custom",
@@ -380,17 +392,19 @@ module TempmailApi2Config
                       "lit" => "custom",
                     },
                   ],
-                  "select" => {
-                    "$action" => "custom",
-                  },
-                  "transform" => {
-                    "req" => "`reqdata`",
-                    "res" => "`body`",
-                  },
                   "parts" => [
                     "inbox",
                     "custom",
                   ],
+                  "rename" => {},
+                  "transform" => {
+                    "req" => "`reqdata`",
+                    "res" => "`body`",
+                  },
+                  "args" => {},
+                  "select" => {
+                    "$action" => "custom",
+                  },
                 },
               ],
             },
@@ -399,25 +413,9 @@ module TempmailApi2Config
               "name" => "load",
               "points" => [
                 {
-                  "args" => {
-                    "params" => [
-                      {
-                        "kind" => "param",
-                        "name" => "id",
-                        "orig" => "token",
-                        "reqd" => true,
-                        "type" => "`$STRING`",
-                      },
-                    ],
-                  },
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/inbox/{token}",
-                  "rename" => {
-                    "param" => {
-                      "token" => "id",
-                    },
-                  },
                   "segments" => [
                     {
                       "lit" => "inbox",
@@ -426,19 +424,35 @@ module TempmailApi2Config
                       "var" => "id",
                     },
                   ],
-                  "select" => {
-                    "exist" => [
-                      "id",
-                    ],
+                  "parts" => [
+                    "inbox",
+                    "{id}",
+                  ],
+                  "rename" => {
+                    "param" => {
+                      "token" => "id",
+                    },
                   },
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "parts" => [
-                    "inbox",
-                    "{id}",
-                  ],
+                  "args" => {
+                    "params" => [
+                      {
+                        "name" => "id",
+                        "orig" => "token",
+                        "type" => "`$STRING`",
+                        "kind" => "param",
+                        "reqd" => true,
+                      },
+                    ],
+                  },
+                  "select" => {
+                    "exist" => [
+                      "id",
+                    ],
+                  },
                 },
               ],
             },
@@ -447,25 +461,9 @@ module TempmailApi2Config
               "name" => "remove",
               "points" => [
                 {
-                  "args" => {
-                    "params" => [
-                      {
-                        "kind" => "param",
-                        "name" => "id",
-                        "orig" => "token",
-                        "reqd" => true,
-                        "type" => "`$STRING`",
-                      },
-                    ],
-                  },
                   "kind" => "http",
                   "method" => "DELETE",
                   "orig" => "/inbox/{token}",
-                  "rename" => {
-                    "param" => {
-                      "token" => "id",
-                    },
-                  },
                   "segments" => [
                     {
                       "lit" => "inbox",
@@ -474,19 +472,35 @@ module TempmailApi2Config
                       "var" => "id",
                     },
                   ],
-                  "select" => {
-                    "exist" => [
-                      "id",
-                    ],
+                  "parts" => [
+                    "inbox",
+                    "{id}",
+                  ],
+                  "rename" => {
+                    "param" => {
+                      "token" => "id",
+                    },
                   },
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "parts" => [
-                    "inbox",
-                    "{id}",
-                  ],
+                  "args" => {
+                    "params" => [
+                      {
+                        "name" => "id",
+                        "orig" => "token",
+                        "type" => "`$STRING`",
+                        "kind" => "param",
+                        "reqd" => true,
+                      },
+                    ],
+                  },
+                  "select" => {
+                    "exist" => [
+                      "id",
+                    ],
+                  },
                 },
               ],
             },

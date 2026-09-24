@@ -24,20 +24,87 @@
         "repr": "auto"
       },
       "contributor": {},
+      "doc": {
+        "active": true,
+        "assets": {
+          "path": ".sdk/doc/assets"
+        },
+        "brand": {
+          "label": "",
+          "notice": "",
+          "shortNotice": "",
+          "url": ""
+        },
+        "ci": {
+          "active": true,
+          "branch": "main"
+        },
+        "content": {
+          "path": ".sdk/doc/content"
+        },
+        "edition": {
+          "summary": {
+            "active": true,
+            "base": "node_modules/@voxgig/docgen/project/.sdk",
+            "brand": {},
+            "filter": {
+              "entities": [],
+              "features": [],
+              "targets": []
+            },
+            "kind": "summary",
+            "name": "summary",
+            "origname": "",
+            "output": {
+              "path": "SUMMARY.md"
+            },
+            "package": "@voxgig/docgen",
+            "published": false,
+            "site": {
+              "active": true
+            },
+            "style": {},
+            "title": ""
+          }
+        },
+        "qa": {
+          "vocabulary": []
+        },
+        "style": {
+          "color": {
+            "accent": "#00c6d8",
+            "background": "#f5f5f9",
+            "darkBackground": "#0f1117",
+            "darkText": "#e6edf3",
+            "primary": "#e70042",
+            "text": "#0a0a0a"
+          },
+          "font": "Nunito, system-ui, sans-serif",
+          "fontFile": "",
+          "headingFont": "Nunito, system-ui, sans-serif",
+          "headingFontFile": "",
+          "logo": "",
+          "mode": "light",
+          "mono": "ui-monospace, monospace",
+          "monoFile": ""
+        },
+        "target": {}
+      },
       "entity": {
         "domain": {
           "active": true,
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "name": "domains",
-              "req": false,
-              "type": "`$ARRAY`"
+          "fields": {
+            "domains": {
+              "a": true,
+              "h": "Domains",
+              "n": "domains",
+              "r": false,
+              "t": "`$ARRAY`"
             }
-          ],
+          },
           "name": "domain",
           "op": {
             "list": {
@@ -45,24 +112,24 @@
               "name": "list",
               "points": [
                 {
-                  "active": true,
-                  "args": {},
-                  "contract": {
+                  "a": true,
+                  "co": {
                     "id": "GET /domains",
-                    "json": "{\"operationId\":\"getDomains\",\"parameters\":[],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"domains\":{\"example\":[\"tempmail.lol\",\"temp.lol\"],\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successfully retrieved domains\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}",
                     "source": "openapi3",
-                    "version": 1
+                    "version": 2
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/domains",
-                  "segments": [
+                  "g": {},
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/domains",
+                  "q": {},
+                  "r": {},
+                  "s": [
                     {
                       "lit": "domains"
                     }
                   ],
-                  "select": {},
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.domains`"
                   }
@@ -79,66 +146,74 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "name": "attachments",
-              "req": false,
-              "type": "`$ARRAY`"
+          "fields": {
+            "attachments": {
+              "a": true,
+              "h": "Attachments",
+              "n": "attachments",
+              "r": false,
+              "t": "`$ARRAY`"
             },
-            {
-              "active": true,
-              "name": "body",
-              "req": false,
-              "short": "Email body content",
-              "type": "`$STRING`"
+            "body": {
+              "a": true,
+              "h": "Body",
+              "n": "body",
+              "r": false,
+              "sh": "Email body content",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "date",
-              "req": false,
-              "short": "Timestamp when email was received",
-              "type": "`$STRING`"
+            "date": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Date",
+              "n": "date",
+              "r": false,
+              "sh": "Timestamp when email was received",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "email",
-              "name": "from",
-              "req": false,
-              "short": "Sender email address",
-              "type": "`$STRING`"
+            "from": {
+              "a": true,
+              "fo": "email",
+              "h": "From",
+              "n": "from",
+              "r": false,
+              "sh": "Sender email address",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "html",
-              "req": false,
-              "short": "HTML version of email body",
-              "type": "`$STRING`"
+            "html": {
+              "a": true,
+              "h": "Html",
+              "n": "html",
+              "r": false,
+              "sh": "HTML version of email body",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "id",
-              "req": false,
-              "short": "Unique identifier for the email",
-              "type": "`$STRING`"
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "sh": "Unique identifier for the email",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "subject",
-              "req": false,
-              "short": "Email subject",
-              "type": "`$STRING`"
+            "subject": {
+              "a": true,
+              "h": "Subject",
+              "n": "subject",
+              "r": false,
+              "sh": "Email subject",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "email",
-              "name": "to",
-              "req": false,
-              "short": "Recipient email address",
-              "type": "`$STRING`"
+            "to": {
+              "a": true,
+              "fo": "email",
+              "h": "To",
+              "n": "to",
+              "r": false,
+              "sh": "Recipient email address",
+              "t": "`$STRING`"
             }
-          ],
+          },
           "id": {
             "field": "id",
             "name": "id",
@@ -155,42 +230,47 @@
               "name": "load",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /inbox/{token}/{emailId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "email_id",
-                        "orig": "email_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "email_id",
+                        "or": "email_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       },
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "token",
-                        "orig": "token",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "token",
+                        "or": "token",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /inbox/{token}/{emailId}",
-                    "json": "{\"operationId\":\"getEmail\",\"parameters\":[{\"description\":\"The authentication token for the inbox\",\"in\":\"path\",\"name\":\"token\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The unique identifier of the email\",\"in\":\"path\",\"name\":\"emailId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"attachments\":{\"items\":{\"properties\":{\"contentType\":{\"type\":\"string\"},\"filename\":{\"type\":\"string\"},\"size\":{\"type\":\"integer\"}},\"type\":\"object\"},\"type\":\"array\"},\"body\":{\"description\":\"Email body content\",\"type\":\"string\"},\"date\":{\"description\":\"Timestamp when email was received\",\"format\":\"date-time\",\"type\":\"string\"},\"from\":{\"description\":\"Sender email address\",\"format\":\"email\",\"type\":\"string\"},\"html\":{\"description\":\"HTML version of email body\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier for the email\",\"type\":\"string\"},\"subject\":{\"description\":\"Email subject\",\"type\":\"string\"},\"to\":{\"description\":\"Recipient email address\",\"format\":\"email\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successfully retrieved email\"},\"401\":{\"description\":\"Unauthorized - Invalid token\"},\"404\":{\"description\":\"Email not found\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/inbox/{token}/{emailId}",
+                  "q": {
+                    "exist": [
+                      "email_id",
+                      "token"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/inbox/{token}/{emailId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "emailId": "email_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "inbox"
                     },
@@ -201,13 +281,7 @@
                       "var": "email_id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "email_id",
-                      "token"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -219,42 +293,47 @@
               "name": "remove",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "DELETE /inbox/{token}/{emailId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "email_id",
-                        "orig": "email_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "email_id",
+                        "or": "email_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       },
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "token",
-                        "orig": "token",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "token",
+                        "or": "token",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "DELETE /inbox/{token}/{emailId}",
-                    "json": "{\"operationId\":\"deleteEmail\",\"parameters\":[{\"description\":\"The authentication token for the inbox\",\"in\":\"path\",\"name\":\"token\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The unique identifier of the email\",\"in\":\"path\",\"name\":\"emailId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"message\":{\"example\":\"Email deleted successfully\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Email successfully deleted\"},\"401\":{\"description\":\"Unauthorized - Invalid token\"},\"404\":{\"description\":\"Email not found\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "DELETE",
+                  "o": "/inbox/{token}/{emailId}",
+                  "q": {
+                    "exist": [
+                      "email_id",
+                      "token"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "DELETE",
-                  "orig": "/inbox/{token}/{emailId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "emailId": "email_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "inbox"
                     },
@@ -265,13 +344,7 @@
                       "var": "email_id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "email_id",
-                      "token"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -282,7 +355,7 @@
           "relations": {
             "ancestors": [
               [
-                "inbox"
+                "$.main.kit.entity.inbox"
               ]
             ]
           }
@@ -292,20 +365,22 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "name": "emails",
-              "req": false,
-              "type": "`$ARRAY`"
+          "fields": {
+            "emails": {
+              "a": true,
+              "h": "Emails",
+              "n": "emails",
+              "r": false,
+              "t": "`$ARRAY`"
             },
-            {
-              "active": true,
-              "name": "id",
-              "req": false,
-              "type": "`$STRING`"
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "t": "`$STRING`"
             }
-          ],
+          },
           "id": {
             "field": "id",
             "name": "id"
@@ -317,18 +392,21 @@
               "name": "create",
               "points": [
                 {
-                  "active": true,
-                  "args": {},
-                  "contract": {
+                  "a": true,
+                  "co": {
                     "id": "POST /inbox/create",
-                    "json": "{\"operationId\":\"createInbox\",\"parameters\":[],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"email\":{\"description\":\"The generated temporary email address\",\"format\":\"email\",\"type\":\"string\"},\"token\":{\"description\":\"Authentication token for accessing the inbox\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successfully created temporary inbox\"},\"400\":{\"description\":\"Bad request\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}",
                     "source": "openapi3",
-                    "version": 1
+                    "version": 2
                   },
-                  "kind": "http",
-                  "method": "POST",
-                  "orig": "/inbox/create",
-                  "segments": [
+                  "g": {},
+                  "k": "http",
+                  "m": "POST",
+                  "o": "/inbox/create",
+                  "q": {
+                    "$action": "create"
+                  },
+                  "r": {},
+                  "s": [
                     {
                       "lit": "inbox"
                     },
@@ -336,27 +414,27 @@
                       "lit": "create"
                     }
                   ],
-                  "select": {
-                    "$action": "create"
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
                 },
                 {
-                  "active": true,
-                  "args": {},
-                  "contract": {
+                  "a": true,
+                  "co": {
                     "id": "POST /inbox/custom",
-                    "json": "{\"operationId\":\"createCustomInbox\",\"parameters\":[],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"domain\":{\"description\":\"Domain for the email address (optional)\",\"type\":\"string\"},\"username\":{\"description\":\"Desired username for the email address\",\"type\":\"string\"}},\"required\":[\"username\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"email\":{\"description\":\"The created custom email address\",\"format\":\"email\",\"type\":\"string\"},\"token\":{\"description\":\"Authentication token for accessing the inbox\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successfully created custom inbox\"},\"400\":{\"description\":\"Bad request - Username already taken or invalid\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}",
                     "source": "openapi3",
-                    "version": 1
+                    "version": 2
                   },
-                  "kind": "http",
-                  "method": "POST",
-                  "orig": "/inbox/custom",
-                  "segments": [
+                  "g": {},
+                  "k": "http",
+                  "m": "POST",
+                  "o": "/inbox/custom",
+                  "q": {
+                    "$action": "custom"
+                  },
+                  "r": {},
+                  "s": [
                     {
                       "lit": "inbox"
                     },
@@ -364,10 +442,7 @@
                       "lit": "custom"
                     }
                   ],
-                  "select": {
-                    "$action": "custom"
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -379,34 +454,38 @@
               "name": "load",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /inbox/{token}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "token",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "token",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /inbox/{token}",
-                    "json": "{\"operationId\":\"getInbox\",\"parameters\":[{\"description\":\"The authentication token for the inbox\",\"in\":\"path\",\"name\":\"token\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"emails\":{\"items\":{\"properties\":{\"body\":{\"description\":\"Email body content\",\"type\":\"string\"},\"date\":{\"description\":\"Timestamp when email was received\",\"format\":\"date-time\",\"type\":\"string\"},\"from\":{\"description\":\"Sender email address\",\"format\":\"email\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier for the email\",\"type\":\"string\"},\"subject\":{\"description\":\"Email subject\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successfully retrieved inbox messages\"},\"401\":{\"description\":\"Unauthorized - Invalid token\"},\"404\":{\"description\":\"Inbox not found\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/inbox/{token}",
+                  "q": {
+                    "exist": [
+                      "id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/inbox/{token}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "token": "id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "inbox"
                     },
@@ -414,12 +493,7 @@
                       "var": "id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -431,34 +505,38 @@
               "name": "remove",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "DELETE /inbox/{token}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "token",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "token",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "DELETE /inbox/{token}",
-                    "json": "{\"operationId\":\"deleteInbox\",\"parameters\":[{\"description\":\"The authentication token for the inbox\",\"in\":\"path\",\"name\":\"token\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"message\":{\"example\":\"Inbox deleted successfully\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Inbox successfully deleted\"},\"401\":{\"description\":\"Unauthorized - Invalid token\"},\"404\":{\"description\":\"Inbox not found\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "DELETE",
+                  "o": "/inbox/{token}",
+                  "q": {
+                    "exist": [
+                      "id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "DELETE",
-                  "orig": "/inbox/{token}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "token": "id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "inbox"
                     },
@@ -466,12 +544,7 @@
                       "var": "id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -900,13 +973,13 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {},
-              "match": {},
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "a": true,
+              "d": {},
+              "i": {},
+              "m": {},
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemExists",
                   "def": {
@@ -926,20 +999,20 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "email_ref01",
                 "srcdatavar": "email_ref01_data",
                 "suffix": "_dt0"
               },
-              "match": {
+              "m": {
                 "id": "email01",
                 "token": "token01"
               },
-              "op": "load",
-              "spec": [],
-              "valid": [
+              "o": "load",
+              "s": [],
+              "v": [
                 {
                   "apply": "TextFieldMark",
                   "def": {
@@ -959,30 +1032,30 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "inbox_ref01"
               },
-              "match": {},
-              "op": "create",
-              "spec": [],
-              "valid": []
+              "m": {},
+              "o": "create",
+              "s": [],
+              "v": []
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "inbox_ref01",
                 "srcdatavar": "inbox_ref01_data",
                 "suffix": "_dt0"
               },
-              "match": {
+              "m": {
                 "id": "inbox01"
               },
-              "op": "load",
-              "spec": [],
-              "valid": [
+              "o": "load",
+              "s": [],
+              "v": [
                 {
                   "apply": "TextFieldMark",
                   "def": {
@@ -992,18 +1065,18 @@
               ]
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "inbox_ref01",
                 "suffix": "_rm0"
               },
-              "match": {
+              "m": {
                 "id": "inbox01"
               },
-              "op": "remove",
-              "spec": [],
-              "valid": []
+              "o": "remove",
+              "s": [],
+              "v": []
             }
           ]
         }

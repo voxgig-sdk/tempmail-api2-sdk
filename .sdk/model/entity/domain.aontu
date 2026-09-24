@@ -1,0 +1,45 @@
+# Entity: domain
+
+main: kit: entity: domain: {
+
+  alias: field: {}
+
+  fields: {
+    domains: {
+      h: "Domains"
+      n: "domains"
+      r: false
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "domain"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /domains"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/domains"
+          s: [
+            {
+              lit: "domains"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.domains`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

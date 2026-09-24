@@ -19,7 +19,6 @@ import type {
   DomainListMatch,
 } from '../TempmailApi2Types'
 
-// TODO: needs Entity superclass
 class DomainEntity extends TempmailApi2EntityBase<Domain> {
 
   constructor(client: TempmailApi2SDK, entopts: any) {

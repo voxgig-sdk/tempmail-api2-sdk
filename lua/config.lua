@@ -89,6 +89,7 @@ local function make_config()
         ["fields"] = {
           {
             ["name"] = "domains",
+            ["title"] = "Domains",
             ["type"] = "`$ARRAY`",
           },
         },
@@ -99,7 +100,6 @@ local function make_config()
             ["name"] = "list",
             ["points"] = {
               {
-                ["args"] = {},
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/domains",
@@ -108,14 +108,16 @@ local function make_config()
                     ["lit"] = "domains",
                   },
                 },
-                ["select"] = {},
+                ["parts"] = {
+                  "domains",
+                },
+                ["rename"] = {},
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body.domains`",
                 },
-                ["parts"] = {
-                  "domains",
-                },
+                ["args"] = {},
+                ["select"] = {},
               },
             },
           },
@@ -128,45 +130,53 @@ local function make_config()
         ["fields"] = {
           {
             ["name"] = "attachments",
+            ["title"] = "Attachments",
             ["type"] = "`$ARRAY`",
           },
           {
             ["name"] = "body",
+            ["title"] = "Body",
+            ["type"] = "`$STRING`",
             ["short"] = "Email body content",
-            ["type"] = "`$STRING`",
           },
           {
-            ["format"] = "date-time",
             ["name"] = "date",
-            ["short"] = "Timestamp when email was received",
+            ["title"] = "Date",
             ["type"] = "`$STRING`",
+            ["short"] = "Timestamp when email was received",
+            ["format"] = "date-time",
           },
           {
-            ["format"] = "email",
             ["name"] = "from",
-            ["short"] = "Sender email address",
+            ["title"] = "From",
             ["type"] = "`$STRING`",
+            ["short"] = "Sender email address",
+            ["format"] = "email",
           },
           {
             ["name"] = "html",
-            ["short"] = "HTML version of email body",
+            ["title"] = "Html",
             ["type"] = "`$STRING`",
+            ["short"] = "HTML version of email body",
           },
           {
             ["name"] = "id",
-            ["short"] = "Unique identifier for the email",
+            ["title"] = "Id",
             ["type"] = "`$STRING`",
+            ["short"] = "Unique identifier for the email",
           },
           {
             ["name"] = "subject",
-            ["short"] = "Email subject",
+            ["title"] = "Subject",
             ["type"] = "`$STRING`",
+            ["short"] = "Email subject",
           },
           {
-            ["format"] = "email",
             ["name"] = "to",
-            ["short"] = "Recipient email address",
+            ["title"] = "To",
             ["type"] = "`$STRING`",
+            ["short"] = "Recipient email address",
+            ["format"] = "email",
           },
         },
         ["id"] = {
@@ -185,32 +195,9 @@ local function make_config()
             ["name"] = "load",
             ["points"] = {
               {
-                ["args"] = {
-                  ["params"] = {
-                    {
-                      ["kind"] = "param",
-                      ["name"] = "email_id",
-                      ["orig"] = "email_id",
-                      ["reqd"] = true,
-                      ["type"] = "`$STRING`",
-                    },
-                    {
-                      ["kind"] = "param",
-                      ["name"] = "token",
-                      ["orig"] = "token",
-                      ["reqd"] = true,
-                      ["type"] = "`$STRING`",
-                    },
-                  },
-                },
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/inbox/{token}/{emailId}",
-                ["rename"] = {
-                  ["param"] = {
-                    ["emailId"] = "email_id",
-                  },
-                },
                 ["segments"] = {
                   {
                     ["lit"] = "inbox",
@@ -222,20 +209,43 @@ local function make_config()
                     ["var"] = "email_id",
                   },
                 },
-                ["select"] = {
-                  ["exist"] = {
-                    "email_id",
-                    "token",
+                ["parts"] = {
+                  "inbox",
+                  "{token}",
+                  "{email_id}",
+                },
+                ["rename"] = {
+                  ["param"] = {
+                    ["emailId"] = "email_id",
                   },
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
                 },
-                ["parts"] = {
-                  "inbox",
-                  "{token}",
-                  "{email_id}",
+                ["args"] = {
+                  ["params"] = {
+                    {
+                      ["name"] = "email_id",
+                      ["orig"] = "email_id",
+                      ["type"] = "`$STRING`",
+                      ["kind"] = "param",
+                      ["reqd"] = true,
+                    },
+                    {
+                      ["name"] = "token",
+                      ["orig"] = "token",
+                      ["type"] = "`$STRING`",
+                      ["kind"] = "param",
+                      ["reqd"] = true,
+                    },
+                  },
+                },
+                ["select"] = {
+                  ["exist"] = {
+                    "email_id",
+                    "token",
+                  },
                 },
               },
             },
@@ -245,32 +255,9 @@ local function make_config()
             ["name"] = "remove",
             ["points"] = {
               {
-                ["args"] = {
-                  ["params"] = {
-                    {
-                      ["kind"] = "param",
-                      ["name"] = "email_id",
-                      ["orig"] = "email_id",
-                      ["reqd"] = true,
-                      ["type"] = "`$STRING`",
-                    },
-                    {
-                      ["kind"] = "param",
-                      ["name"] = "token",
-                      ["orig"] = "token",
-                      ["reqd"] = true,
-                      ["type"] = "`$STRING`",
-                    },
-                  },
-                },
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/inbox/{token}/{emailId}",
-                ["rename"] = {
-                  ["param"] = {
-                    ["emailId"] = "email_id",
-                  },
-                },
                 ["segments"] = {
                   {
                     ["lit"] = "inbox",
@@ -282,20 +269,43 @@ local function make_config()
                     ["var"] = "email_id",
                   },
                 },
-                ["select"] = {
-                  ["exist"] = {
-                    "email_id",
-                    "token",
+                ["parts"] = {
+                  "inbox",
+                  "{token}",
+                  "{email_id}",
+                },
+                ["rename"] = {
+                  ["param"] = {
+                    ["emailId"] = "email_id",
                   },
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
                 },
-                ["parts"] = {
-                  "inbox",
-                  "{token}",
-                  "{email_id}",
+                ["args"] = {
+                  ["params"] = {
+                    {
+                      ["name"] = "email_id",
+                      ["orig"] = "email_id",
+                      ["type"] = "`$STRING`",
+                      ["kind"] = "param",
+                      ["reqd"] = true,
+                    },
+                    {
+                      ["name"] = "token",
+                      ["orig"] = "token",
+                      ["type"] = "`$STRING`",
+                      ["kind"] = "param",
+                      ["reqd"] = true,
+                    },
+                  },
+                },
+                ["select"] = {
+                  ["exist"] = {
+                    "email_id",
+                    "token",
+                  },
                 },
               },
             },
@@ -304,7 +314,7 @@ local function make_config()
         ["relations"] = {
           ["ancestors"] = {
             {
-              "inbox",
+              "$.main.kit.entity.inbox",
             },
           },
         },
@@ -313,10 +323,12 @@ local function make_config()
         ["fields"] = {
           {
             ["name"] = "emails",
+            ["title"] = "Emails",
             ["type"] = "`$ARRAY`",
           },
           {
             ["name"] = "id",
+            ["title"] = "Id",
             ["type"] = "`$STRING`",
           },
         },
@@ -331,7 +343,6 @@ local function make_config()
             ["name"] = "create",
             ["points"] = {
               {
-                ["args"] = {},
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/inbox/create",
@@ -343,20 +354,21 @@ local function make_config()
                     ["lit"] = "create",
                   },
                 },
-                ["select"] = {
-                  ["$action"] = "create",
-                },
-                ["transform"] = {
-                  ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
-                },
                 ["parts"] = {
                   "inbox",
                   "create",
                 },
+                ["rename"] = {},
+                ["transform"] = {
+                  ["req"] = "`reqdata`",
+                  ["res"] = "`body`",
+                },
+                ["args"] = {},
+                ["select"] = {
+                  ["$action"] = "create",
+                },
               },
               {
-                ["args"] = {},
                 ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/inbox/custom",
@@ -368,16 +380,18 @@ local function make_config()
                     ["lit"] = "custom",
                   },
                 },
-                ["select"] = {
-                  ["$action"] = "custom",
+                ["parts"] = {
+                  "inbox",
+                  "custom",
                 },
+                ["rename"] = {},
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
                 },
-                ["parts"] = {
-                  "inbox",
-                  "custom",
+                ["args"] = {},
+                ["select"] = {
+                  ["$action"] = "custom",
                 },
               },
             },
@@ -387,25 +401,9 @@ local function make_config()
             ["name"] = "load",
             ["points"] = {
               {
-                ["args"] = {
-                  ["params"] = {
-                    {
-                      ["kind"] = "param",
-                      ["name"] = "id",
-                      ["orig"] = "token",
-                      ["reqd"] = true,
-                      ["type"] = "`$STRING`",
-                    },
-                  },
-                },
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/inbox/{token}",
-                ["rename"] = {
-                  ["param"] = {
-                    ["token"] = "id",
-                  },
-                },
                 ["segments"] = {
                   {
                     ["lit"] = "inbox",
@@ -414,18 +412,34 @@ local function make_config()
                     ["var"] = "id",
                   },
                 },
-                ["select"] = {
-                  ["exist"] = {
-                    "id",
+                ["parts"] = {
+                  "inbox",
+                  "{id}",
+                },
+                ["rename"] = {
+                  ["param"] = {
+                    ["token"] = "id",
                   },
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
                 },
-                ["parts"] = {
-                  "inbox",
-                  "{id}",
+                ["args"] = {
+                  ["params"] = {
+                    {
+                      ["name"] = "id",
+                      ["orig"] = "token",
+                      ["type"] = "`$STRING`",
+                      ["kind"] = "param",
+                      ["reqd"] = true,
+                    },
+                  },
+                },
+                ["select"] = {
+                  ["exist"] = {
+                    "id",
+                  },
                 },
               },
             },
@@ -435,25 +449,9 @@ local function make_config()
             ["name"] = "remove",
             ["points"] = {
               {
-                ["args"] = {
-                  ["params"] = {
-                    {
-                      ["kind"] = "param",
-                      ["name"] = "id",
-                      ["orig"] = "token",
-                      ["reqd"] = true,
-                      ["type"] = "`$STRING`",
-                    },
-                  },
-                },
                 ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/inbox/{token}",
-                ["rename"] = {
-                  ["param"] = {
-                    ["token"] = "id",
-                  },
-                },
                 ["segments"] = {
                   {
                     ["lit"] = "inbox",
@@ -462,18 +460,34 @@ local function make_config()
                     ["var"] = "id",
                   },
                 },
-                ["select"] = {
-                  ["exist"] = {
-                    "id",
+                ["parts"] = {
+                  "inbox",
+                  "{id}",
+                },
+                ["rename"] = {
+                  ["param"] = {
+                    ["token"] = "id",
                   },
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
                 },
-                ["parts"] = {
-                  "inbox",
-                  "{id}",
+                ["args"] = {
+                  ["params"] = {
+                    {
+                      ["name"] = "id",
+                      ["orig"] = "token",
+                      ["type"] = "`$STRING`",
+                      ["kind"] = "param",
+                      ["reqd"] = true,
+                    },
+                  },
+                },
+                ["select"] = {
+                  ["exist"] = {
+                    "id",
+                  },
                 },
               },
             },

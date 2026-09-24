@@ -43,7 +43,7 @@ local domains, err = client:Domain():list()
 if err then error(err) end
 
 for _, item in ipairs(domains) do
-  print(item["domains"])
+  print(item)
 end
 ```
 

@@ -11,19 +11,12 @@ const FEATURE_CLASS = {
     test: TestFeature_1.TestFeature,
     timeout: TimeoutFeature_1.TimeoutFeature,
 };
-// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
-// the model's active plugin groups. A feature that takes a `plugins` option
-// (secrets over sekreto) reads its own entry; a feature with no plugins has
-// none. Named imports above make each definition statically reachable, so
-// an SDK carries exactly the plugin modules its model selects — the same
-// leanness the old side-effect registry imports bought, without a registry.
 const FEATURE_PLUGINS = {};
 exports.FEATURE_PLUGINS = FEATURE_PLUGINS;
 class Config {
     makeFeature(fn) {
         const fc = FEATURE_CLASS[fn];
         const fi = new fc();
-        // TODO: errors etc
         return fi;
     }
     // False for a feature added at runtime via options.extend (station's
@@ -116,6 +109,7 @@ class Config {
             "fields": [
                 {
                     "name": "domains",
+                    "title": "Domains",
                     "type": "`$ARRAY`"
                 }
             ],
@@ -126,7 +120,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "GET",
                             "orig": "/domains",
@@ -135,14 +128,16 @@ class Config {
                                     "lit": "domains"
                                 }
                             ],
-                            "select": {},
+                            "parts": [
+                                "domains"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.domains`"
                             },
-                            "parts": [
-                                "domains"
-                            ]
+                            "args": {},
+                            "select": {}
                         }
                     ]
                 }
@@ -155,45 +150,53 @@ class Config {
             "fields": [
                 {
                     "name": "attachments",
+                    "title": "Attachments",
                     "type": "`$ARRAY`"
                 },
                 {
                     "name": "body",
-                    "short": "Email body content",
-                    "type": "`$STRING`"
+                    "title": "Body",
+                    "type": "`$STRING`",
+                    "short": "Email body content"
                 },
                 {
-                    "format": "date-time",
                     "name": "date",
+                    "title": "Date",
+                    "type": "`$STRING`",
                     "short": "Timestamp when email was received",
-                    "type": "`$STRING`"
+                    "format": "date-time"
                 },
                 {
-                    "format": "email",
                     "name": "from",
+                    "title": "From",
+                    "type": "`$STRING`",
                     "short": "Sender email address",
-                    "type": "`$STRING`"
+                    "format": "email"
                 },
                 {
                     "name": "html",
-                    "short": "HTML version of email body",
-                    "type": "`$STRING`"
+                    "title": "Html",
+                    "type": "`$STRING`",
+                    "short": "HTML version of email body"
                 },
                 {
                     "name": "id",
-                    "short": "Unique identifier for the email",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Unique identifier for the email"
                 },
                 {
                     "name": "subject",
-                    "short": "Email subject",
-                    "type": "`$STRING`"
+                    "title": "Subject",
+                    "type": "`$STRING`",
+                    "short": "Email subject"
                 },
                 {
-                    "format": "email",
                     "name": "to",
+                    "title": "To",
+                    "type": "`$STRING`",
                     "short": "Recipient email address",
-                    "type": "`$STRING`"
+                    "format": "email"
                 }
             ],
             "id": {
@@ -212,32 +215,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "email_id",
-                                        "orig": "email_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "token",
-                                        "orig": "token",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/inbox/{token}/{emailId}",
-                            "rename": {
-                                "param": {
-                                    "emailId": "email_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "inbox"
@@ -249,21 +229,44 @@ class Config {
                                     "var": "email_id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "email_id",
-                                    "token"
-                                ]
+                            "parts": [
+                                "inbox",
+                                "{token}",
+                                "{email_id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "emailId": "email_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "inbox",
-                                "{token}",
-                                "{email_id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "email_id",
+                                        "orig": "email_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "token",
+                                        "orig": "token",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "email_id",
+                                    "token"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -272,32 +275,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "email_id",
-                                        "orig": "email_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "token",
-                                        "orig": "token",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/inbox/{token}/{emailId}",
-                            "rename": {
-                                "param": {
-                                    "emailId": "email_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "inbox"
@@ -309,21 +289,44 @@ class Config {
                                     "var": "email_id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "email_id",
-                                    "token"
-                                ]
+                            "parts": [
+                                "inbox",
+                                "{token}",
+                                "{email_id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "emailId": "email_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "inbox",
-                                "{token}",
-                                "{email_id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "email_id",
+                                        "orig": "email_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "token",
+                                        "orig": "token",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "email_id",
+                                    "token"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -331,7 +334,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "inbox"
+                        "$.main.kit.entity.inbox"
                     ]
                 ]
             }
@@ -340,10 +343,12 @@ class Config {
             "fields": [
                 {
                     "name": "emails",
+                    "title": "Emails",
                     "type": "`$ARRAY`"
                 },
                 {
                     "name": "id",
+                    "title": "Id",
                     "type": "`$STRING`"
                 }
             ],
@@ -358,7 +363,6 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "POST",
                             "orig": "/inbox/create",
@@ -370,20 +374,21 @@ class Config {
                                     "lit": "create"
                                 }
                             ],
-                            "select": {
-                                "$action": "create"
-                            },
+                            "parts": [
+                                "inbox",
+                                "create"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "inbox",
-                                "create"
-                            ]
+                            "args": {},
+                            "select": {
+                                "$action": "create"
+                            }
                         },
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "POST",
                             "orig": "/inbox/custom",
@@ -395,17 +400,19 @@ class Config {
                                     "lit": "custom"
                                 }
                             ],
-                            "select": {
-                                "$action": "custom"
-                            },
+                            "parts": [
+                                "inbox",
+                                "custom"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "inbox",
-                                "custom"
-                            ]
+                            "args": {},
+                            "select": {
+                                "$action": "custom"
+                            }
                         }
                     ]
                 },
@@ -414,25 +421,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "token",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/inbox/{token}",
-                            "rename": {
-                                "param": {
-                                    "token": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "inbox"
@@ -441,19 +432,35 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "inbox",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "token": "id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "inbox",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "token",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -462,25 +469,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "token",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/inbox/{token}",
-                            "rename": {
-                                "param": {
-                                    "token": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "inbox"
@@ -489,19 +480,35 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "inbox",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "token": "id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "inbox",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "token",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 }
