@@ -91,7 +91,7 @@ main: kit: entity: email: {
               {
                 k: "param"
                 n: "email_id"
-                or: "email_id"
+                or: "emailId"
                 r: true
                 t: "`$STRING`"
               }
@@ -149,7 +149,7 @@ main: kit: entity: email: {
               {
                 k: "param"
                 n: "email_id"
-                or: "email_id"
+                or: "emailId"
                 r: true
                 t: "`$STRING`"
               }

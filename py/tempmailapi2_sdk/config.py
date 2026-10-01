@@ -256,7 +256,7 @@ def make_config():
                   "params": [
                     {
                       "name": "email_id",
-                      "orig": "email_id",
+                      "orig": "emailId",
                       "type": "`$STRING`",
                       "kind": "param",
                       "reqd": True,
@@ -316,7 +316,7 @@ def make_config():
                   "params": [
                     {
                       "name": "email_id",
-                      "orig": "email_id",
+                      "orig": "emailId",
                       "type": "`$STRING`",
                       "kind": "param",
                       "reqd": True,

@@ -227,7 +227,7 @@ local function make_config()
                   ["params"] = {
                     {
                       ["name"] = "email_id",
-                      ["orig"] = "email_id",
+                      ["orig"] = "emailId",
                       ["type"] = "`$STRING`",
                       ["kind"] = "param",
                       ["reqd"] = true,
@@ -287,7 +287,7 @@ local function make_config()
                   ["params"] = {
                     {
                       ["name"] = "email_id",
-                      ["orig"] = "email_id",
+                      ["orig"] = "emailId",
                       ["type"] = "`$STRING`",
                       ["kind"] = "param",
                       ["reqd"] = true,

@@ -276,7 +276,7 @@ class Config {
                 "params": [
                   {
                     "name": "email_id",
-                    "orig": "email_id",
+                    "orig": "emailId",
                     "type": "`$STRING`",
                     "kind": "param",
                     "reqd": true
@@ -336,7 +336,7 @@ class Config {
                 "params": [
                   {
                     "name": "email_id",
-                    "orig": "email_id",
+                    "orig": "emailId",
                     "type": "`$STRING`",
                     "kind": "param",
                     "reqd": true
