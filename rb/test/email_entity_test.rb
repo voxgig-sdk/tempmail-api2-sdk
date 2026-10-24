@@ -6,28 +6,40 @@ require_relative "../TempmailApi2_sdk"
 require_relative "runner"
 
 class EmailEntityTest < Minitest::Test
+  # main.kit.test.live.strict is true (the default is true): a live
+  # request that fails, or a live test missing an input it needs,
+  # fails the test.
+  # An account with no record for a test to read skips it either way.
+  LIVE_STRICT = true
+
   def test_create_instance
     testsdk = TempmailApi2SDK.test(nil, nil)
     ent = testsdk.Email(nil)
     assert !ent.nil?
   end
 
+  def test_validate
+    cfg = TempmailApi2Config.shared_config
+    unless cfg["feature"].is_a?(Hash) && cfg["feature"].key?("validate")
+      skip("feature not present in this SDK: validate")
+    end
+    client = TempmailApi2SDK.test(nil, { "feature" => { "validate" => { "active" => true } } })
+    err = assert_raises(StandardError) do
+      client.Email(nil).load({ "email_id" => 1, "token" => "x" }, nil)
+    end
+    assert_equal "validate_failed", err.code
+  end
+
   def test_basic_flow
     setup = email_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["load"].each do |_op|
+    [].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "email." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")
         return
       end
-    end
-    # The basic flow consumes synthetic IDs from the fixture. In live mode
-    # without an *_ENTID env override, those IDs hit the live API and 4xx.
-    if setup[:synthetic_only]
-      skip "live entity test uses synthetic IDs from fixture — set TEMPMAIL_API2_TEST_EMAIL_ENTID JSON to run live"
-      return
     end
     client = setup[:client]
 
@@ -39,16 +51,6 @@ class EmailEntityTest < Minitest::Test
       email_ref01_data = Helpers.to_map(email_ref01_data_raw[0][1])
     end
 
-    # LOAD
-    email_ref01_ent = client.Email(nil)
-    email_ref01_match_dt0 = {
-      "id" => email_ref01_data["id"],
-    }
-    email_ref01_data_dt0_loaded = email_ref01_ent.load(email_ref01_match_dt0, nil)
-    email_ref01_data_dt0_load_result = Helpers.to_map(email_ref01_data_dt0_loaded.respond_to?(:data_get) ? email_ref01_data_dt0_loaded.data_get : email_ref01_data_dt0_loaded)
-    assert !email_ref01_data_dt0_load_result.nil?
-    assert_equal email_ref01_data_dt0_load_result["id"], email_ref01_data["id"]
-
   end
 end
 
@@ -56,7 +58,7 @@ def email_basic_setup(extra)
   Runner.load_env_local
 
   entity_data_file = File.join(__dir__, "..", "..", ".sdk", "test", "entity", "email", "EmailTestData.json")
-  entity_data_source = File.read(entity_data_file)
+  entity_data_source = File.read(entity_data_file, encoding: "UTF-8")
   entity_data = JSON.parse(entity_data_source)
 
   options = {}
@@ -66,7 +68,7 @@ def email_basic_setup(extra)
 
   # Generate idmap via transform.
   idmap = Vs.transform(
-    ["email01", "email02", "email03", "inbox01", "inbox02", "inbox03", "token01"],
+    ["email01", "email02", "email03", "inbox01", "inbox02", "inbox03"],
     {
       "`$PACK`" => ["", {
         "`$KEY`" => "`$COPY`",
@@ -75,9 +77,8 @@ def email_basic_setup(extra)
     }
   )
 
-  # Detect ENTID env override before envOverride consumes it. When live
-  # mode is on without a real override, the basic test runs against synthetic
-  # IDs from the fixture and 4xx's. Surface this so the test can skip.
+  # Whether *_ENTID supplied the idmap, read before env_override consumes
+  # it: without it, the ids a live flow binds are the fixture's synthetic ones.
   entid_env_raw = ENV["TEMPMAIL_API2_TEST_EMAIL_ENTID"]
   idmap_overridden = !entid_env_raw.nil? && entid_env_raw.strip.start_with?("{")
 

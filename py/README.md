@@ -15,7 +15,7 @@ keeps the cognitive load low.
 
 ## Install
 This package is not yet published to PyPI. Install it from the GitHub
-release tag (`py/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/tempmail-api2-sdk/releases)) or
+release tag (`py/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/tempmail-api2-sdk/tags)) or
 from a source checkout:
 
 ```bash
@@ -38,14 +38,14 @@ client = TempmailApi2SDK()
 
 ### 2. List domain records
 
-`list()` returns a `list` of records (each a `dict`) and raises on
-error — iterate it directly.
+`list()` returns a `list` of entities, one per record, and raises on
+error; an entity's `data_get()` reads its record (a `dict`).
 
 ```python
 try:
     domains = client.Domain().list()
     for domain in domains:
-        print(domain)
+        print(domain.data_get())
 except Exception as err:
     print(f"list failed: {err}")
 ```
@@ -58,7 +58,7 @@ Email is nested under email, so provide the `email_id`.
 ```python
 try:
     email = client.Email().load({"email_id": "example_email_id", "token": "example_token"})
-    print(email)
+    print(email.data_get())
 except Exception as err:
     print(f"load failed: {err}")
 ```
@@ -71,7 +71,7 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 ```python
 try:
     inbox = client.Inbox().load({"id": "example_id"})
-    print(inbox)
+    print(inbox.data_get())
 except Exception as err:
     print(f"load failed: {err}")
 ```
@@ -137,10 +137,9 @@ Create a mock client for unit testing — no server required:
 ```python
 client = TempmailApi2SDK.test()
 
-# Entity ops return the ENTITY and raises on error;
-# call data_get() for the record.
+# Entity ops return the entity, and list one per record; they raise on error.
 inbox = client.Inbox().load({"id": "test01"})
-# inbox contains the mock response record
+# data_get() on an entity reads its mock response record
 ```
 
 ### Use a custom fetch function
@@ -226,10 +225,10 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria. Raises on error. |
-| `list` | `(reqmatch, ctrl) -> list` | List entities matching the criteria. Raises on error. |
-| `create` | `(reqdata, ctrl) -> any` | Create a new entity. Raises on error. |
-| `remove` | `(reqmatch, ctrl) -> any` | Remove an entity. Raises on error. |
+| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria, and return it. Raises on error. |
+| `list` | `(reqmatch, ctrl) -> list` | List entities matching the criteria, one per record. Raises on error. |
+| `create` | `(reqdata, ctrl) -> any` | Create a new entity, and return it. Raises on error. |
+| `remove` | `(reqmatch, ctrl) -> any` | Remove an entity, and return it marked as deleted. Raises on error. |
 | `data_get` | `() -> dict` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
 | `match_get` | `() -> dict` | Get entity match criteria. |
@@ -239,9 +238,9 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the ENTITY (call data_get() for the record) (a `dict` for single-entity
-ops, a `list` for `list`) and raise on error. Wrap calls in
-`try`/`except` to handle failures.
+Entity operations return the entity, and `list` a `list` of entities, one
+per record; an entity's `data_get()` reads its record (a `dict`). They raise
+on error, so wrap calls in `try`/`except` to handle failures.
 
 The `direct()` escape hatch never raises — it returns a result `dict`
 you branch on via `result["ok"]`:
@@ -377,13 +376,6 @@ Create an instance: `inbox = client.Inbox()`
 
 ```python
 inbox = client.Inbox().load({"id": "inbox_id"})
-```
-
-#### Example: Create
-
-```python
-inbox = client.Inbox().create({
-})
 ```
 
 ## Features

@@ -87,6 +87,7 @@ class Config {
             },
             "optspec": {
                 "clearTimer": "`$FUNCTION`",
+                "now": "`$FUNCTION`",
                 "setTimer": "`$FUNCTION`"
             },
             "strict": false,
@@ -137,7 +138,11 @@ class Config {
                                 "res": "`body.domains`"
                             },
                             "args": {},
-                            "select": {}
+                            "select": {},
+                            "response": {
+                                "kind": "json",
+                                "media": "application/json"
+                            }
                         }
                     ]
                 }
@@ -266,6 +271,10 @@ class Config {
                                     "email_id",
                                     "token"
                                 ]
+                            },
+                            "response": {
+                                "kind": "json",
+                                "media": "application/json"
                             }
                         }
                     ]
@@ -326,6 +335,10 @@ class Config {
                                     "email_id",
                                     "token"
                                 ]
+                            },
+                            "response": {
+                                "kind": "json",
+                                "media": "application/json"
                             }
                         }
                     ]
@@ -386,6 +399,10 @@ class Config {
                             "args": {},
                             "select": {
                                 "$action": "create"
+                            },
+                            "response": {
+                                "kind": "json",
+                                "media": "application/json"
                             }
                         },
                         {
@@ -412,6 +429,10 @@ class Config {
                             "args": {},
                             "select": {
                                 "$action": "custom"
+                            },
+                            "response": {
+                                "kind": "json",
+                                "media": "application/json"
                             }
                         }
                     ]
@@ -460,6 +481,10 @@ class Config {
                                 "exist": [
                                     "id"
                                 ]
+                            },
+                            "response": {
+                                "kind": "json",
+                                "media": "application/json"
                             }
                         }
                     ]
@@ -508,6 +533,10 @@ class Config {
                                 "exist": [
                                     "id"
                                 ]
+                            },
+                            "response": {
+                                "kind": "json",
+                                "media": "application/json"
                             }
                         }
                     ]

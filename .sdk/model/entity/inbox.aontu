@@ -40,6 +40,10 @@ main: kit: entity: inbox: {
           q: {
             "$action": "create"
           }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "inbox"
@@ -54,6 +58,10 @@ main: kit: entity: inbox: {
           }
         }
         {
+          bf: [
+            "domain"
+            "username"
+          ]
           co: {
             id: "POST /inbox/custom"
             source: "openapi3"
@@ -63,6 +71,10 @@ main: kit: entity: inbox: {
           o: "/inbox/custom"
           q: {
             "$action": "custom"
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
           s: [
             {
@@ -111,6 +123,10 @@ main: kit: entity: inbox: {
               token: "id"
             }
           }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "inbox"
@@ -157,6 +173,10 @@ main: kit: entity: inbox: {
             param: {
               token: "id"
             }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
           s: [
             {

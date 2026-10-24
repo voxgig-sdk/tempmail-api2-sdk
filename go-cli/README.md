@@ -20,7 +20,6 @@ export TEMPMAIL_API2_APIKEY=sk_live_xxx
 
 # 4. Each command line is ONE boru expression, run against the API:
 ./tempmail-api2-cli list domain
-./tempmail-api2-cli list email
 
 # 5. Override the API base URL for a single call
 TEMPMAIL_API2_BASE=https://api.example.com ./tempmail-api2-cli list domain

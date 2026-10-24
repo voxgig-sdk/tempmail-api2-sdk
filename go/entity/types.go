@@ -50,6 +50,8 @@ type InboxLoadMatch struct {
 type InboxCreateData struct {
 	Emails *[]any `json:"emails,omitempty"`
 	Id *string `json:"id,omitempty"`
+	Domain *any `json:"domain,omitempty"`
+	Username *any `json:"username,omitempty"`
 }
 
 // InboxRemoveMatch is the typed request payload for Inbox.RemoveTyped.

@@ -54,35 +54,42 @@ const utility_1 = require("../../utility");
         const ent = testsdk.Inbox();
         (0, node_assert_1.default)(null != ent);
     });
+    (0, node_test_1.test)('validate', async (t) => {
+        if (null == __1.config.feature?.validate) {
+            t.skip('feature not present in this SDK: validate');
+            return;
+        }
+        const client = __1.TempmailApi2SDK.test(undefined, { feature: { validate: { active: true } } });
+        await node_assert_1.default.rejects(client.Inbox().load({ "id": 1 }), (err) => 'validate_failed' === err.code);
+    });
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.TEMPMAIL_API2_TEST_LIVE;
-        for (const op of ['create', 'load', 'remove']) {
+        for (const op of ['load', 'remove']) {
             if (!live && (0, utility_1.maybeSkipControl)(t, 'entityOp', 'inbox.' + op, live))
                 return;
         }
         const setup = basicSetup();
         if (setup.live) {
-            return (0, live_entity_1.runLiveEntity)(setup, { "active": true, "alias": { "field": {} }, "fields": { "emails": { "a": true, "h": "Emails", "n": "emails", "r": false, "t": "`$ARRAY`", "key$": "emails", "index$": 0 }, "id": { "a": true, "h": "Id", "n": "id", "r": false, "t": "`$STRING`", "key$": "id", "index$": 1 } }, "id": { "field": "id", "name": "id" }, "name": "inbox", "op": { "create": { "input": "data", "name": "create", "points": [{ "a": true, "co": { "id": "POST /inbox/create", "source": "openapi3", "version": 2 }, "g": {}, "k": "http", "m": "POST", "o": "/inbox/create", "q": { "$action": "create" }, "r": {}, "s": [{ "lit": "inbox" }, { "lit": "create" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }, { "a": true, "co": { "id": "POST /inbox/custom", "source": "openapi3", "version": 2 }, "g": {}, "k": "http", "m": "POST", "o": "/inbox/custom", "q": { "$action": "custom" }, "r": {}, "s": [{ "lit": "inbox" }, { "lit": "custom" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 1 }], "key$": "create" }, "load": { "input": "data", "name": "load", "points": [{ "a": true, "co": { "id": "GET /inbox/{token}", "source": "openapi3", "version": 2 }, "g": { "params": [{ "a": true, "k": "param", "n": "id", "or": "token", "r": true, "t": "`$STRING`", "index$": 0 }] }, "k": "http", "m": "GET", "o": "/inbox/{token}", "q": { "exist": ["id"] }, "r": { "param": { "token": "id" } }, "s": [{ "lit": "inbox" }, { "var": "id" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "load" }, "remove": { "input": "data", "name": "remove", "points": [{ "a": true, "co": { "id": "DELETE /inbox/{token}", "source": "openapi3", "version": 2 }, "g": { "params": [{ "a": true, "k": "param", "n": "id", "or": "token", "r": true, "t": "`$STRING`", "index$": 0 }] }, "k": "http", "m": "DELETE", "o": "/inbox/{token}", "q": { "exist": ["id"] }, "r": { "param": { "token": "id" } }, "s": [{ "lit": "inbox" }, { "var": "id" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "remove" } }, "relations": { "ancestors": [] }, "key$": "inbox", "name__orig": "inbox", "Name": "Inbox", "name_": "inbox", "name-": "inbox", "NAME": "INBOX", "index$": 2 }, { "active": true, "entity": "inbox", "key$": "BasicInboxFlow", "kind": "basic", "name": "BasicInboxFlow", "param": {}, "step": [{ "a": true, "d": {}, "i": { "ref": "inbox_ref01" }, "m": {}, "o": "create", "s": [], "v": [], "index$": 0 }, { "a": true, "d": {}, "i": { "ref": "inbox_ref01", "srcdatavar": "inbox_ref01_data", "suffix": "_dt0" }, "m": { "id": "inbox01" }, "o": "load", "s": [], "v": [{ "apply": "TextFieldMark", "def": { "mark": "Mark01-inbox_ref01" } }], "index$": 1 }, { "a": true, "d": {}, "i": { "ref": "inbox_ref01", "suffix": "_rm0" }, "m": { "id": "inbox01" }, "o": "remove", "s": [], "v": [], "index$": 2 }] }, 'Inbox', { "POST /inbox/create": { "protocol": "http", "parameters": [] }, "POST /inbox/custom": { "protocol": "http", "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["username"], "properties": { "username": { "type": "string", "description": "Desired username for the email address" }, "domain": { "type": "string", "description": "Domain for the email address (optional)" } } } } } }, "parameters": [] }, "GET /inbox/{token}": { "protocol": "http", "parameters": [{ "name": "token", "in": "path", "required": true, "description": "The authentication token for the inbox", "schema": { "type": "string" }, "index$": 0 }] }, "DELETE /inbox/{token}": { "protocol": "http", "parameters": [{ "name": "token", "in": "path", "required": true, "description": "The authentication token for the inbox", "schema": { "type": "string" }, "index$": 0 }] } });
+            return (0, live_entity_1.runLiveEntity)(setup, { "active": true, "alias": { "field": {} }, "fields": { "emails": { "a": true, "h": "Emails", "n": "emails", "r": false, "t": "`$ARRAY`", "key$": "emails", "index$": 0 }, "id": { "a": true, "h": "Id", "n": "id", "r": false, "t": "`$STRING`", "key$": "id", "index$": 1 } }, "id": { "field": "id", "name": "id" }, "name": "inbox", "op": { "create": { "input": "data", "name": "create", "points": [{ "a": true, "co": { "id": "POST /inbox/create", "source": "openapi3", "version": 2 }, "g": {}, "k": "http", "m": "POST", "o": "/inbox/create", "q": { "$action": "create" }, "r": {}, "rs": { "kind": "json", "media": "application/json" }, "s": [{ "lit": "inbox" }, { "lit": "create" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }, { "a": true, "bf": ["domain", "username"], "co": { "id": "POST /inbox/custom", "source": "openapi3", "version": 2 }, "g": {}, "k": "http", "m": "POST", "o": "/inbox/custom", "q": { "$action": "custom" }, "r": {}, "rs": { "kind": "json", "media": "application/json" }, "s": [{ "lit": "inbox" }, { "lit": "custom" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 1 }], "key$": "create" }, "load": { "input": "data", "name": "load", "points": [{ "a": true, "co": { "id": "GET /inbox/{token}", "source": "openapi3", "version": 2 }, "g": { "params": [{ "a": true, "k": "param", "n": "id", "or": "token", "r": true, "t": "`$STRING`", "index$": 0 }] }, "k": "http", "m": "GET", "o": "/inbox/{token}", "q": { "exist": ["id"] }, "r": { "param": { "token": "id" } }, "rs": { "kind": "json", "media": "application/json" }, "s": [{ "lit": "inbox" }, { "var": "id" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "load" }, "remove": { "input": "data", "name": "remove", "points": [{ "a": true, "co": { "id": "DELETE /inbox/{token}", "source": "openapi3", "version": 2 }, "g": { "params": [{ "a": true, "k": "param", "n": "id", "or": "token", "r": true, "t": "`$STRING`", "index$": 0 }] }, "k": "http", "m": "DELETE", "o": "/inbox/{token}", "q": { "exist": ["id"] }, "r": { "param": { "token": "id" } }, "rs": { "kind": "json", "media": "application/json" }, "s": [{ "lit": "inbox" }, { "var": "id" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "remove" } }, "relations": { "ancestors": [] }, "key$": "inbox", "name__orig": "inbox", "Name": "Inbox", "name_": "inbox", "name-": "inbox", "NAME": "INBOX", "index$": 2 }, { "active": true, "entity": "inbox", "key$": "BasicInboxFlow", "kind": "basic", "name": "BasicInboxFlow", "param": {}, "step": [{ "a": false, "d": {}, "i": { "ref": "inbox_ref01" }, "m": {}, "o": "create", "s": [], "v": [], "unreachable": true }, { "a": true, "d": {}, "i": { "ref": "inbox_ref01", "srcdatavar": "inbox_ref01_data", "suffix": "_dt0" }, "m": { "id": "inbox01" }, "o": "load", "s": [], "v": [{ "apply": "TextFieldMark", "def": { "mark": "Mark01-inbox_ref01" } }], "index$": 0 }, { "a": true, "d": {}, "i": { "ref": "inbox_ref01", "suffix": "_rm0" }, "m": { "id": "inbox01" }, "o": "remove", "s": [], "v": [], "index$": 1 }] }, 'Inbox', { "POST /inbox/create": { "protocol": "http", "parameters": [] }, "POST /inbox/custom": { "protocol": "http", "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["username"], "properties": { "username": { "type": "string", "description": "Desired username for the email address" }, "domain": { "type": "string", "description": "Domain for the email address (optional)" } } } } } }, "parameters": [] }, "GET /inbox/{token}": { "protocol": "http", "parameters": [{ "name": "token", "in": "path", "required": true, "description": "The authentication token for the inbox", "schema": { "type": "string" }, "index$": 0 }] }, "DELETE /inbox/{token}": { "protocol": "http", "parameters": [{ "name": "token", "in": "path", "required": true, "description": "The authentication token for the inbox", "schema": { "type": "string" }, "index$": 0 }] } }, { strict: LIVE_STRICT, t });
         }
         const client = setup.client;
         const struct = setup.struct;
         const isempty = struct.isempty;
         const select = struct.select;
-        // CREATE
-        const inbox_ref01_ent = client.Inbox();
-        let inbox_ref01_data = setup.data.new.inbox['inbox_ref01'];
-        inbox_ref01_data = (await inbox_ref01_ent.create(inbox_ref01_data)).data();
-        (0, node_assert_1.default)(null != inbox_ref01_data.id);
+        let inbox_ref01_data = Object.values(setup.data.existing.inbox)[0];
         // LOAD
+        const inbox_ref01_ent = client.Inbox();
         const inbox_ref01_match_dt0 = {};
         inbox_ref01_match_dt0.id = inbox_ref01_data.id;
         const inbox_ref01_data_dt0 = (await inbox_ref01_ent.load(inbox_ref01_match_dt0)).data();
         (0, node_assert_1.default)(inbox_ref01_data_dt0.id === inbox_ref01_data.id);
-        // REMOVE
-        const inbox_ref01_match_rm0 = { id: inbox_ref01_data.id };
-        await inbox_ref01_ent.remove(inbox_ref01_match_rm0);
     });
 });
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true;
 function basicSetup(extra) {
     // TODO: fix test def options
     const options = {}; // null

@@ -1,10 +1,14 @@
 # tempmail-api2-mcp
 
 [MCP](https://modelcontextprotocol.io) server exposing the TempmailApi2 SDK as
-two agent tools — `tempmail-api2_list` and `tempmail-api2_load` — built on the
+2 agent tools, `tempmail-api2_list` and `tempmail-api2_load`, built on the
 [official Go MCP SDK](https://github.com/modelcontextprotocol/go-sdk) and the
 sibling Go SDK at `../go`. Runs over **stdio** (default, for spawnable installs)
 or **streamable HTTP** (one shared server for several agents).
+
+The server only reads. Create, update, patch and remove become tools too when the
+SDK's own model sets `main: kit: target: 'go-mcp': tool: write: true`; they are off by default, as an agent calling
+them changes the API's data.
 
 ## Examples
 
@@ -28,10 +32,9 @@ Tool-call arguments (what an agent sends):
 ```jsonc
 // tempmail-api2_list: first page of records
 { "entity": "domain" }
-{ "entity": "domain", "query": { } }
 
-// tempmail-api2_load: one record by id
-{ "entity": "email", "query": { "id": 1 } }
+// tempmail-api2_load: one record
+{ "entity": "email", "query": { "email_id": "example", "token": "example" } }
 ```
 
 > The rest of this guide follows the [Diátaxis](https://diataxis.fr) framework:
@@ -59,8 +62,8 @@ Tool-call arguments (what an agent sends):
      -- "$PWD"/dist/*/tempmail-api2-mcp -transport stdio
    ```
 
-4. **Restart Claude Code.** The `tempmail-api2_list` and `tempmail-api2_load` tools now appear
-   in new sessions. Ask the agent to *"list domain using tempmail-api2"*
+4. **Restart Claude Code.** The `tempmail-api2_list` and `tempmail-api2_load` tools now appear in new
+   sessions. Ask the agent to *"list domain using tempmail-api2"*
    and it calls `tempmail-api2_list` with `{"entity":"domain"}`.
 
 ## How-to guides
@@ -88,8 +91,8 @@ default) spawns a fresh process per client.
 
 ### Call the `tempmail-api2_list` tool
 
-Args: `entity` (required), `query` (optional filter map). Returns the first
-page of records as JSON:
+Args: `entity` (required), `query` (optional: optional filter map; omit it for the first page).
+Returns the first page of records as JSON:
 
 ```jsonc
 { "entity": "domain" }
@@ -97,11 +100,19 @@ page of records as JSON:
 
 ### Call the `tempmail-api2_load` tool
 
-Args: `entity` (required), `query` = `{"id":N}` (required). Returns the single
-record as JSON:
+Args: `entity` (required), `query` (required: match map naming the record, such as {"id":1}).
+Returns the record as JSON:
 
 ```jsonc
-{ "entity": "email", "query": { "id": 1 } }
+{ "entity": "email", "query": { "email_id": "example", "token": "example" } }
+```
+
+### Turn on the write tools
+
+In the SDK's own model (`.sdk/model/sdk.aontu`), then regenerate:
+
+```
+main: kit: target: 'go-mcp': tool: write: true
 ```
 
 ### Cross-compile release binaries
@@ -115,25 +126,28 @@ make build-all   # linux/darwin/windows x amd64/arm64, under dist/<os>-<arch>/
 
 ### Tools
 
-| Tool | Args | Returns |
-|------|------|---------|
-| `tempmail-api2_list` | `entity` (required), `query` (optional map) | First page of records as JSON |
-| `tempmail-api2_load` | `entity` (required), `query` = `{id:N}` | Single record as JSON |
+| Tool | Args | Returns | MCP hints |
+|------|------|---------|-----------|
+| `tempmail-api2_list` | `entity`, `query` (optional map) | The first page of records as JSON | read-only |
+| `tempmail-api2_load` | `entity`, `query` (required map) | The record as JSON | read-only |
 
 On error, a tool returns an MCP error result (`isError: true`) whose text is the
 failure message (e.g. unknown entity, or an API error).
 
-### `Args` schema
+### Entities
 
-Both tools take the same argument object:
+Each tool takes as its `entity` argument one of the entities that has its
+operation, of the 3 the SDK has:
 
-| Field | Type | Notes |
-|-------|------|-------|
-| `entity` | string | One of the 3 supported entities (see below). |
-| `query` | object | Optional match map. `{"id":N}` for load; omit or `{}` for list. |
+| Tool | Entities |
+|------|----------|
+| `tempmail-api2_list` | domain |
+| `tempmail-api2_load` | email, inbox |
 
-JSON schemas are emitted by the SDK from the `Args` struct's `json` /
-`jsonschema` tags — no schema is hand-written.
+JSON schemas are emitted by the SDK from each tool's argument struct's
+`json` / `jsonschema` tags — no schema is hand-written. Each tool's
+`entity` is an `enum` of the entities in its row, so the server refuses
+any other before it runs a call.
 
 ### Transports & flags
 
@@ -148,12 +162,6 @@ JSON schemas are emitted by the SDK from the `Args` struct's `json` /
 |----------|---------|
 | `TEMPMAIL_API2_APIKEY` | API key sent with every request. |
 | `TEMPMAIL_API2_BASE` | Optional override of the API base URL. |
-
-### Entities
-
-The 3 entities valid as the `entity` argument:
-
-domain | email | inbox
 
 ### Smoke test via HTTP (raw JSON-RPC)
 
@@ -173,7 +181,7 @@ curl -sN -X POST http://localhost:18080 \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json, text/event-stream' \
   -H "Mcp-Session-Id: $SESSION" \
-  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"tempmail-api2_load","arguments":{"entity":"email","query":{"id":1}}}}'
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"tempmail-api2_list","arguments":{"entity":"domain"}}}'
 ```
 
 ## Explanation
@@ -181,9 +189,10 @@ curl -sN -X POST http://localhost:18080 \
 ### How tools map to the SDK
 
 `main.go` builds the SDK client (configured from the environment) and registers
-two tools. Each dispatches on the `entity` argument to the matching entity in
-the sibling Go SDK at `../go`, calls `List` or `Load`, unwraps the `Entity`
-wrappers to plain data, and returns it as pretty-printed JSON.
+one tool per operation the SDK's entities have. Each dispatches on the
+`entity` argument to the matching entity in the sibling Go SDK at `../go`,
+calls its operation, unwraps the `Entity` wrappers to plain data, and returns
+it as pretty-printed JSON.
 
 ### Why two transports
 
@@ -193,9 +202,10 @@ that many agents can share — handy for a long-lived deployment.
 
 ### Schema generation
 
-The input schema is derived from the `Args` Go struct's `json` / `jsonschema`
-tags at registration time, so the advertised tool schema can never drift from
-the code that consumes it.
+The input schema is derived from each tool's argument struct's `json` /
+`jsonschema` tags at registration time, so the advertised tool schema can
+never drift from the code that consumes it. The `entity` enum comes from the
+same list the tool is registered for.
 
 ## Generated by
 

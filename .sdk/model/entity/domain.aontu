@@ -26,6 +26,10 @@ main: kit: entity: domain: {
           }
           m: "GET"
           o: "/domains"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "domains"

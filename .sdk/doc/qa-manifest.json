@@ -3,5 +3,23 @@
     "SUMMARY.md"
   ],
   "config": ".sdk/doc/qa/vale.ini",
-  "routes": {}
+  "routes": {},
+  "quoted": {
+    "SUMMARY.md": [
+      "Email body content",
+      "Email successfully deleted",
+      "HTML version of email body",
+      "Inbox successfully deleted",
+      "Production server",
+      "Sender email address",
+      "Successfully created custom inbox",
+      "Successfully created temporary inbox",
+      "Successfully retrieved domains",
+      "Successfully retrieved email",
+      "Successfully retrieved inbox messages",
+      "The Tempmail API provides users with disposable email addresses that can be used for temporary registrations or verifications. It allows users to manage their temporary inboxes, retrieve emails, and perform various email-related operations securely and anonymously.",
+      "Timestamp when email was received",
+      "Unique identifier for the email"
+    ]
+  }
 }

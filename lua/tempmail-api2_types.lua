@@ -40,6 +40,8 @@
 ---@class InboxCreateData
 ---@field emails? table
 ---@field id? string
+---@field domain? any
+---@field username? any
 
 ---@class InboxRemoveMatch
 ---@field id string

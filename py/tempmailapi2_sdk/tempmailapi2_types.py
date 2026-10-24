@@ -24,14 +24,16 @@ class DomainListMatch(TypedDict, total=False):
     domains: list
 
 
-class Email(TypedDict, total=False):
-    attachments: list
-    body: str
-    date: str
-    html: str
-    id: str
-    subject: str
-    to: str
+Email = TypedDict('Email', {
+    "attachments": list,
+    "body": str,
+    "date": str,
+    "from": str,
+    "html": str,
+    "id": str,
+    "subject": str,
+    "to": str,
+}, total=False)
 
 
 class EmailLoadMatch(TypedDict):
@@ -56,6 +58,8 @@ class InboxLoadMatch(TypedDict):
 class InboxCreateData(TypedDict, total=False):
     emails: list
     id: str
+    domain: Any
+    username: Any
 
 
 class InboxRemoveMatch(TypedDict):

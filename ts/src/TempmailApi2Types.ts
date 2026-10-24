@@ -46,6 +46,8 @@ export interface InboxLoadMatch {
 export interface InboxCreateData {
   emails?: any[]
   id?: string
+  domain?: any
+  username?: any
 
   // Selects a custom action instead of the plain create:
   //   'create' | 'custom'

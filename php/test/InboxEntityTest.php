@@ -11,6 +11,12 @@ use Voxgig\Struct\Struct as Vs;
 
 class InboxEntityTest extends TestCase
 {
+    // main.kit.test.live.strict is true (the default is true): a live
+    // request that fails, or a live test missing an input it needs,
+    // fails the test.
+    // An account with no record for a test to read skips it either way.
+    private const LIVE_STRICT = true;
+
     public function test_create_instance(): void
     {
         $testsdk = TempmailApi2SDK::test(null, null);
@@ -18,37 +24,49 @@ class InboxEntityTest extends TestCase
         $this->assertNotNull($ent);
     }
 
+    public function test_validate(): void
+    {
+        $cfg = TempmailApi2Config::shared_config();
+        if (!isset($cfg["feature"]["validate"])) {
+            $this->markTestSkipped('feature not present in this SDK: validate');
+        }
+        $client = TempmailApi2SDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
+        $err = null;
+        try {
+            $client->Inbox(null)->load(["id" => 1], null);
+        } catch (\Throwable $e) {
+            $err = $e;
+        }
+        $this->assertSame('validate_failed', $err->sdk_code ?? null);
+    }
+
     public function test_basic_flow(): void
     {
         $setup = inbox_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["create", "load", "remove"] as $_op) {
+        foreach (["load", "remove"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "inbox." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
                 return;
             }
         }
-        // The basic flow consumes synthetic IDs from the fixture. In live mode
-        // without an *_ENTID env override, those IDs hit the live API and 4xx.
-        if (!empty($setup["synthetic_only"])) {
-            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set TEMPMAIL_API2_TEST_INBOX_ENTID JSON to run live");
-            return;
+        if (!empty($setup["live"])) {
+            Runner::live_miss(self::LIVE_STRICT, "Live entity test blocked: " . "the flow loads a inbox record it has no list to find");
         }
         $client = $setup["client"];
 
-        // CREATE
-        $inbox_ref01_ent = $client->Inbox(null);
-        $inbox_ref01_data = Helpers::to_map(Vs::getprop(
-            Vs::getpath($setup["data"], "new.inbox"), "inbox_ref01"));
-
-        $inbox_ref01_data_result = $inbox_ref01_ent->create($inbox_ref01_data, null);
-        $inbox_ref01_data = Helpers::to_map(is_object($inbox_ref01_data_result) && method_exists($inbox_ref01_data_result, 'data_get') ? $inbox_ref01_data_result->data_get() : $inbox_ref01_data_result);
-        $this->assertNotNull($inbox_ref01_data);
-        $this->assertNotNull($inbox_ref01_data["id"]);
+        // Bootstrap entity data from existing test data.
+        $inbox_ref01_data_raw = Vs::items(Helpers::to_map(
+            Vs::getpath($setup["data"], "existing.inbox")));
+        $inbox_ref01_data = null;
+        if (count($inbox_ref01_data_raw) > 0) {
+            $inbox_ref01_data = Helpers::to_map($inbox_ref01_data_raw[0][1]);
+        }
 
         // LOAD
+        $inbox_ref01_ent = $client->Inbox(null);
         $inbox_ref01_match_dt0 = [
             "id" => $inbox_ref01_data["id"],
         ];
@@ -56,12 +74,6 @@ class InboxEntityTest extends TestCase
         $inbox_ref01_data_dt0_load_result = Helpers::to_map(is_object($inbox_ref01_data_dt0_loaded) && method_exists($inbox_ref01_data_dt0_loaded, 'data_get') ? $inbox_ref01_data_dt0_loaded->data_get() : $inbox_ref01_data_dt0_loaded);
         $this->assertNotNull($inbox_ref01_data_dt0_load_result);
         $this->assertEquals($inbox_ref01_data_dt0_load_result["id"], $inbox_ref01_data["id"]);
-
-        // REMOVE
-        $inbox_ref01_match_rm0 = [
-            "id" => $inbox_ref01_data["id"],
-        ];
-        $inbox_ref01_ent->remove($inbox_ref01_match_rm0, null);
 
     }
 }
@@ -85,9 +97,8 @@ function inbox_basic_setup($extra)
         $idmap[$k] = strtoupper($k);
     }
 
-    // Detect ENTID env override before envOverride consumes it. When live
-    // mode is on without a real override, the basic test runs against synthetic
-    // IDs from the fixture and 4xx's. Surface this so the test can skip.
+    // Whether *_ENTID supplied the idmap, read before env_override consumes
+    // it: without it, the ids a live flow binds are the fixture's synthetic ones.
     $entid_env_raw = getenv("TEMPMAIL_API2_TEST_INBOX_ENTID");
     $idmap_overridden = $entid_env_raw !== false && str_starts_with(trim($entid_env_raw), "{");
 

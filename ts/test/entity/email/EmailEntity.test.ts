@@ -9,7 +9,7 @@ import { createLiveTransport } from '../../live-runner'
 import { runLiveEntity } from '../../live-entity'
 
 
-import { TempmailApi2SDK, BaseFeature, stdutil } from '../../..'
+import { TempmailApi2SDK, BaseFeature, config, stdutil } from '../../..'
 
 import {
   envOverride,
@@ -41,17 +41,29 @@ describe('EmailEntity', async () => {
   })
 
 
+  test('validate', async (t) => {
+    if (null == (config as any).feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = TempmailApi2SDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.Email().load({"email_id":1,"token":"x"} as any),
+      (err: any) => 'validate_failed' === err.code)
+  })
+
+
+
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.TEMPMAIL_API2_TEST_LIVE
-    for (const op of ['load']) {
+    for (const op of []) {
       if (!live && maybeSkipControl(t, 'entityOp', 'email.' + op, live)) return
     }
 
     
     const setup = basicSetup()
     if (setup.live) {
-      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"attachments":{"a":true,"h":"Attachments","n":"attachments","r":false,"t":"`$ARRAY`","key$":"attachments","index$":0},"body":{"a":true,"h":"Body","n":"body","r":false,"sh":"Email body content","t":"`$STRING`","key$":"body","index$":1},"date":{"a":true,"fo":"date-time","h":"Date","n":"date","r":false,"sh":"Timestamp when email was received","t":"`$STRING`","key$":"date","index$":2},"from":{"a":true,"fo":"email","h":"From","n":"from","r":false,"sh":"Sender email address","t":"`$STRING`","key$":"from","index$":3},"html":{"a":true,"h":"Html","n":"html","r":false,"sh":"HTML version of email body","t":"`$STRING`","key$":"html","index$":4},"id":{"a":true,"h":"Id","n":"id","r":false,"sh":"Unique identifier for the email","t":"`$STRING`","key$":"id","index$":5},"subject":{"a":true,"h":"Subject","n":"subject","r":false,"sh":"Email subject","t":"`$STRING`","key$":"subject","index$":6},"to":{"a":true,"fo":"email","h":"To","n":"to","r":false,"sh":"Recipient email address","t":"`$STRING`","key$":"to","index$":7}},"id":{"field":"id","name":"id","parts":["token","email_id"],"sep":"/"},"name":"email","op":{"load":{"input":"data","name":"load","points":[{"a":true,"co":{"id":"GET /inbox/{token}/{emailId}","source":"openapi3","version":2},"g":{"params":[{"a":true,"k":"param","n":"email_id","or":"emailId","r":true,"t":"`$STRING`","index$":0},{"a":true,"k":"param","n":"token","or":"token","r":true,"t":"`$STRING`","index$":1}]},"k":"http","m":"GET","o":"/inbox/{token}/{emailId}","q":{"exist":["email_id","token"]},"r":{"param":{"emailId":"email_id"}},"s":[{"lit":"inbox"},{"var":"token"},{"var":"email_id"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"load"},"remove":{"input":"data","name":"remove","points":[{"a":true,"co":{"id":"DELETE /inbox/{token}/{emailId}","source":"openapi3","version":2},"g":{"params":[{"a":true,"k":"param","n":"email_id","or":"emailId","r":true,"t":"`$STRING`","index$":0},{"a":true,"k":"param","n":"token","or":"token","r":true,"t":"`$STRING`","index$":1}]},"k":"http","m":"DELETE","o":"/inbox/{token}/{emailId}","q":{"exist":["email_id","token"]},"r":{"param":{"emailId":"email_id"}},"s":[{"lit":"inbox"},{"var":"token"},{"var":"email_id"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"remove"}},"relations":{"ancestors":[["$.main.kit.entity.inbox"]]},"key$":"email","name__orig":"email","Name":"Email","name_":"email","name-":"email","NAME":"EMAIL","index$":1}, {"active":true,"entity":"email","key$":"BasicEmailFlow","kind":"basic","name":"BasicEmailFlow","param":{},"step":[{"a":true,"d":{},"i":{"ref":"email_ref01","srcdatavar":"email_ref01_data","suffix":"_dt0"},"m":{"id":"email01","token":"token01"},"o":"load","s":[],"v":[{"apply":"TextFieldMark","def":{"mark":"Mark01-email_ref01"}}],"index$":0}]}, 'Email', {"GET /inbox/{token}/{emailId}":{"protocol":"http","parameters":[{"name":"token","in":"path","required":true,"description":"The authentication token for the inbox","schema":{"type":"string"},"index$":0},{"name":"emailId","in":"path","required":true,"description":"The unique identifier of the email","schema":{"type":"string"},"index$":1}]},"DELETE /inbox/{token}/{emailId}":{"protocol":"http","parameters":[{"name":"token","in":"path","required":true,"description":"The authentication token for the inbox","schema":{"type":"string"},"index$":0},{"name":"emailId","in":"path","required":true,"description":"The unique identifier of the email","schema":{"type":"string"},"index$":1}]}})
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"attachments":{"a":true,"h":"Attachments","n":"attachments","r":false,"t":"`$ARRAY`","key$":"attachments","index$":0},"body":{"a":true,"h":"Body","n":"body","r":false,"sh":"Email body content","t":"`$STRING`","key$":"body","index$":1},"date":{"a":true,"fo":"date-time","h":"Date","n":"date","r":false,"sh":"Timestamp when email was received","t":"`$STRING`","key$":"date","index$":2},"from":{"a":true,"fo":"email","h":"From","n":"from","r":false,"sh":"Sender email address","t":"`$STRING`","key$":"from","index$":3},"html":{"a":true,"h":"Html","n":"html","r":false,"sh":"HTML version of email body","t":"`$STRING`","key$":"html","index$":4},"id":{"a":true,"h":"Id","n":"id","r":false,"sh":"Unique identifier for the email","t":"`$STRING`","key$":"id","index$":5},"subject":{"a":true,"h":"Subject","n":"subject","r":false,"sh":"Email subject","t":"`$STRING`","key$":"subject","index$":6},"to":{"a":true,"fo":"email","h":"To","n":"to","r":false,"sh":"Recipient email address","t":"`$STRING`","key$":"to","index$":7}},"id":{"field":"id","name":"id","parts":["token","email_id"],"sep":"/"},"name":"email","op":{"load":{"input":"data","name":"load","points":[{"a":true,"co":{"id":"GET /inbox/{token}/{emailId}","source":"openapi3","version":2},"g":{"params":[{"a":true,"k":"param","n":"email_id","or":"emailId","r":true,"t":"`$STRING`","index$":0},{"a":true,"k":"param","n":"token","or":"token","r":true,"t":"`$STRING`","index$":1}]},"k":"http","m":"GET","o":"/inbox/{token}/{emailId}","q":{"exist":["email_id","token"]},"r":{"param":{"emailId":"email_id"}},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"inbox"},{"var":"token"},{"var":"email_id"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"load"},"remove":{"input":"data","name":"remove","points":[{"a":true,"co":{"id":"DELETE /inbox/{token}/{emailId}","source":"openapi3","version":2},"g":{"params":[{"a":true,"k":"param","n":"email_id","or":"emailId","r":true,"t":"`$STRING`","index$":0},{"a":true,"k":"param","n":"token","or":"token","r":true,"t":"`$STRING`","index$":1}]},"k":"http","m":"DELETE","o":"/inbox/{token}/{emailId}","q":{"exist":["email_id","token"]},"r":{"param":{"emailId":"email_id"}},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"inbox"},{"var":"token"},{"var":"email_id"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"remove"}},"relations":{"ancestors":[["$.main.kit.entity.inbox"]]},"key$":"email","name__orig":"email","Name":"Email","name_":"email","name-":"email","NAME":"EMAIL","index$":1}, {"active":true,"entity":"email","key$":"BasicEmailFlow","kind":"basic","name":"BasicEmailFlow","param":{},"step":[{"a":false,"d":{},"i":{"ref":"email_ref01","srcdatavar":"email_ref01_data","suffix":"_dt0"},"m":{"id":"email01","token":"token01"},"o":"load","s":[],"v":[{"apply":"TextFieldMark","def":{"mark":"Mark01-email_ref01"}}],"unreachable":true}]}, 'Email', {"GET /inbox/{token}/{emailId}":{"protocol":"http","parameters":[{"name":"token","in":"path","required":true,"description":"The authentication token for the inbox","schema":{"type":"string"},"index$":0},{"name":"emailId","in":"path","required":true,"description":"The unique identifier of the email","schema":{"type":"string"},"index$":1}]},"DELETE /inbox/{token}/{emailId}":{"protocol":"http","parameters":[{"name":"token","in":"path","required":true,"description":"The authentication token for the inbox","schema":{"type":"string"},"index$":0},{"name":"emailId","in":"path","required":true,"description":"The unique identifier of the email","schema":{"type":"string"},"index$":1}]}}, { strict: LIVE_STRICT, t })
     }
     const client = setup.client
     const struct = setup.struct
@@ -61,18 +73,16 @@ describe('EmailEntity', async () => {
 
     let email_ref01_data = Object.values(setup.data.existing.email)[0] as any
 
-    // LOAD
-    const email_ref01_ent = client.Email()
-    const email_ref01_match_dt0: any = {}
-    email_ref01_match_dt0.id = email_ref01_data.id
-    const email_ref01_data_dt0 = (await email_ref01_ent.load(email_ref01_match_dt0)).data()
-    assert(email_ref01_data_dt0.id === email_ref01_data.id)
-
-
   })
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra?: any) {
   // TODO: fix test def options
@@ -97,7 +107,7 @@ function basicSetup(extra?: any) {
   const transform = struct.transform
 
   let idmap = transform(
-    ['email01','email02','email03','inbox01','inbox02','inbox03','token01'],
+    ['email01','email02','email03','inbox01','inbox02','inbox03'],
     {
       '`$PACK`': ['', {
         '`$KEY`': '`$COPY`',

@@ -69,6 +69,8 @@ class InboxCreateData
 {
     public ?array $emails = null;
     public ?string $id = null;
+    public mixed $domain = null;
+    public mixed $username = null;
 }
 
 /** Request payload for Inbox#remove. */

@@ -15,6 +15,13 @@ import (
 	vs "github.com/voxgig-sdk/tempmail-api2-sdk/go/utility/struct"
 )
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const inboxEntityLiveStrict = true
+
+
 func TestInboxEntity(t *testing.T) {
 	t.Run("instance", func(t *testing.T) {
 		testsdk := sdk.TestSDK(nil, nil)
@@ -24,7 +31,21 @@ func TestInboxEntity(t *testing.T) {
 		}
 	})
 
-	t.Run("basic", func(t *testing.T) {
+	t.Run("validate", func(t *testing.T) {
+		if !fhHasFeature("validate") {
+			t.Skip("feature not present in this SDK: validate")
+		}
+		client := sdk.TestSDK(nil, map[string]any{
+			"feature": map[string]any{"validate": map[string]any{"active": true}},
+		})
+		_, err := client.Inbox(nil).Load(map[string]any{"id": 1}, nil)
+		if sdkerr, ok := err.(*core.TempmailApi2Error); !ok || "validate_failed" != sdkerr.Code {
+			t.Fatalf("expected validate_failed, got %v", err)
+		}
+	})
+
+	t.Run("basic", func(tt *testing.T) {
+		var t testing.TB = tt
 		setup := inboxBasicSetup(nil)
 		// Per-op sdk-test-control.json skip — basic test exercises a flow
 		// with multiple ops; skipping any op skips the whole flow.
@@ -32,7 +53,7 @@ func TestInboxEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"create", "load", "remove"} {
+		for _, _op := range []string{"load", "remove"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "inbox." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -41,32 +62,24 @@ func TestInboxEntity(t *testing.T) {
 				return
 			}
 		}
-		// The basic flow consumes synthetic IDs from the fixture. In live mode
-		// without an *_ENTID env override, those IDs hit the live API and 4xx.
-		if setup.syntheticOnly {
-			t.Skip("live entity test uses synthetic IDs from fixture — set TEMPMAIL_API2_TEST_INBOX_ENTID JSON to run live")
-			return
+		if setup.live {
+			liveMiss(t, inboxEntityLiveStrict, "Live entity test blocked: %s", "the flow loads a inbox record it has no list to find")
 		}
 		client := setup.client
+		_ = client
 
-		// CREATE
-		inboxRef01Ent := client.Inbox(nil)
-		inboxRef01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath(setup.data, []any{"new", "inbox"}), "inbox_ref01"))
-
-		inboxRef01DataResult, err := inboxRef01Ent.Create(inboxRef01Data, nil)
-		if err != nil {
-			t.Fatalf("create failed: %v", err)
+		// Bootstrap entity data from existing test data (no create step in flow).
+		inboxRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.inbox")))
+		var inboxRef01Data map[string]any
+		if len(inboxRef01DataRaw) > 0 {
+			inboxRef01Data = core.ToMapAny(inboxRef01DataRaw[0][1])
 		}
-		inboxRef01Data = core.ToMapAny(entityData(inboxRef01DataResult))
-		if inboxRef01Data == nil {
-			t.Fatal("expected create result to be a map")
-		}
-		if inboxRef01Data["id"] == nil {
-			t.Fatal("expected created entity to have an id")
-		}
+		// Discard guards against Go's unused-var check when the flow's steps
+		// happen not to consume the bootstrap data (e.g. list-only flows).
+		_ = inboxRef01Data
 
 		// LOAD
+		inboxRef01Ent := client.Inbox(nil)
 		inboxRef01MatchDt0 := map[string]any{
 			"id": inboxRef01Data["id"],
 		}
@@ -80,15 +93,6 @@ func TestInboxEntity(t *testing.T) {
 		}
 		if inboxRef01DataDt0LoadResult["id"] != inboxRef01Data["id"] {
 			t.Fatal("expected load result id to match")
-		}
-
-		// REMOVE
-		inboxRef01MatchRm0 := map[string]any{
-			"id": inboxRef01Data["id"],
-		}
-		_, err = inboxRef01Ent.Remove(inboxRef01MatchRm0, nil)
-		if err != nil {
-			t.Fatalf("remove failed: %v", err)
 		}
 
 	})
@@ -128,9 +132,8 @@ func inboxBasicSetup(extra map[string]any) *entityTestSetup {
 		},
 	)
 
-	// Detect ENTID env override before envOverride consumes it. When live
-	// mode is on without a real override, the basic test runs against synthetic
-	// IDs from the fixture and 4xx's. Surface this so the test can skip.
+	// Whether *_ENTID supplied the idmap, read before envOverride consumes it:
+	// without it, the ids a live flow binds are the fixture's synthetic ones.
 	entidEnvRaw := os.Getenv("TEMPMAIL_API2_TEST_INBOX_ENTID")
 	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
 

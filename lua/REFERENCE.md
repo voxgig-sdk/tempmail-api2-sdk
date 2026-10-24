@@ -104,7 +104,7 @@ local domain = client:Domain(nil)
 
 #### `list(reqmatch, ctrl) -> any, err`
 
-List entities matching the given criteria. Returns an array.
+List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
 
 ```lua
 local results, err = client:Domain():list()
@@ -163,7 +163,7 @@ local email = client:Email(nil)
 
 #### `load(reqmatch, ctrl) -> any, err`
 
-Load a single entity matching the given criteria.
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
 
 ```lua
 local result, err = client:Email():load({ email_id = "email_id", token = "token" })
@@ -171,7 +171,7 @@ local result, err = client:Email():load({ email_id = "email_id", token = "token"
 
 #### `remove(reqmatch, ctrl) -> any, err`
 
-Remove the entity matching the given criteria.
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
 
 ```lua
 local result, err = client:Email():remove({ email_id = "email_id", token = "token" })
@@ -224,16 +224,11 @@ local inbox = client:Inbox(nil)
 
 #### `create(reqdata, ctrl) -> any, err`
 
-Create a new entity with the given data.
-
-```lua
-local result, err = client:Inbox():create({
-})
-```
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
 
 #### `load(reqmatch, ctrl) -> any, err`
 
-Load a single entity matching the given criteria.
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
 
 ```lua
 local result, err = client:Inbox():load({ id = "inbox_id" })
@@ -241,7 +236,7 @@ local result, err = client:Inbox():load({ id = "inbox_id" })
 
 #### `remove(reqmatch, ctrl) -> any, err`
 
-Remove the entity matching the given criteria.
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
 
 ```lua
 local result, err = client:Inbox():remove({ id = "inbox_id" })
@@ -434,6 +429,7 @@ Timeout.
 | Option | Type |
 |---|---|
 | `clearTimer` | function |
+| `now` | function |
 | `setTimer` | function |
 
 These take no default: the feature behaves one way when you supply them and

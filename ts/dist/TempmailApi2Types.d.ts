@@ -32,6 +32,8 @@ export interface InboxLoadMatch {
 export interface InboxCreateData {
     emails?: any[];
     id?: string;
+    domain?: any;
+    username?: any;
     $action?: string;
     [action: string]: any;
 }

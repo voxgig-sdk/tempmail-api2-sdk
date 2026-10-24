@@ -118,9 +118,17 @@ InboxLoadMatch = Struct.new(
 #
 # @!attribute [rw] id
 #   @return [String, nil]
+#
+# @!attribute [rw] domain
+#   @return [Object, nil]
+#
+# @!attribute [rw] username
+#   @return [Object, nil]
 InboxCreateData = Struct.new(
   :emails,
   :id,
+  :domain,
+  :username,
   keyword_init: true
 )
 

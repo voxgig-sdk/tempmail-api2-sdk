@@ -79,6 +79,7 @@ module TempmailApi2Config
           },
           "optspec" => {
             "clearTimer" => "`$FUNCTION`",
+            "now" => "`$FUNCTION`",
             "setTimer" => "`$FUNCTION`",
           },
           "strict" => false,
@@ -130,6 +131,10 @@ module TempmailApi2Config
                   },
                   "args" => {},
                   "select" => {},
+                  "response" => {
+                    "kind" => "json",
+                    "media" => "application/json",
+                  },
                 },
               ],
             },
@@ -259,6 +264,10 @@ module TempmailApi2Config
                       "token",
                     ],
                   },
+                  "response" => {
+                    "kind" => "json",
+                    "media" => "application/json",
+                  },
                 },
               ],
             },
@@ -318,6 +327,10 @@ module TempmailApi2Config
                       "email_id",
                       "token",
                     ],
+                  },
+                  "response" => {
+                    "kind" => "json",
+                    "media" => "application/json",
                   },
                 },
               ],
@@ -379,6 +392,10 @@ module TempmailApi2Config
                   "select" => {
                     "$action" => "create",
                   },
+                  "response" => {
+                    "kind" => "json",
+                    "media" => "application/json",
+                  },
                 },
                 {
                   "kind" => "http",
@@ -404,6 +421,10 @@ module TempmailApi2Config
                   "args" => {},
                   "select" => {
                     "$action" => "custom",
+                  },
+                  "response" => {
+                    "kind" => "json",
+                    "media" => "application/json",
                   },
                 },
               ],
@@ -453,6 +474,10 @@ module TempmailApi2Config
                       "id",
                     ],
                   },
+                  "response" => {
+                    "kind" => "json",
+                    "media" => "application/json",
+                  },
                 },
               ],
             },
@@ -500,6 +525,10 @@ module TempmailApi2Config
                     "exist" => [
                       "id",
                     ],
+                  },
+                  "response" => {
+                    "kind" => "json",
+                    "media" => "application/json",
                   },
                 },
               ],
